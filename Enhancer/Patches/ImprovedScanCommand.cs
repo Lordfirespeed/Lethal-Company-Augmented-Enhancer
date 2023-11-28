@@ -21,19 +21,19 @@ public static class ImprovedScanCommand
     
     private static string getThreatDescription(int enemyPower, int enemyMaxPower, int enemyCount)
     {
-        if (Plugin.Cfg.ThreatScannerType == 0) return null;
+        if (Plugin.BoundConfig.ThreatScannerType == 0) return null;
         
-        if (Plugin.Cfg.ThreatScannerType == 1) {
+        if (Plugin.BoundConfig.ThreatScannerType == 1) {
             return $"\nHostile Contacts: {enemyCount}\n";
         }
         
         float threatCoefficient = (float)enemyPower / enemyMaxPower;
 
-        if (Plugin.Cfg.ThreatScannerType == 2) {
+        if (Plugin.BoundConfig.ThreatScannerType == 2) {
             return $"\nThreat Level: {threatCoefficient:p1}\n";
         }
 
-        if (Plugin.Cfg.ThreatScannerType == 3)
+        if (Plugin.BoundConfig.ThreatScannerType == 3)
         {
             return $"\nThreat Level: {getThreatLevel(threatCoefficient)}\n";
         }
