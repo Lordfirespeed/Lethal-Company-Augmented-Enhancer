@@ -1,5 +1,6 @@
 using UnityEngine;
 using HarmonyLib;
+using Unity.Netcode;
 
 namespace Enhancer.Patches;
 
@@ -71,6 +72,11 @@ public static class PriceRandomizer
     {
         Plugin.Log.LogInfo("TimeOfDay SetBuyingRateForDay");
 
+        if (!NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsServer)
+        {
+            return;
+        }
+        
         if (Plugin.Cfg.UseRandomPrices)
         {
             StartOfRound.Instance.companyBuyingRate = GetRandomPriceScalar();
@@ -81,7 +87,6 @@ public static class PriceRandomizer
             StartOfRound.Instance.companyBuyingRate = Plugin.Cfg.MinimumBuyRate;
 
         //Make sure clients are up to date
-        StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
         StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
     }
 }
