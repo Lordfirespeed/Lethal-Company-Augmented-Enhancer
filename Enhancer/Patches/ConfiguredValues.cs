@@ -12,13 +12,13 @@ public static class ConfiguredValues
 
         QuotaSettings quotaSettings = TimeOfDay.Instance.quotaVariables;
 
-        quotaSettings.startingQuota = Plugin.Cfg.StartingQuota;
-        quotaSettings.startingCredits = Plugin.Cfg.StartingCredits;
-        quotaSettings.deadlineDaysAmount = Plugin.Cfg.DaysPerQuota;
+        quotaSettings.startingQuota = Plugin.BoundConfig.StartingQuota;
+        quotaSettings.startingCredits = Plugin.BoundConfig.StartingCredits;
+        quotaSettings.deadlineDaysAmount = Plugin.BoundConfig.DaysPerQuota;
         // vanilla 'increase steepness' is actually 'increase shallowness', so we reciprocate (1/x) the value
-        quotaSettings.increaseSteepness = 1f / Plugin.Cfg.QuotaIncreaseSteepness;
-        quotaSettings.baseIncrease = Plugin.Cfg.QuotaBaseIncrease;
-        quotaSettings.randomizerMultiplier = Plugin.Cfg.QuotaRandomFactor;
+        quotaSettings.increaseSteepness = 1f / Plugin.BoundConfig.QuotaIncreaseSteepness;
+        quotaSettings.baseIncrease = Plugin.BoundConfig.QuotaBaseIncrease;
+        quotaSettings.randomizerMultiplier = Plugin.BoundConfig.QuotaRandomFactor;
 
         //never skip
         return true;
@@ -31,7 +31,7 @@ public static class ConfiguredValues
         Plugin.Log.LogInfo("TimeOfDay Start");
 
         //Sets gamespeed
-        __instance.globalTimeSpeedMultiplier = Plugin.Cfg.TimeScale;
+        __instance.globalTimeSpeedMultiplier = Plugin.BoundConfig.TimeScale;
     }
 
     [HarmonyPatch(typeof(HangarShipDoor), "Start")]
@@ -41,14 +41,14 @@ public static class ConfiguredValues
         Plugin.Log.LogInfo("HangarShipDoor Start");
 
         //Sets hangar door close timer
-        __instance.doorPowerDuration = Plugin.Cfg.DoorTimer;
+        __instance.doorPowerDuration = Plugin.BoundConfig.DoorTimer;
     }
 
     [HarmonyPatch(typeof(Terminal), "Update")]
     [HarmonyPostfix]
     public static void TerminalUpdatePost(Terminal __instance)
     {
-        if (__instance.terminalUIScreen.gameObject.activeSelf && Plugin.Cfg.KeepConsoleEnabled)
+        if (__instance.terminalUIScreen.gameObject.activeSelf && Plugin.BoundConfig.KeepConsoleEnabled)
             return;
 
         __instance.terminalUIScreen.gameObject.SetActive(true);
