@@ -18,7 +18,7 @@ public static class PriceRandomizer
         //Company mood factor
         float moodFactor = GetMoodFactor();
         //Small increase each day
-        float daysFactor = (float)(1.0 + 0.05f * (Plugin.Cfg.DaysPerQuota - TimeOfDay.Instance.daysUntilDeadline));
+        float daysFactor = (float)(1.0 + 0.05f * (Plugin.BoundConfig.DaysPerQuota - TimeOfDay.Instance.daysUntilDeadline));
 
         //This maximum value should only happen after more than 10 days on a single quota
         daysFactor = Mathf.Clamp(daysFactor, 1.0f, 2.0f);
@@ -77,16 +77,17 @@ public static class PriceRandomizer
             return;
         }
         
-        if (Plugin.Cfg.UseRandomPrices)
+        if (Plugin.BoundConfig.UseRandomPrices)
         {
             StartOfRound.Instance.companyBuyingRate = GetRandomPriceScalar();
         }
 
         //Minimum sale rate fixes negative rates
-        if (StartOfRound.Instance.companyBuyingRate < Plugin.Cfg.MinimumBuyRate)
-            StartOfRound.Instance.companyBuyingRate = Plugin.Cfg.MinimumBuyRate;
+        if (StartOfRound.Instance.companyBuyingRate < Plugin.BoundConfig.MinimumBuyRate)
+            StartOfRound.Instance.companyBuyingRate = Plugin.BoundConfig.MinimumBuyRate;
 
         //Make sure clients are up to date
+        StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
         StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
     }
 }
