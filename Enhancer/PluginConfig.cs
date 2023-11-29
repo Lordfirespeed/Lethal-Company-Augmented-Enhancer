@@ -4,6 +4,8 @@
     All configuration options go in here
 ***********************************************************/
 
+using BepInEx.Configuration;
+
 namespace Enhancer;
 
 public class PluginConfig
@@ -21,6 +23,11 @@ public class PluginConfig
     public readonly int DaysPerQuota;
     public readonly int ThreatScannerType;
 
+    public readonly float MaxDeathPenalty;
+    public readonly float MaxDeathPenaltyPerPlayer;
+    public readonly float DeadBodyRecoveryDiscount;
+    public readonly float DeathPenaltyScalingCurvature;
+
     public readonly Patches.ItemProtection.ProtectionType ScrapProtection;
 
     public PluginConfig(Plugin BindingPlugin)
@@ -37,6 +44,40 @@ public class PluginConfig
         DaysPerQuota = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "iQuotaDays", 3, "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes").Value;
         ThreatScannerType = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
 
+        MaxDeathPenalty = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fMaxDeathPenalty", 
+            0.8f, 
+            new ConfigDescription(
+                "The maximum fraction of your money that you can lose per round.\nValue should be in [0,1], e.g.\n0 - No money can be lost.\n0.5 - Half your money can be lost in one run.\n1 - All money can be lost in one run.\nUse 0.8 for vanilla behaviour.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        MaxDeathPenaltyPerPlayer = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fMaxDeathPenaltyPerPlayer", 
+            0.2f, 
+            new ConfigDescription(
+                "The maximum fraction of your money that you can lose per round, per dead player.\nValue should be in [0,1].\nUse 0.2 for vanilla behaviour.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        DeadBodyRecoveryDiscount = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fDeadBodyRecoveryDiscount", 
+            0.6f, 
+            new ConfigDescription(
+                "How much recovering dead bodies reduces the penalty for that death by.\nValue should be in [0,1], e.g.\n0 - Recovering a body does not reduce the fine.\n1 - Recovering a body completely removes the fine for that death.\nUse 0.6 for vanilla behaviour.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        DeathPenaltyScalingCurvature = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fDeathPenaltyCurveDegree", 
+            0f, 
+            "How curved the death penalty scaling is. Positive -> less fine for fewer deaths. Negative -> more fine for fewer deaths.\ne.g. with a 4-player lobby:\n0 - The fine scales linearly: 25%, 50%, 75%, 100%.\n1 - The fine scales quadratically: 6.3%, 25%, 56.3%, 100%\n-1 - The fine scales anti-quadratically: 50%, 70.1%, 86.6%, 100%"
+        ).Value;
+        
         ScrapProtection = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eScrapProtection", Patches.ItemProtection.ProtectionType.SAVE_NONE, "Sets how scrap will be handled when all players die in a round.\nSAVE_NONE: Default all scrap is deleted\nSAVE_ALL: No scrap is removed\nSAVE_COINFLIP: Each piece of scrap has a 50/50 of being removed\nHost Required: Yes").Value;
     }
 }
