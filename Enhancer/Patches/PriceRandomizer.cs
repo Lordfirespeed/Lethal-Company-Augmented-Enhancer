@@ -6,14 +6,14 @@ namespace Enhancer.Patches;
 
 public static class PriceRandomizer
 {
-    public static float GetRandomPriceScalar()
+    public static float GetRandomPriceFactor()
     {
         if (TimeOfDay.Instance.daysUntilDeadline < 1)
         {
             return 1.0f;
         }
             
-        Plugin.Log.LogInfo("Choosing random price scalar");
+        Plugin.Log.LogInfo("Choosing random price factor");
 
         //Company mood factor
         float moodFactor = GetMoodFactor();
@@ -27,12 +27,12 @@ public static class PriceRandomizer
 
         //Use the level seed to get prices
         System.Random rng = new(StartOfRound.Instance.randomMapSeed + 77);
-        float priceScalar = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
+        float priceFactor = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
         
-        Plugin.Log.LogInfo("New price % set at" + priceScalar);
+        Plugin.Log.LogInfo("New price % set at" + priceFactor);
         Plugin.Log.LogInfo("    factors " + moodFactor + " : " + daysFactor + " : " + (StartOfRound.Instance.randomMapSeed + 77));
 
-        return priceScalar;
+        return priceFactor;
     }
     
     private static string GetCompanyMoodName()
@@ -79,7 +79,7 @@ public static class PriceRandomizer
         
         if (Plugin.BoundConfig.UseRandomPrices)
         {
-            StartOfRound.Instance.companyBuyingRate = GetRandomPriceScalar();
+            StartOfRound.Instance.companyBuyingRate = GetRandomPriceFactor();
         }
 
         //Minimum sale rate fixes negative rates
@@ -87,7 +87,6 @@ public static class PriceRandomizer
             StartOfRound.Instance.companyBuyingRate = Plugin.BoundConfig.MinimumBuyRate;
 
         //Make sure clients are up to date
-        StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
         StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
     }
 }
