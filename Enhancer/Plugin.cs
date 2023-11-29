@@ -44,7 +44,7 @@ public class Plugin : BaseUnityPlugin
         {
             new("Configured values", typeof(ConfiguredValues)),
             new("Improved scan command", typeof(ImprovedScanCommand)),
-            new("Item protection", typeof(ItemProtection)),
+            new("Item protection", typeof(ItemProtection.DespawnPropsAtEndOfRoundPatch)),
             new("Price randomizer", typeof(PriceRandomizer)),
             new("Suit unlockables", typeof(SuitUnlockables), loadCondition: () => BoundConfig.DoSuitPatches),
         };
