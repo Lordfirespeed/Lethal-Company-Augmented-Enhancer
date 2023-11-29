@@ -18,7 +18,7 @@ public static class ConfiguredValues
         // vanilla 'increase steepness' is actually 'increase shallowness', so we reciprocate (1/x) the value
         quotaSettings.increaseSteepness = 1f / Plugin.BoundConfig.QuotaIncreaseSteepness;
         quotaSettings.baseIncrease = Plugin.BoundConfig.QuotaBaseIncrease;
-        quotaSettings.randomizerMultiplier = Plugin.BoundConfig.QuotaRandomFactor;
+        quotaSettings.randomizerMultiplier = Plugin.BoundConfig.QuotaIncreaseRandomFactor;
 
         //never skip
         return true;
