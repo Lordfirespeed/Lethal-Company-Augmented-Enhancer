@@ -48,6 +48,7 @@ public class Plugin : BaseUnityPlugin
             new("Item protection", typeof(ItemProtection)),
             new("Price randomizer", typeof(PriceRandomizer)),
             new("Suit unlockables", typeof(SuitUnlockables), loadCondition: () => BoundConfig.DoSuitPatches),
+            new("Death penalty", typeof(DeathPenalty)),
         };
         
         Logger.LogInfo("Enabled, applying all patches");
