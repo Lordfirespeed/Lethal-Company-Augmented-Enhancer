@@ -18,9 +18,14 @@ namespace Enhancer
         public readonly float MinimumBuyRate;
         public readonly float DoorTimer;
 
+        public readonly int StartingQuota;
+        public readonly int StartingCredits;
         public readonly int DaysPerQuota;
+        public readonly float QuotaIncreaseSteepness;
+        public readonly float QuotaBaseIncrease;
+        public readonly float QuotaIncreaseRandomFactor;
+        
         public readonly int ThreatScannerType;
-
         public readonly Patches.ItemProtection.ProtectionType ScrapProtection;
 
         public PluginConfig(Plugin BindingPlugin)
@@ -34,9 +39,44 @@ namespace Enhancer
             MinimumBuyRate = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fMinCompanyBuyPCT", 0.0f, "The default formula for selling items to the company doesn't allow days remaining above 3.\nAlways keep this set to at least 0.0 but you probably want something higher if you have more days set for the quota.\nRecommended values for games above 3 days: 0.3 - 0.5\nHost Required: Yes").Value;
             DoorTimer = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fDoorTimer", 30.0f, "How long the hangar door can be kept shut at a time (in seconds)\nRecommended values: 60.0 - 180.0\nHost Required: All players should use the same setting here").Value;
 
-            DaysPerQuota = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "iQuotaDays", 3, "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes").Value;
+            StartingQuota = BindingPlugin.Config.Bind(
+                PluginInfo.PLUGIN_GUID,
+                "iStartingQuota",
+                130,
+                "The starting quota on a new run.\nHost Required: Yes"
+            ).Value;
+            StartingCredits = BindingPlugin.Config.Bind(
+                PluginInfo.PLUGIN_GUID,
+                "iStartingCredits",
+                60,
+                "How many credits the group starts with on a new run.\nHost Required: Yes"
+            ).Value;
+            DaysPerQuota = BindingPlugin.Config.Bind(
+                PluginInfo.PLUGIN_GUID, 
+                "iQuotaDays", 
+                3, 
+                "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes"
+            ).Value;
+            QuotaIncreaseSteepness = BindingPlugin.Config.Bind(
+                PluginInfo.PLUGIN_GUID,
+                "fQuotaIncreaseSteepness",
+                0.0625f,
+                "Used in calculating quota increase. Multiplier for the quadratic increase factor.\nHost Required: Yes"
+            ).Value;
+            QuotaBaseIncrease = BindingPlugin.Config.Bind(
+                PluginInfo.PLUGIN_GUID,
+                "fQuotaBaseIncrease",
+                100f,
+                "Used in calculating quota increase. Multiplier for the constant increase factor.\nHost Required: Yes"
+            ).Value;
+            QuotaIncreaseRandomFactor = BindingPlugin.Config.Bind(
+                PluginInfo.PLUGIN_GUID,
+                "fQuotaIncreaseRandomFactor",
+                1f,
+                "Used in calculating quota increase. Multiplier for the random increase factor.\nHost Required: Yes"
+            ).Value;
+            
             ThreatScannerType = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
-
             ScrapProtection = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eScrapProtection", Patches.ItemProtection.ProtectionType.SAVE_NONE, "Sets how scrap will be handled when all players die in a round.\nSAVE_NONE: Default all scrap is deleted\nSAVE_ALL: No scrap is removed\nSAVE_COINFLIP: Each piece of scrap has a 50/50 of being removed\nHost Required: Yes").Value;
         }
     }
