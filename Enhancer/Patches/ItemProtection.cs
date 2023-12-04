@@ -7,13 +7,6 @@ namespace Enhancer.Patches;
 
 public static class ItemProtection
 {
-    public enum ProtectionType
-    {
-        SAVE_NONE,
-        SAVE_ALL,
-        SAVE_COINFLIP
-    }
-    
     public static bool IsUnprotectedScrap(Item item)
     {
         Plugin.Log.LogInfo($"Considering item {item} for destruction...");
