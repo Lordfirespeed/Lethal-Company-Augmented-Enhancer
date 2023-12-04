@@ -101,7 +101,8 @@ public sealed class PatchBuildPropsTask : FrostingTask<BuildContext>
 
     public override void Run(BuildContext ctx)
     {
-        ctx.SolutionBuildProperties.SetProperty("VersionPrefix", ctx.GitHubReleaseTagName);
+        if (!ctx.GitHubReleaseTagName.StartsWith("v")) throw new Exception("Release tags must be semantic versions.");
+        ctx.SolutionBuildProperties.SetProperty("VersionPrefix", ctx.GitHubReleaseTagName.Substring(1));
         ctx.SolutionBuildProperties.Save();
     }
 }
