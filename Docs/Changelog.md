@@ -16,9 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.1.2] - 2023-12-04
+
+### Fixed
+
+- Specified categories in `thunderstore.toml` on a per-community basis to prevent `HTTP 400` on publish
+
 ## [0.1.1] - 2023-12-04
 
 ### Changed
+
 - Build task ensures release tags begin with `v` and uses the remaining substring as the version
 
 ### Fixed
