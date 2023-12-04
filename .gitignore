@@ -1,3 +1,52 @@
-bin/**
-obj/**
-.vscode/**
+# Exclude everything
+/*
+
+# Specific includes
+## Docs
+!Docs/
+
+## Assets
+!assets/
+
+## Source
+!src/
+
+## Build System/Scripts
+!NuGet.Config
+!Directory.Build.props
+!build.sh
+!build.ps1
+!build.cmd
+
+## Markdowns
+!*.md
+!LICENSE
+
+## important Git files
+!.gitmodules
+!.gitignore
+!.gitattributes
+!.git-blame-ignore-revs
+
+## GitHub specific
+!.github/
+
+## Dependencies folder
+!lib
+lib/*
+!lib/.gitkeep
+
+## Projects
+!Lethal-Company-Enhancer.sln
+
+### Enhancer
+!Enhancer/
+Enhancer/[Bb]in/
+Enhancer/[Oo]bj/
+
+### Build
+!build/
+build/[Bb]in/
+build/[Oo]bj/
+
+# Explicit exceptions/ignores

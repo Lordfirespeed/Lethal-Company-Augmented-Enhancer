@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  release:
+    types: [prereleased, released]
+    
+jobs:
+  publish:
+    name: Publish package
+    runs-on: ubuntu-latest
+    steps:
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      # Set up .NET environment for the next steps
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+          
+      # Install the building/publishing capability of Thunderstore CLI
+      - name: Install TCLI
+        run: dotnet tool install -g tcli
+            
+      # Update Unreleased section with the current release note TODO
+      - name: Patch Changelog
+        run: echo
+
+      # Build package and publish to Thunderstore
+      - name: Build & Publish
+        id: build
+        env:
+          TCLI_AUTH_TOKEN: ${{ secrets.THUNDERSTORE_API_TOKEN }}
+        run: |
+          ./build.sh --target PublishThunderstore --build-type Release --github-tag-name ${{ github.event.release.tag_name }}
+
+      # Upload built packages as release assets
+      - name: Upload Release Assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} dist/*.zip
+      
+      # Upload built packages as artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/*.zip
+        
+      # Check whether there is anything to commit
+      - name: Retrieve Git Status
+        id: retrieve_git_status
+        run: echo GIT_STATUS=$(git status --porcelain) >> $GITHUB_OUTPUT
+          
+      # Push and create pull request
+      - name: Create Pull Request
+        if: ${{ steps.retrieve_git_status.outputs.GIT_STATUS != "" }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          BRANCH="changelog-update-$VERSION"
+          LABEL="release workflow"
+          
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          
+          git checkout -b $BRANCH
+          git commit -m "Incremented version to $VERSION" -- Directory.Build.props assets/thunderstore.toml
+          git commit -am "Changelog update - $VERSION"
+          git push --set-upstream origin $BRANCH
+           
+          gh label create "$LABEL" \
+            --description "Pull requests with release changelog update" \
+            --force \
+            || true
+           
+          gh pr create \
+            --title "Changelog update - \`$VERSION\`" \
+            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
+            --label "$LABEL" \
+            --head $BRANCH
