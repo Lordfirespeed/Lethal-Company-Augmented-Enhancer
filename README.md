@@ -1,4 +1,7 @@
 # Augmented Enhancer
+
+[![Build](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml/badge.svg)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml)
+
 A mod for Lethal Company that adds additional configuration options to fit the player's preferences. 
 
 ## Configurable Features
