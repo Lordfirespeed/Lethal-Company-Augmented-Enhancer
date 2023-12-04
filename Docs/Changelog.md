@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.1.3] - 2023-12-04
+
+### Fixed
+
+- Removed categories from `thunderstore.toml` as `tcli` has not released the necessary feature
+
 ## [0.1.2] - 2023-12-04
 
 ### Fixed
