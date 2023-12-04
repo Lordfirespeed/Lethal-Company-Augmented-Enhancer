@@ -1,7 +1,7 @@
 # Augmented Enhancer
 
 [![Build](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml/badge.svg)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml)
-[![Release](https://img.shields.io/github/v/release/lordfirespeed/lethal-company-augmented-enhancer)
+[![Release](https://img.shields.io/github/v/release/lordfirespeed/lethal-company-augmented-enhancer)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/releases)
 
 A mod for Lethal Company that adds additional configuration options to fit the player's preferences. 
 
