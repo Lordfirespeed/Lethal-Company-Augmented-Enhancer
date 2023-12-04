@@ -69,14 +69,14 @@ jobs:
           
           git checkout -b $BRANCH
           git commit -m "Incremented version to $VERSION" -- Directory.Build.props assets/thunderstore.toml
-          git commit -am "Changelog update - $VERSION"
-          git push --set-upstream origin $BRANCH
-           
+          git commit -am "Changelog update - $VERSION" || true
+          git push --set-upstream origin $BRANCH || true
+          
           gh label create "$LABEL" \
             --description "Pull requests with release changelog update" \
             --force \
             || true
-           
+          
           gh pr create \
             --title "Changelog update - \`$VERSION\`" \
             --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
