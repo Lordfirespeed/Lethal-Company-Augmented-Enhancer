@@ -37,6 +37,6 @@ public class PluginConfig
         DaysPerQuota = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "iQuotaDays", 3, "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes").Value;
         ThreatScannerType = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
 
-        ScrapProtection = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fScrapProtection", Patches.ItemProtection.ProtectionType.SAVE_NONE, "Sets how scrap will be handled when all players die in a round.\nSAVE_NONE: Default all scrap is deleted\nSAVE_ALL: No scrap is removed\nSAVE_COINFLIP: Each piece of scrap has a 50/50 of being removed\nHost Required: Yes").Value;
+        ScrapProtection = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fScrapProtection", 0f, "Sets the probability that each scrap item is lost, given that no players survive a mission.\nThat is, this is the approximate fraction of secured scrap items lost .\nHost Required: Yes").Value;
     }
 }

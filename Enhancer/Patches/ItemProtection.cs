@@ -39,28 +39,28 @@ public static class ItemProtection
             
             if (despawnAllItems) return;
             if (StartOfRound.Instance.allPlayersDead) return;
-            if (Plugin.BoundConfig.ScrapProtection != ProtectionType.SAVE_COINFLIP) return;
+            if (Plugin.BoundConfig.ScrapProtection == 0f || Plugin.BoundConfig.ScrapProtection >= 1f) return;
             
-            rng = new System.Random(StartOfRound.Instance.randomMapSeed + 83);
+            RandomGenerator = new System.Random(StartOfRound.Instance.randomMapSeed + 83);
         }
         
         [HarmonyPostfix]
         static void Postfix()
         {
             Plugin.Log.LogInfo("Finished considering items for destruction");
-            rng = null;
+            RandomGenerator = null;
         }
     }
 
-    private static System.Random rng;
+    private static System.Random? RandomGenerator { get; set; }
     
     public static bool ShouldSaveScrap()
     {
         return Plugin.BoundConfig.ScrapProtection switch
         {
-            ProtectionType.SAVE_ALL => true,
-            ProtectionType.SAVE_COINFLIP => rng.NextDouble() > 0.49,
-            _ => false
+            0 => false,
+            1 => true,
+            _ => Plugin.BoundConfig.ScrapProtection > RandomGenerator?.NextDouble()
         };
     }
 }
