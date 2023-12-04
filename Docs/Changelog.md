@@ -16,6 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.1.1] - 2023-12-04
+
+### Changed
+- Build task ensures release tags begin with `v` and uses the remaining substring as the version
+
+### Fixed
+
+- Publish workflow contained syntax errors
+
 ## [0.1.0] - 2023-12-04
 
 ### Changed
