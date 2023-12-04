@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The 'release' workflow was failing when there was no changelog to commit
+
 ### Removed
 
 ## [0.1.3] - 2023-12-04
