@@ -14,8 +14,8 @@ public class DeathPenalty
     {
         return Mathf.Clamp(
             Mathf.Min(
-                Plugin.BoundConfig.MaxDeathPenalty,
-                CountTotalPlayersInSession() * Plugin.BoundConfig.MaxDeathPenaltyPerPlayer
+                Plugin.BoundConfig.MaximumDeathPenalty,
+                CountTotalPlayersInSession() * Plugin.BoundConfig.MaximumDeathPenaltyPerPlayer
             ), 
             0, 
             1
