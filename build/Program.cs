@@ -1,7 +1,6 @@
 ﻿// Largely derived from https://github.com/BepInEx/BepInEx/blob/master/build/Program.cs
 
 using System.Configuration;
-using Build;
 using Cake.Common;
 using Cake.Common.IO;
 using Cake.Common.Tools.Command;
@@ -16,9 +15,15 @@ using Cake.Git;
 using Microsoft.Build.Definition;
 using Microsoft.Build.Evaluation;
 
-return new CakeHost()
-    .UseContext<BuildContext>()
-    .Run(args);
+public static class Program
+{
+    public static int Main(string[] args)
+    {
+        return new CakeHost()
+            .UseContext<BuildContext>()
+            .Run(args);
+    }
+}
 
 public class BuildContext : FrostingContext
 {
