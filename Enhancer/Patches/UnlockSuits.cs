@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public static class SuitUnlockables
+public static class UnlockSuits
 {
     private static readonly MethodInfo unlockItem = typeof(StartOfRound).GetMethod("SpawnUnlockable", BindingFlags.NonPublic | BindingFlags.Instance);
 
