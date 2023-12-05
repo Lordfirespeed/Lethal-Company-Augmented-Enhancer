@@ -30,7 +30,7 @@ Supply the proportion of items that you would like to (approximately) keep. For 
 - The maximum death penalty factor per player can be configured (ideal for small groups).
 - The death penalty discount for recovering bodies can be configured.
 - The death penalty scaling curvature can be configured.
-- 
+
 <details>
 <summary><strong>Scaling Curvature</strong></summary>
 
