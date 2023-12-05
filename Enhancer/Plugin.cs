@@ -27,6 +27,7 @@ namespace Enhancer;
 
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 [BepInDependency("mom.llama.enhancer", BepInDependency.DependencyFlags.SoftDependency)]
+[BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     public static ManualLogSource Log { get; private set; }
@@ -45,6 +46,7 @@ public class Plugin : BaseUnityPlugin
             .SetPatchType(typeof(DaysPerQuota))
             .SetLoadCondition(() => BoundConfig.DaysPerQuotaEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .AddModGuidToDelegateTo("Haha.DynamicDeadline")
             .Build(),
         new PatchInfo.Builder()
             .SetName("Hangar door close duration")
