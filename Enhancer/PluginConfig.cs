@@ -36,8 +36,8 @@ public class PluginConfig
     public readonly int ThreatScannerType;
 
     public readonly bool DeathPenaltyFormulaEnabled;
-    public readonly float MaxDeathPenalty;
-    public readonly float MaxDeathPenaltyPerPlayer;
+    public readonly float MaximumDeathPenalty;
+    public readonly float MaximumDeathPenaltyPerPlayer;
     public readonly float DeadBodyRecoveryDiscount;
     public readonly float DeathPenaltyScalingCurvature;
 
@@ -168,18 +168,18 @@ public class PluginConfig
             false,
             "Feature flag for the 'death penalty formula' variables, which includes\n - 'max death penalty'\n - 'max death penalty per player'\n - 'body recovery discount'\n - 'death penalty scaling curvature'\nHost Required: Yes"
         ).Value;
-        MaxDeathPenalty = bindingPlugin.Config.Bind(
+        MaximumDeathPenalty = bindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID, 
-            "fMaxDeathPenalty", 
+            "fMaximumDeathPenalty", 
             0.8f, 
             new ConfigDescription(
                 "The maximum fraction of your money that you can lose per round.\nValue should be in [0,1], e.g.\n0 - No money can be lost.\n0.5 - Half your money can be lost in one run.\n1 - All money can be lost in one run.\nUse 0.8 for vanilla behaviour.\nHost Required: Yes",
                 new AcceptableValueRange<float>(0f, 1f)
             )
         ).Value;
-        MaxDeathPenaltyPerPlayer = bindingPlugin.Config.Bind(
+        MaximumDeathPenaltyPerPlayer = bindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID, 
-            "fMaxDeathPenaltyPerPlayer", 
+            "fMaximumDeathPenaltyPerPlayer", 
             0.2f, 
             new ConfigDescription(
                 "The maximum fraction of your money that you can lose per round, per dead player.\nValue should be in [0,1].\nUse 0.2 for vanilla behaviour.\nHost Required: Yes",
