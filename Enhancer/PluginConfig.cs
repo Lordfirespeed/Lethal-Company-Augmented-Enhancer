@@ -5,6 +5,7 @@
 ***********************************************************/
 
 using BepInEx.Configuration;
+using Enhancer.Patches;
 
 namespace Enhancer;
 
@@ -37,7 +38,7 @@ public class PluginConfig
     public readonly float QuotaBaseIncrease;
     public readonly float QuotaIncreaseRandomFactor;
 
-    public readonly int ThreatScannerType;
+    public readonly ThreatScannerMode ThreatScanner;
 
     public readonly bool ScrapProtectionEnabled;
     public readonly float ScrapProtection;
@@ -173,7 +174,12 @@ public class PluginConfig
             "Used in calculating quota increase. Multiplier for the random increase factor.\nHost Required: Yes"
         ).Value;
         
-        ThreatScannerType = bindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
+        ThreatScanner = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "eThreatScannerMode", 
+            ThreatScannerMode.Disabled, 
+            "How the threat scanner functions. Valid types:\n - Disabled\n - Contacts: Number of Enemies on level\n - ThreatLevelPercentage: Percentage of max enemies on level\n - ThreatLevelName: Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No"
+        ).Value;
         
         ScrapProtectionEnabled = bindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID,
