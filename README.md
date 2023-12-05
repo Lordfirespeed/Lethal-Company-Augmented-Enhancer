@@ -130,7 +130,7 @@ Please set the `bEnabled` option to `false` (and disable other installed mods) w
 players that do not have mods installed.
 
 ### How do I change settings?
-All this mod's configuration is contained within one file, `/BepInEx/config/lordfirespeed.enhancer.cfg`.
+All this mod's configuration is contained within one file, `/BepInEx/config/com.github.lordfirespeed.augmented_enhancer.cfg`.
 
 If an option's description is too confusing or not well-enough explained, 
 please [open an issue on GitHub](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/issues).
