@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class TimeScale
+public class TimeSpeed
 {
     [HarmonyPatch(typeof(TimeOfDay), "Start")]
     [HarmonyPostfix]
