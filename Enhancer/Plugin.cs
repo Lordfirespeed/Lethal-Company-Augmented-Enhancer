@@ -46,7 +46,7 @@ public class Plugin : BaseUnityPlugin
             new("Improved scan command", typeof(ImprovedScanCommand)),
             new("Item protection", typeof(ItemProtection)),
             new("Price randomizer", typeof(PriceRandomizer)),
-            new("Suit unlockables", typeof(SuitUnlockables), loadCondition: () => BoundConfig.DoSuitPatches),
+            new("Suit unlockables", typeof(SuitUnlockables), loadCondition: () => BoundConfig.SuitUnlocksEnabled),
         };
         
         Logger.LogInfo("Enabled, applying all patches");
