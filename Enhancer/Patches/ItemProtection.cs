@@ -1,91 +1,79 @@
-using UnityEngine;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using HarmonyLib;
-using Unity.Netcode;
+using UnityEngine;
 
 namespace Enhancer.Patches;
 
+[HarmonyPatch(typeof(RoundManager), nameof(RoundManager.DespawnPropsAtEndOfRound))]
 public static class ItemProtection
 {
-    public enum ProtectionType
+    public static bool IsUnprotectedScrap(Item item)
     {
-        SAVE_NONE,
-        SAVE_ALL,
-        SAVE_COINFLIP
+        Plugin.Log.LogDebug($"Considering item {item} for destruction...");
+        return item.isScrap && !ShouldSaveScrap();
     }
-
-    private static System.Random rng;
-
-    [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.DespawnPropsAtEndOfRound))]
+    
+    static readonly FieldInfo ItemIsScrapField = AccessTools.Field(typeof(Item), nameof(Item.isScrap));
+    private static readonly MethodInfo ItemIsUnprotectedScrapMethod = AccessTools.Method(typeof(ItemProtection), nameof(IsUnprotectedScrap));
+    
+    [HarmonyTranspiler]
+    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        return instructions.Manipulator(
+            instruction => instruction.opcode == OpCodes.Ldfld && instruction.OperandIs(ItemIsScrapField),
+            instruction =>
+            {
+                instruction.opcode = OpCodes.Call;
+                instruction.operand = ItemIsUnprotectedScrapMethod;
+            }
+        );
+    }
+    
     [HarmonyPrefix]
-    public static bool ProtectionPrefix(RoundManager __instance, bool despawnAllItems)
+    static void Prefix(RoundManager __instance, bool despawnAllItems)
     {
-
-        if (Plugin.BoundConfig.ScrapProtection == ProtectionType.SAVE_NONE || despawnAllItems)
-            return true;
-
-        Plugin.Log.LogInfo("ProtectionPatch -> " + despawnAllItems + " : " + StartOfRound.Instance.allPlayersDead.ToString());
-
-        //check if we're needed at all
-        if (StartOfRound.Instance.allPlayersDead)
-        {
-            //There should probably be a host check here but roundmanager uses
-            //base.ishost and I dunno what to make of this right now.
-
-            GrabbableObject[] allItems = GameObject.FindObjectsOfType<GrabbableObject>();
-                
-            //I don't know if the host/client sync despawned objects but using the
-            //same seed should make absolutely sure they do
-            rng = new System.Random(StartOfRound.Instance.randomMapSeed + 83);
-
-            foreach (GrabbableObject item in allItems)
-            {
-
-                ProtectionType prot = Plugin.BoundConfig.ScrapProtection;
-
-                //is this an item that would normally be destroyed after a failed round?
-                if (item.itemProperties.isScrap)
-                    if (item.isInShipRoom && ShouldSaveScrap(prot))
-                    {
-                        Plugin.Log.LogInfo("Saving scrap item " + item.name);
-                    }
-                    else
-                    {
-                        //despawn network item
-                        item.gameObject.GetComponent<NetworkObject>().Despawn();
-
-                        //destroy synced object
-                        if (__instance.spawnedSyncedObjects.Contains(item.gameObject))
-                        {
-                            __instance.spawnedSyncedObjects.Remove(item.gameObject);
-                        }
-                    }
-            }
-
-            //destroy temp effects since we're skipping the destroy function
-            GameObject[] tempEffects = GameObject.FindGameObjectsWithTag("TemporaryEffect");
-            for (int i = 0; i < tempEffects.Length; i++)
-            {
-                Object.Destroy(tempEffects[i]);
-            }
-
-            //this might could maybe break things because I don't implement the
-            //destroy loop the same as the base game, I dunno.
-            return false;
-        }
-
-        return true;
+        Plugin.Log.LogInfo("Getting ready to consider items for destruction");
+        
+        if (despawnAllItems) return;
+        if (!StartOfRound.Instance.allPlayersDead) return;
+        
+        ThisPassProtectionProbability = Plugin.BoundConfig.ScrapProtection;
+        if (
+            Plugin.BoundConfig.ScrapProtectionRandomness <= 0f && 
+            (Plugin.BoundConfig.ScrapProtection <= 0f || Plugin.BoundConfig.ScrapProtection >= 1f)
+        ) return;
+        
+        RandomGenerator = new System.Random(StartOfRound.Instance.randomMapSeed + 83);
+        
+        if (Plugin.BoundConfig.ScrapProtectionRandomness <= 0f) return;
+        // get randomly from the quota randomizer curve (which is approximately the same shape as the quantile function)
+        ThisPassProtectionProbability += (
+            Plugin.BoundConfig.ScrapProtectionRandomness * 2 * 
+            TimeOfDay.Instance.quotaVariables.randomizerCurve.Evaluate((float)RandomGenerator.NextDouble())
+        );
+        ThisPassProtectionProbability = Mathf.Clamp(ThisPassProtectionProbability.Value, 0f, 1f);
     }
-
-    public static bool ShouldSaveScrap(ProtectionType pType)
+    
+    [HarmonyPostfix]
+    static void Postfix()
     {
-        switch (pType)
+        Plugin.Log.LogInfo("Finished considering items for destruction");
+        RandomGenerator = null;
+        ThisPassProtectionProbability = null;
+    }
+    
+    private static System.Random? RandomGenerator { get; set; }
+    private static float? ThisPassProtectionProbability { get; set; }
+
+    public static bool ShouldSaveScrap()
+    {
+        return Plugin.BoundConfig.ScrapProtection switch
         {
-            case ProtectionType.SAVE_ALL:
-                return true;
-            case ProtectionType.SAVE_COINFLIP:
-                return rng.NextDouble() > 0.49;
-            default:
-                return false;
-        }
+            0f => false,
+            1f => true,
+            _ => ThisPassProtectionProbability > RandomGenerator?.NextDouble()
+        };
     }
 }

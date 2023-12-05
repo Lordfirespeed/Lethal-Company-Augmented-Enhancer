@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Delegating most features to [Lethal Enhancer](https://thunderstore.io/c/lethal-company/p/Mom_Llama/Lethal_Company_Enhancer/)
   - Delegating days per quota to [Dynamic Deadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/)
 - Feature flag for disabling delegation
+- Configurable death penalty options
 
 ### Fixed
 
