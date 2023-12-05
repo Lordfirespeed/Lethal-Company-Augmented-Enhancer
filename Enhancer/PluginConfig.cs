@@ -18,9 +18,12 @@ public class PluginConfig
     public readonly float MinimumBuyRate;
     public readonly float DoorTimer;
 
-    public readonly int StartingQuota;
+    public readonly bool StartingCreditsEnabled;
     public readonly int StartingCredits;
+    public readonly bool DaysPerQuotaEnabled;
     public readonly int DaysPerQuota;
+    public readonly bool QuotaFormulaEnabled;
+    public readonly int StartingQuota;
     public readonly float QuotaIncreaseSteepness;
     public readonly float QuotaBaseIncrease;
     public readonly float QuotaIncreaseRandomFactor;
@@ -39,11 +42,11 @@ public class PluginConfig
         MinimumBuyRate = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fMinCompanyBuyPCT", 0.0f, "The default formula for selling items to the company doesn't allow days remaining above 3.\nAlways keep this set to at least 0.0 but you probably want something higher if you have more days set for the quota.\nRecommended values for games above 3 days: 0.3 - 0.5\nHost Required: Yes").Value;
         DoorTimer = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fDoorTimer", 30.0f, "How long the hangar door can be kept shut at a time (in seconds)\nRecommended values: 60.0 - 180.0\nHost Required: All players should use the same setting here").Value;
 
-        StartingQuota = BindingPlugin.Config.Bind(
+        StartingCreditsEnabled = BindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID,
-            "iStartingQuota",
-            130,
-            "The starting quota on a new run.\nHost Required: Yes"
+            "bStartingCreditsEnabled",
+            false,
+            "Feature flag for the 'starting credits' variable.\nHost Required: Yes"
         ).Value;
         StartingCredits = BindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID,
@@ -51,11 +54,31 @@ public class PluginConfig
             60,
             "How many credits the group starts with on a new run.\nHost Required: Yes"
         ).Value;
+        
+        DaysPerQuotaEnabled = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "bDaysPerQuotaEnabled",
+            false,
+            "Feature flag for the 'days per quota' variable.\nHost Required: Yes"
+        ).Value;
         DaysPerQuota = BindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID, 
             "iQuotaDays", 
             3, 
             "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes"
+        ).Value;
+        
+        QuotaFormulaEnabled = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "bQuotaFormulaEnabled",
+            false,
+            "Feature flag for the 'quota formula' variables, which include:\n - 'starting quota'\n - 'quota increase steepness'\n - 'quota base increase'\n - 'quota increase randomness'\nHost Required: Yes"
+        ).Value;
+        StartingQuota = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "iStartingQuota",
+            130,
+            "The starting quota on a new run.\nHost Required: Yes"
         ).Value;
         QuotaIncreaseSteepness = BindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID,

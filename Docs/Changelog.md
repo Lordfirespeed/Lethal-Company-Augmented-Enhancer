@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- More quota configuration options:
+  - starting credits
+  - starting quota
+  - quota increase steepness
+  - quota base increase
+  - quota increase randomness
+- Feature flags for starting credits, days per quota, and quota formula
+
 ### Fixed
 
 - The 'release' workflow was failing when there was no changelog to commit
