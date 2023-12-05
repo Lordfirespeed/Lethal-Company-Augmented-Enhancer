@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace Enhancer.Patches;
 
-public static class PriceRandomizer
+public static class CompanyBuyingFactorRandomizer
 {
     private static float GetRandomPriceFactor()
     {
@@ -77,14 +77,14 @@ public static class PriceRandomizer
             return;
         }
         
-        if (Plugin.BoundConfig.UseRandomPrices)
+        if (Plugin.BoundConfig.RandomiseCompanyBuyingFactor)
         {
             StartOfRound.Instance.companyBuyingRate = GetRandomPriceFactor();
         }
 
         //Minimum sale rate fixes negative rates
-        if (StartOfRound.Instance.companyBuyingRate < Plugin.BoundConfig.MinimumBuyRate)
-            StartOfRound.Instance.companyBuyingRate = Plugin.BoundConfig.MinimumBuyRate;
+        if (StartOfRound.Instance.companyBuyingRate < Plugin.BoundConfig.MinimumCompanyBuyingFactor)
+            StartOfRound.Instance.companyBuyingRate = Plugin.BoundConfig.MinimumCompanyBuyingFactor;
 
         //Make sure clients are up to date
         StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
