@@ -6,7 +6,7 @@ namespace Enhancer.Patches;
 
 public static class PriceRandomizer
 {
-    public static float GetRandomPriceFactor()
+    private static float GetRandomPriceFactor()
     {
         if (TimeOfDay.Instance.daysUntilDeadline < 1)
         {
