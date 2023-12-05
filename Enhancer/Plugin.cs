@@ -32,7 +32,7 @@ public class Plugin : BaseUnityPlugin
     public static ManualLogSource Log { get; private set; }
     public static PluginConfig BoundConfig { get; private set; }
     
-    private static PatchInfo[] _patches = new[]
+    private static readonly PatchInfo[] Patches = new[]
     {
         new PatchInfo.Builder()
             .SetName("Configured values")
@@ -76,7 +76,7 @@ public class Plugin : BaseUnityPlugin
         Harmony patcher = new(PluginInfo.PLUGIN_GUID);
         
         Logger.LogInfo("Enabled, applying patches");
-        foreach (var patch in _patches)
+        foreach (var patch in Patches)
         {
             if (!patch.ShouldLoad()) continue;
             Logger.LogInfo($"Applying {patch.Name} patches...");
