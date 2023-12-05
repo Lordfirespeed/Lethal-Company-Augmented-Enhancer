@@ -21,8 +21,8 @@ readme = "../README.md"
 outdir = "../dist"
 
 [[build.copy]]
-source = "../Enhancer/bin/AugmentedEnhancer.dll"
-target = "AugmentedEnhancer.dll"
+source = "../Enhancer/bin/com.github.lordfirespeed.augmented_enhancer.dll"
+target = "com.github.lordfirespeed.augmented_enhancer.dll"
 
 [publish]
 communities = ["lethal-company"]
