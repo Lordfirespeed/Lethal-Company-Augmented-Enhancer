@@ -14,9 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed various configuration options
 - Renamed various classes
 - Threat scanner has been refactored and is configured by an Enum, instead of an int
+- Scrap protection is achieved by a transpiler
+- Scrap protection configurable is now a continuous variable, rather than discrete enum
 
 ### Added
 
+- Scrap protection 'randomness' configuration
 - More quota configuration options:
   - starting credits
   - starting quota
@@ -33,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The 'release' workflow was failing when there was no changelog to commit
+- Scrap protection attempting to remove items 
 
 ### Removed
 
