@@ -27,16 +27,31 @@ namespace Enhancer;
 
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 [BepInDependency("mom.llama.enhancer", BepInDependency.DependencyFlags.SoftDependency)]
+[BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     public static ManualLogSource Log { get; private set; }
     public static PluginConfig BoundConfig { get; private set; }
     
-    private static PatchInfo[] _patches = new[]
+    private static readonly PatchInfo[] Patches = new[]
     {
         new PatchInfo.Builder()
-            .SetName("Configured values")
-            .SetPatchType(typeof(ConfiguredValues))
+            .SetName("Always show terminal")
+            .SetPatchType(typeof(AlwaysShowTerminal))
+            .SetLoadCondition(() => BoundConfig.KeepConsoleEnabled)
+            .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Days per quota")
+            .SetPatchType(typeof(DaysPerQuota))
+            .SetLoadCondition(() => BoundConfig.DaysPerQuotaEnabled)
+            .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .AddModGuidToDelegateTo("Haha.DynamicDeadline")
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Hangar door close duration")
+            .SetPatchType(typeof(HangarDoorCloseDuration))
+            .SetLoadCondition(() => BoundConfig.DoorPowerDurationEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
@@ -55,9 +70,25 @@ public class Plugin : BaseUnityPlugin
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
-            .SetName("Suit unlocks")
-            .SetPatchType(typeof(SuitUnlockables))
+            .SetName("Quota formula")
+            .SetPatchType(typeof(QuotaFormula))
+            .SetLoadCondition(() => BoundConfig.QuotaFormulaEnabled)
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Starting credits")
+            .SetPatchType(typeof(StartingCredits))
+            .SetLoadCondition(() => BoundConfig.StartingCreditsEnabled)
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Suit unlock")
+            .SetPatchType(typeof(UnlockSuits))
             .SetLoadCondition(() => BoundConfig.SuitUnlocksEnabled)
+            .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Time speed")
+            .SetPatchType(typeof(TimeSpeed))
+            .SetLoadCondition(() => BoundConfig.TimeSpeedEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
     };
@@ -76,7 +107,7 @@ public class Plugin : BaseUnityPlugin
         Harmony patcher = new(PluginInfo.PLUGIN_GUID);
         
         Logger.LogInfo("Enabled, applying patches");
-        foreach (var patch in _patches)
+        foreach (var patch in Patches)
         {
             if (!patch.ShouldLoad()) continue;
             Logger.LogInfo($"Applying {patch.Name} patches...");
@@ -94,6 +125,8 @@ public class Plugin : BaseUnityPlugin
         public bool ShouldLoad() => (_loadCondition == null || _loadCondition()) && !HasLoadedDelegate();
         public bool HasLoadedDelegate()
         {
+            if (!BoundConfig.DelegationEnabled) return false;
+            
             var delegateToPluginInfosEnumerable = from delegateToModGuid in _delegateToModGuids 
                 select Chainloader.PluginInfos.Get(delegateToModGuid);
             var delegateToPluginInfos = delegateToPluginInfosEnumerable as BepInEx.PluginInfo[] ?? delegateToPluginInfosEnumerable.ToArray();

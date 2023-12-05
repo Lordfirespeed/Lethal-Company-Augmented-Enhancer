@@ -10,7 +10,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Features' patch-classes have been separated
+- Renamed various configuration options
+- Renamed various classes
+
 ### Added
+
+- More quota configuration options:
+  - starting credits
+  - starting quota
+  - quota increase steepness
+  - quota base increase
+  - quota increase randomness
+- Feature flags for most options
+- Delegation: features will be automatically delegated to other mods (disabled) depending on what is installed
+  - Delegating most features to [Lethal Enhancer](https://thunderstore.io/c/lethal-company/p/Mom_Llama/Lethal_Company_Enhancer/)
+  - Delegating days per quota to [Dynamic Deadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/)
+- Feature flag for disabling delegation
 
 ### Fixed
 
