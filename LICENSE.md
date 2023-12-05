@@ -1,4 +1,4 @@
-This module and all of it component files are provided under the CC-BY-NC-4 license.
+This module and all of its component files are provided under the CC-BY-NC-4 license.
 
 A short and simple summary may be found at the following web address:
 
