@@ -201,7 +201,6 @@ public class PluginConfig
                 new AcceptableValueRange<float>(0f, 1f)
             )
         ).Value;
-        ScrapProtection = bindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eScrapProtection", Patches.ItemProtection.ProtectionType.SAVE_NONE, "Sets how scrap will be handled when all players die in a round.\nSAVE_NONE: Default all scrap is deleted\nSAVE_ALL: No scrap is removed\nSAVE_COINFLIP: Each piece of scrap has a 50/50 of being removed\nHost Required: Yes").Value;
 
         DeathPenaltyFormulaEnabled = bindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID,
