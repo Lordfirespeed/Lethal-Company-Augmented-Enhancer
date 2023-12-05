@@ -35,4 +35,28 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>../lib/Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity Netcode">
+      <HintPath>../lib/Unity.Netcode.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Netstandard">
+      <HintPath>../lib/netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine UIModule">
+      <HintPath>../lib/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine Core">
+      <HintPath>../lib/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>../lib/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TMP">
+      <HintPath>../lib/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
