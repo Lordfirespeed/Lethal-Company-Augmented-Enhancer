@@ -15,6 +15,8 @@ using Cake.Git;
 using Microsoft.Build.Definition;
 using Microsoft.Build.Evaluation;
 
+namespace Build;
+
 public static class Program
 {
     public static int Main(string[] args)
