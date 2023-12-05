@@ -1,7 +1,4 @@
-using System;
 using HarmonyLib;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Enhancer.Patches;
 
