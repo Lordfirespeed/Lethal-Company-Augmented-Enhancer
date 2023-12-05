@@ -1,12 +1,21 @@
 using System;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Enhancer.Patches;
 
+public enum ThreatScannerMode
+{
+    Disabled,
+    Contacts,
+    ThreatLevelPercentage,
+    ThreatLevelName,
+}
+
 public static class ImprovedScanCommand
 {
-    private static string getThreatLevel(float threatCoefficient)
+    private static string GetThreatLevel(float threatCoefficient)
     {
         return threatCoefficient switch
         {
@@ -19,27 +28,27 @@ public static class ImprovedScanCommand
         };
     }
     
-    private static string getThreatDescription(int enemyPower, int enemyMaxPower, int enemyCount)
+    private static string? GetThreatDescription(int enemyPower, int enemyMaxPower, int enemyCount)
     {
-        if (Plugin.BoundConfig.ThreatScannerType == 0) return null;
+        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.Disabled) return null;
         
-        if (Plugin.BoundConfig.ThreatScannerType == 1) {
+        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.Contacts) {
             return $"\nHostile Contacts: {enemyCount}\n";
         }
         
         float threatCoefficient = (float)enemyPower / enemyMaxPower;
 
-        if (Plugin.BoundConfig.ThreatScannerType == 2) {
+        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.ThreatLevelPercentage) {
             return $"\nThreat Level: {threatCoefficient:p1}\n";
         }
 
-        if (Plugin.BoundConfig.ThreatScannerType == 3)
+        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.ThreatLevelName)
         {
-            return $"\nThreat Level: {getThreatLevel(threatCoefficient)}\n";
+            return $"\nThreat Level: {GetThreatLevel(threatCoefficient)}\n";
         }
         
         Plugin.Log.LogWarning("Invalid threat scanner type is configured.");
-        return "";
+        return null;
     }
     
     //Todo: This should probably be changed to a postfix on the text modifier
@@ -52,7 +61,7 @@ public static class ImprovedScanCommand
         if (node.name != "ScanInfo") return;
         
         //If scan command improvements are disabled, do nothing
-        if (Plugin.Cfg.ThreatScannerType == 0) return;
+        if (Plugin.BoundConfig.ThreatScanner == 0) return;
 
         //If there are no enemies in the level, do nothing
         if (!RoundManager.Instance.currentLevel.spawnEnemiesAndScrap) return;
@@ -70,7 +79,7 @@ public static class ImprovedScanCommand
         int maxp = RoundManager.Instance.currentLevel.maxEnemyPowerCount;
         int count = RoundManager.Instance.numberOfEnemiesInScene;
 
-        __instance.screenText.text += getThreatDescription(power, maxp, count);
+        __instance.screenText.text += GetThreatDescription(power, maxp, count);
         __instance.currentText = __instance.screenText.text;
         __instance.textAdded = 0;
     }

@@ -4,6 +4,8 @@
     All configuration options go in here
 ***********************************************************/
 
+using Enhancer.Patches;
+
 namespace Enhancer;
 
 public class PluginConfig
@@ -19,7 +21,7 @@ public class PluginConfig
     public readonly float DoorTimer;
 
     public readonly int DaysPerQuota;
-    public readonly int ThreatScannerType;
+    public readonly ThreatScannerMode ThreatScanner;
 
     public readonly Patches.ItemProtection.ProtectionType ScrapProtection;
 
@@ -35,7 +37,12 @@ public class PluginConfig
         DoorTimer = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fDoorTimer", 30.0f, "How long the hangar door can be kept shut at a time (in seconds)\nRecommended values: 60.0 - 180.0\nHost Required: All players should use the same setting here").Value;
 
         DaysPerQuota = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "iQuotaDays", 3, "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes").Value;
-        ThreatScannerType = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
+        ThreatScanner = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "eThreatScannerMode", 
+            ThreatScannerMode.Disabled, 
+            "How the threat scanner functions. Valid types:\n - Disabled\n - Contacts: Number of Enemies on level\n - ThreatLevelPercentage: Percentage of max enemies on level\n - ThreatLevelName: Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No"
+        ).Value;
 
         ScrapProtection = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eScrapProtection", Patches.ItemProtection.ProtectionType.SAVE_NONE, "Sets how scrap will be handled when all players die in a round.\nSAVE_NONE: Default all scrap is deleted\nSAVE_ALL: No scrap is removed\nSAVE_COINFLIP: Each piece of scrap has a 50/50 of being removed\nHost Required: Yes").Value;
     }
