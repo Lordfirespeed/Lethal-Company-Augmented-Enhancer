@@ -24,5 +24,13 @@ outdir = "../dist"
 source = "../Enhancer/bin/com.github.lordfirespeed.augmented_enhancer.dll"
 target = "com.github.lordfirespeed.augmented_enhancer.dll"
 
+[[build.copy]]
+source = "../LICENSE.md"
+target = "LICENSE.md"
+
+[[build.copy]]
+source = "../Docs/Changelog.md"
+target = "CHANGELOG.md"
+
 [publish]
 communities = ["lethal-company"]
