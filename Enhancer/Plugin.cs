@@ -35,8 +35,21 @@ public class Plugin : BaseUnityPlugin
     private static readonly PatchInfo[] Patches = new[]
     {
         new PatchInfo.Builder()
-            .SetName("Configured values")
-            .SetPatchType(typeof(ConfiguredValues))
+            .SetName("Always show terminal")
+            .SetPatchType(typeof(AlwaysShowTerminal))
+            .SetLoadCondition(() => BoundConfig.KeepConsoleEnabled)
+            .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Days per quota")
+            .SetPatchType(typeof(DaysPerQuota))
+            .SetLoadCondition(() => BoundConfig.DaysPerQuotaEnabled)
+            .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Hangar door close duration")
+            .SetPatchType(typeof(HangarDoorCloseDuration))
+            .SetLoadCondition(() => BoundConfig.DoorPowerDurationEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
@@ -55,9 +68,25 @@ public class Plugin : BaseUnityPlugin
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
-            .SetName("Suit unlocks")
-            .SetPatchType(typeof(SuitUnlockables))
+            .SetName("Quota formula")
+            .SetPatchType(typeof(QuotaFormula))
+            .SetLoadCondition(() => BoundConfig.QuotaFormulaEnabled)
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Starting credits")
+            .SetPatchType(typeof(StartingCredits))
+            .SetLoadCondition(() => BoundConfig.StartingCreditsEnabled)
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Suit unlock")
+            .SetPatchType(typeof(UnlockSuits))
             .SetLoadCondition(() => BoundConfig.SuitUnlocksEnabled)
+            .AddModGuidToDelegateTo("mom.llama.enhancer")
+            .Build(),
+        new PatchInfo.Builder()
+            .SetName("Time speed")
+            .SetPatchType(typeof(TimeSpeed))
+            .SetLoadCondition(() => BoundConfig.TimeSpeedEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
     };
