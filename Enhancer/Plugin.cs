@@ -125,6 +125,8 @@ public class Plugin : BaseUnityPlugin
         public bool ShouldLoad() => (_loadCondition == null || _loadCondition()) && !HasLoadedDelegate();
         public bool HasLoadedDelegate()
         {
+            if (!BoundConfig.DelegationEnabled) return false;
+            
             var delegateToPluginInfosEnumerable = from delegateToModGuid in _delegateToModGuids 
                 select Chainloader.PluginInfos.Get(delegateToModGuid);
             var delegateToPluginInfos = delegateToPluginInfosEnumerable as BepInEx.PluginInfo[] ?? delegateToPluginInfosEnumerable.ToArray();

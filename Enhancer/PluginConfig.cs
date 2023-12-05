@@ -9,6 +9,8 @@ namespace Enhancer;
 public class PluginConfig
 {
     public readonly bool Enabled;
+    public readonly bool DelegationEnabled;
+    
     public readonly bool KeepConsoleEnabled;
     public readonly bool UseRandomPrices;
     public readonly bool SuitUnlocksEnabled;
@@ -39,6 +41,12 @@ public class PluginConfig
             "bEnabled", 
             true, 
             "Globally enable/disable the plugin"
+        ).Value;
+        DelegationEnabled = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "bDelegationEnabled", 
+            true, 
+            "Globally enables/disables delegation for the plugin. When this is true, features will be disabled automatically (delegated to other mods) depending on the mods you have installed."
         ).Value;
         
         KeepConsoleEnabled = bindingPlugin.Config.Bind(
