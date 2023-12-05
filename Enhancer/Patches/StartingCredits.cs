@@ -2,14 +2,14 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class StartingQuota
+public class StartingCredits
 {
     [HarmonyPatch(typeof(StartOfRound), "Start")]
     [HarmonyPrefix]
     public static void StartOfRoundShipStartPre()
     {
-        Plugin.Log.LogInfo($"Setting starting quota to {Plugin.BoundConfig.StartingQuota}...");
+        Plugin.Log.LogInfo($"Setting starting credits to {Plugin.BoundConfig.StartingCredits}...");
         var quotaSettings = TimeOfDay.Instance.quotaVariables;
-        quotaSettings.startingQuota = Plugin.BoundConfig.StartingQuota;
+        quotaSettings.startingCredits = Plugin.BoundConfig.StartingCredits;
     }
 }
