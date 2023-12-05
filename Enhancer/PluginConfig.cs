@@ -8,7 +8,6 @@ namespace Enhancer;
 
 public class PluginConfig
 {
-
     public readonly bool Enabled;
     public readonly bool KeepConsoleEnabled;
     public readonly bool UseRandomPrices;
