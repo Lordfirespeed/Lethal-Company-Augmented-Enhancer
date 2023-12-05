@@ -24,6 +24,24 @@ Supply the proportion of items that you would like to (approximately) keep. For 
 
 </details>
 
+### Death Penalty Settings
+
+- The maximum death penalty factor (with any number of players) can be configured (ideal for large groups).
+- The maximum death penalty factor per player can be configured (ideal for small groups).
+- The death penalty discount for recovering bodies can be configured.
+- The death penalty scaling curvature can be configured.
+- 
+<details>
+<summary><strong>Scaling Curvature</strong></summary>
+
+For example, with 4 players:
+
+- `-1.0` $\rightarrow$ The fine scales anti-quadratically: 50%, 70.1%, 86.6%, 100%
+- `0.0` $\rightarrow$ The fine scales linearly: 25%, 50%, 75%, 100%
+- `1.0` $\rightarrow$ The fine scales quadratically: 6.3%, 25%, 56.3%, 100%
+
+</details>
+
 ### Suit Unlocker
 Enabling this option unlocks the Green and Hazard suits from game start. 
 The PJs suit are not unlocked by default and remain available via the Company store.

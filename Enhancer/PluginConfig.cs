@@ -43,6 +43,12 @@ public class PluginConfig
     public readonly float ScrapProtection;
     public readonly float ScrapProtectionRandomness;
 
+    public readonly bool DeathPenaltyFormulaEnabled;
+    public readonly float MaximumDeathPenalty;
+    public readonly float MaximumDeathPenaltyPerPlayer;
+    public readonly float DeadBodyRecoveryDiscount;
+    public readonly float DeathPenaltyScalingCurvature;
+
     public PluginConfig(Plugin bindingPlugin)
     {
         Enabled = bindingPlugin.Config.Bind(
@@ -194,6 +200,46 @@ public class PluginConfig
                 "Sets the randomness of the probability that each scrap item is kept in the event that that no players survive a mission.\n 0 -> no randomness, 0.5 -> \u00b10.5, 1 -> \u00b11\nHost Required: Yes",
                 new AcceptableValueRange<float>(0f, 1f)
             )
+        ).Value;
+
+        DeathPenaltyFormulaEnabled = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "bDeathPenaltyFormulaEnabled",
+            false,
+            "Feature flag for the 'death penalty formula' variables, which includes\n - 'max death penalty'\n - 'max death penalty per player'\n - 'body recovery discount'\n - 'death penalty scaling curvature'\nHost Required: Yes"
+        ).Value;
+        MaximumDeathPenalty = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fMaximumDeathPenalty", 
+            0.8f, 
+            new ConfigDescription(
+                "The maximum fraction of your money that you can lose per round.\nValue should be in [0,1], e.g.\n0 - No money can be lost.\n0.5 - Half your money can be lost in one run.\n1 - All money can be lost in one run.\nUse 0.8 for vanilla behaviour.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        MaximumDeathPenaltyPerPlayer = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fMaximumDeathPenaltyPerPlayer", 
+            0.2f, 
+            new ConfigDescription(
+                "The maximum fraction of your money that you can lose per round, per dead player.\nValue should be in [0,1].\nUse 0.2 for vanilla behaviour.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        DeadBodyRecoveryDiscount = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fDeadBodyRecoveryDiscount", 
+            0.6f, 
+            new ConfigDescription(
+                "How much recovering dead bodies reduces the penalty for that death by.\nValue should be in [0,1], e.g.\n0 - Recovering a body does not reduce the fine.\n1 - Recovering a body completely removes the fine for that death.\nUse 0.6 for vanilla behaviour.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        DeathPenaltyScalingCurvature = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fDeathPenaltyCurveDegree", 
+            0f, 
+            "How curved the death penalty scaling is. Positive -> less fine for fewer deaths. Negative -> more fine for fewer deaths.\ne.g. with a 4-player lobby:\n0 - The fine scales linearly: 25%, 50%, 75%, 100%.\n1 - The fine scales quadratically: 6.3%, 25%, 56.3%, 100%\n-1 - The fine scales anti-quadratically: 50%, 70.1%, 86.6%, 100%\nHost Required: Yes"
         ).Value;
     }
 }

@@ -49,6 +49,11 @@ public class Plugin : BaseUnityPlugin
             .AddModGuidToDelegateTo("Haha.DynamicDeadline")
             .Build(),
         new PatchInfo.Builder()
+            .SetName("Death penalty")
+            .SetPatchType(typeof(DeathPenalty))
+            .SetLoadCondition(() => BoundConfig.DeathPenaltyFormulaEnabled)
+            .Build(),
+        new PatchInfo.Builder()
             .SetName("Hangar door close duration")
             .SetPatchType(typeof(HangarDoorCloseDuration))
             .SetLoadCondition(() => BoundConfig.DoorPowerDurationEnabled)
@@ -62,6 +67,7 @@ public class Plugin : BaseUnityPlugin
         new PatchInfo.Builder()
             .SetName("Item protection")
             .SetPatchType(typeof(ItemProtection))
+            .SetLoadCondition(() => BoundConfig.ScrapProtectionEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
