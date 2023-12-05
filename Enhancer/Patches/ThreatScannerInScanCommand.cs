@@ -10,7 +10,7 @@ public enum ThreatScannerMode
     ThreatLevelName,
 }
 
-public static class ImprovedScanCommand
+public static class ThreatScannerInScanCommand
 {
     private static string GetThreatLevel(float threatCoefficient)
     {

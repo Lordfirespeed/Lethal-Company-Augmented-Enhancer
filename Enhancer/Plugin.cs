@@ -56,7 +56,7 @@ public class Plugin : BaseUnityPlugin
             .Build(),
         new PatchInfo.Builder()
             .SetName("Improved scan command")
-            .SetPatchType(typeof(ImprovedScanCommand))
+            .SetPatchType(typeof(ThreatScannerInScanCommand))
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
