@@ -53,7 +53,7 @@ Ideal for watching the output from `view monitor`.
 ### Minimum Company Buying Factor
 The minimum company buying factor can be configured.
 
-Prevents the company from offering buying factors below. Should be enforced regardless of the 
+Prevents the company from offering buying factors below the configured value. Should be enforced regardless of the 
 [randomizer](#company-buying-factor-randomizer)'s enabledness.
 
 ### Company Buying Factor Randomizer
