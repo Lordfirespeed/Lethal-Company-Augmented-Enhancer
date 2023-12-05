@@ -4,6 +4,8 @@
     All configuration options go in here
 ***********************************************************/
 
+using BepInEx.Configuration;
+
 namespace Enhancer;
 
 public class PluginConfig
@@ -21,7 +23,9 @@ public class PluginConfig
     public readonly int DaysPerQuota;
     public readonly int ThreatScannerType;
 
+    public readonly bool ScrapProtectionEnabled;
     public readonly float ScrapProtection;
+    public readonly float ScrapProtectionRandomness;
 
     public PluginConfig(Plugin BindingPlugin)
     {
@@ -37,6 +41,31 @@ public class PluginConfig
         DaysPerQuota = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "iQuotaDays", 3, "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes").Value;
         ThreatScannerType = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
 
-        ScrapProtection = BindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fScrapProtection", 0f, "Sets the probability that each scrap item is lost, given that no players survive a mission.\nThat is, this is the approximate fraction of secured scrap items lost .\nHost Required: Yes").Value;
+        ScrapProtectionEnabled = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "bScrapProtectionEnabled",
+            false,
+            new ConfigDescription(
+                "Sets whether or not the scrap protection feature is enabled. \nHost Required: Yes"
+            )
+        ).Value;
+        ScrapProtection = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fScrapProtection", 
+            0f, 
+            new ConfigDescription(
+                "Sets the average probability that each scrap item is kept in the event that that no players survive a mission.\nThat is, this is the approximate average fraction of secured scrap items kept.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        ScrapProtectionRandomness = BindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fScrapProtectionRandomnessScalar", 
+            0f, 
+            new ConfigDescription(
+                "Sets the randomness of the probability that each scrap item is kept in the event that that no players survive a mission.\n 0 -> no randomness, 0.5 -> \u00b10.5, 1 -> \u00b11\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
     }
 }
