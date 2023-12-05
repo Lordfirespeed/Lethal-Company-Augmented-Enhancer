@@ -1,18 +1,19 @@
 using UnityEngine;
 using HarmonyLib;
+using Unity.Netcode;
 
 namespace Enhancer.Patches;
 
-public static class PriceRandomizer
+public static class CompanyBuyingFactorRandomizer
 {
-    public static float GetRandomPriceScalar()
+    private static float GetRandomPriceFactor()
     {
         if (TimeOfDay.Instance.daysUntilDeadline < 1)
         {
             return 1.0f;
         }
             
-        Plugin.Log.LogInfo("Choosing random price scalar");
+        Plugin.Log.LogInfo("Choosing random price factor");
 
         //Company mood factor
         float moodFactor = GetMoodFactor();
@@ -26,12 +27,12 @@ public static class PriceRandomizer
 
         //Use the level seed to get prices
         System.Random rng = new(StartOfRound.Instance.randomMapSeed + 77);
-        float priceScalar = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
+        float priceFactor = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
         
-        Plugin.Log.LogInfo("New price % set at" + priceScalar);
+        Plugin.Log.LogInfo("New price % set at" + priceFactor);
         Plugin.Log.LogInfo("    factors " + moodFactor + " : " + daysFactor + " : " + (StartOfRound.Instance.randomMapSeed + 77));
 
-        return priceScalar;
+        return priceFactor;
     }
     
     private static string GetCompanyMoodName()
@@ -71,17 +72,21 @@ public static class PriceRandomizer
     {
         Plugin.Log.LogInfo("TimeOfDay SetBuyingRateForDay");
 
-        if (Plugin.BoundConfig.UseRandomPrices)
+        if (!NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsServer)
         {
-            StartOfRound.Instance.companyBuyingRate = GetRandomPriceScalar();
+            return;
+        }
+        
+        if (Plugin.BoundConfig.RandomiseCompanyBuyingFactor)
+        {
+            StartOfRound.Instance.companyBuyingRate = GetRandomPriceFactor();
         }
 
         //Minimum sale rate fixes negative rates
-        if (StartOfRound.Instance.companyBuyingRate < Plugin.BoundConfig.MinimumBuyRate)
-            StartOfRound.Instance.companyBuyingRate = Plugin.BoundConfig.MinimumBuyRate;
+        if (StartOfRound.Instance.companyBuyingRate < Plugin.BoundConfig.MinimumCompanyBuyingFactor)
+            StartOfRound.Instance.companyBuyingRate = Plugin.BoundConfig.MinimumCompanyBuyingFactor;
 
         //Make sure clients are up to date
-        StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
         StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
     }
 }

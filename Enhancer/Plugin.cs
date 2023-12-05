@@ -66,7 +66,7 @@ public class Plugin : BaseUnityPlugin
             .Build(),
         new PatchInfo.Builder()
             .SetName("Price randomizer")
-            .SetPatchType(typeof(PriceRandomizer))
+            .SetPatchType(typeof(CompanyBuyingFactorRandomizer))
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
