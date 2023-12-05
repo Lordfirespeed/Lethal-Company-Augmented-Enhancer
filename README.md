@@ -10,7 +10,8 @@ A mod for Lethal Company that adds additional configuration options to fit the p
 
 ### Scrap Protection
 The mod allows configuring the following in the event that no players survive a mission:
-- The approximate proportion of secured scrap items lost
+- The approximate average proportion of secured scrap items lost
+- The randomness of the proportion of secured scrap items lost 
 
 <details>
 <summary><strong>Details</strong></summary>
@@ -77,21 +78,30 @@ Despite the Sigurd log file stating that the company bought at 120%, @Crunchepil
 possible in the base game so this mod caps the buying factor at `1.0`.
 </details>
 
-### Time Scale
+### Time Speed
 How quickly time passes on moons can be configured.
 
 This can make the game drastically easier (or harder) because part of the monster spawning routine depends on 
 how much time has passed.
 
-### Hangar Door Close Duration
+### Ship Hangar Doors Power Duration
 The time it takes for the hangar doors to re-open due to lack of power can be configured.
 
 ### Threat Scanner
 The `scan` command on the terminal can be configured to provide additional information about the environment's 
 danger level due to enemy threats.
 
-### Quota Settings
-- Assignment Duration (Days Per Quota): The quota assignment duration can be configured.
+### Days Per Quota
+Assignment Duration (Days Per Quota): The quota assignment duration can be configured.
+
+### Starting Credits
+Group starting credits can be configured.
+
+### Quota Formula 
+- The starting quota can be configured
+- The multiplier for quadratic quota increase can be configured
+- The multiplier for constant quota increase can be configured
+- The randomness of quota increase can be configured
 
 ## FAQ
 

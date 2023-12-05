@@ -14,19 +14,23 @@ public class PluginConfig
     public readonly bool DelegationEnabled;
     
     public readonly bool KeepConsoleEnabled;
-    public readonly bool UseRandomPrices;
     public readonly bool SuitUnlocksEnabled;
+    
+    public readonly bool RandomiseCompanyBuyingFactor;
+    public readonly float MinimumCompanyBuyingFactor;
 
     public readonly bool TimeSpeedEnabled;
     public readonly float TimeSpeed;
-    public readonly float MinimumBuyRate;
+    
     public readonly bool DoorPowerDurationEnabled;
     public readonly float DoorPowerDuration;
 
     public readonly bool StartingCreditsEnabled;
     public readonly int StartingCredits;
+    
     public readonly bool DaysPerQuotaEnabled;
     public readonly int DaysPerQuota;
+    
     public readonly bool QuotaFormulaEnabled;
     public readonly int StartingQuota;
     public readonly float QuotaIncreaseSteepness;
@@ -35,13 +39,15 @@ public class PluginConfig
 
     public readonly int ThreatScannerType;
 
+    public readonly bool ScrapProtectionEnabled;
+    public readonly float ScrapProtection;
+    public readonly float ScrapProtectionRandomness;
+
     public readonly bool DeathPenaltyFormulaEnabled;
     public readonly float MaximumDeathPenalty;
     public readonly float MaximumDeathPenaltyPerPlayer;
     public readonly float DeadBodyRecoveryDiscount;
     public readonly float DeathPenaltyScalingCurvature;
-
-    public readonly Patches.ItemProtection.ProtectionType ScrapProtection;
 
     public PluginConfig(Plugin bindingPlugin)
     {
@@ -64,14 +70,24 @@ public class PluginConfig
             true, 
             "Whether to keep the terminal enabled after a player stops using it\nHost Required: No"
         ).Value;
-        
-        UseRandomPrices = bindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "bUseRandomPrices", false, "Enables the random prices setting. Great if you're using longer quota deadlines.\nThis uses a variety of things to randomize prices such as the company mood, time passed in the quota, etc.\nRespects the minimum sale value, too.\nHost Required: Yes").Value;
-        
         SuitUnlocksEnabled = bindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID, 
             "bUnlockSuits", 
             false, 
             "Unlocks a few of the cheaper suits from the start so your crew has options.\nHost Required: Yes"
+        ).Value;
+        
+        RandomiseCompanyBuyingFactor = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "bCompanyBuyingFactorRandomizerEnabled", 
+            false, 
+            "Randomises the company buying % when enabled. Great if you're using longer quota deadlines.\nThis uses a variety of things to randomize prices such as the company mood, time passed in the quota, etc.\nRespects the minimum sale value, too.\nHost Required: Yes"
+        ).Value;
+        MinimumCompanyBuyingFactor = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fMinimumCompanyBuyingFactor", 
+            0.0f, 
+            "The default formula for selling items to the company isn't designed to handle more than 3 days remaining.\nThe Company will be prevented from offering a factor lower than this configured value.\nRecommended values for games above 3 days: 0.3 - 0.5\nHost Required: Yes"
         ).Value;
         
         TimeSpeedEnabled = bindingPlugin.Config.Bind(
@@ -86,8 +102,6 @@ public class PluginConfig
             1.0f, 
             "How fast time passes on moons. Lower values mean time passes more slowly.\nRecommended value for single play: 0.75\nHost Required: Yes"
         ).Value;
-        
-        MinimumBuyRate = bindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "fMinCompanyBuyPCT", 0.0f, "The default formula for selling items to the company doesn't allow days remaining above 3.\nAlways keep this set to at least 0.0 but you probably want something higher if you have more days set for the quota.\nRecommended values for games above 3 days: 0.3 - 0.5\nHost Required: Yes").Value;
         
         DoorPowerDurationEnabled = bindingPlugin.Config.Bind(
             PluginInfo.PLUGIN_GUID,
@@ -160,6 +174,33 @@ public class PluginConfig
         ).Value;
         
         ThreatScannerType = bindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eThreatScannerType", 0, "How the threat scanner functions. Valid types:\n0 - Disabled\n1 - Number of Enemies on level\n2 - Percentage of max enemies on level\n3 - Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No").Value;
+        
+        ScrapProtectionEnabled = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "bScrapProtectionEnabled",
+            false,
+            new ConfigDescription(
+                "Sets whether or not the scrap protection feature is enabled. \nHost Required: Yes"
+            )
+        ).Value;
+        ScrapProtection = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fScrapProtection", 
+            0f, 
+            new ConfigDescription(
+                "Sets the average probability that each scrap item is kept in the event that that no players survive a mission.\nThat is, this is the approximate average fraction of secured scrap items kept.\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
+        ScrapProtectionRandomness = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID, 
+            "fScrapProtectionRandomnessScalar", 
+            0f, 
+            new ConfigDescription(
+                "Sets the randomness of the probability that each scrap item is kept in the event that that no players survive a mission.\n 0 -> no randomness, 0.5 -> \u00b10.5, 1 -> \u00b11\nHost Required: Yes",
+                new AcceptableValueRange<float>(0f, 1f)
+            )
+        ).Value;
         ScrapProtection = bindingPlugin.Config.Bind(PluginInfo.PLUGIN_GUID, "eScrapProtection", Patches.ItemProtection.ProtectionType.SAVE_NONE, "Sets how scrap will be handled when all players die in a round.\nSAVE_NONE: Default all scrap is deleted\nSAVE_ALL: No scrap is removed\nSAVE_COINFLIP: Each piece of scrap has a 50/50 of being removed\nHost Required: Yes").Value;
 
         DeathPenaltyFormulaEnabled = bindingPlugin.Config.Bind(
