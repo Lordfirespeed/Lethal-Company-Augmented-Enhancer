@@ -67,6 +67,7 @@ public class Plugin : BaseUnityPlugin
         new PatchInfo.Builder()
             .SetName("Item protection")
             .SetPatchType(typeof(ItemProtection))
+            .SetLoadCondition(() => BoundConfig.ScrapProtectionEnabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
