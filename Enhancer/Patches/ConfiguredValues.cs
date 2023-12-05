@@ -10,7 +10,15 @@ public static class ConfiguredValues
     {
         Plugin.Log.LogInfo("StartOfRound Start");
 
-        TimeOfDay.Instance.quotaVariables.deadlineDaysAmount = Plugin.BoundConfig.DaysPerQuota;
+        QuotaSettings quotaSettings = TimeOfDay.Instance.quotaVariables;
+
+        quotaSettings.startingQuota = Plugin.BoundConfig.StartingQuota;
+        quotaSettings.startingCredits = Plugin.BoundConfig.StartingCredits;
+        quotaSettings.deadlineDaysAmount = Plugin.BoundConfig.DaysPerQuota;
+        // vanilla 'increase steepness' is actually 'increase shallowness', so we reciprocate (1/x) the value
+        quotaSettings.increaseSteepness = 1f / Plugin.BoundConfig.QuotaIncreaseSteepness;
+        quotaSettings.baseIncrease = Plugin.BoundConfig.QuotaBaseIncrease;
+        quotaSettings.randomizerMultiplier = Plugin.BoundConfig.QuotaIncreaseRandomFactor;
 
         //never skip
         return true;
