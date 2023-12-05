@@ -57,6 +57,7 @@ public class Plugin : BaseUnityPlugin
         new PatchInfo.Builder()
             .SetName("Improved scan command")
             .SetPatchType(typeof(ThreatScannerInScanCommand))
+            .SetLoadCondition(() => BoundConfig.ThreatScanner is not ThreatScannerMode.Disabled)
             .AddModGuidToDelegateTo("mom.llama.enhancer")
             .Build(),
         new PatchInfo.Builder()
