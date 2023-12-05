@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Features' patch-classes have been separated
 - Renamed various configuration options
 - Renamed various classes
+- Threat scanner has been refactored and is configured by an Enum, instead of an int
 
 ### Added
 
