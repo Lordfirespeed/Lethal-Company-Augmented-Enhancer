@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>0.2.0</VersionPrefix>
+    <VersionPrefix>0.3.0</VersionPrefix>
     <Authors>Crunchepillar, Lordfirespeed</Authors>
     <LangVersion>latest</LangVersion>
     <PackageLicenseExpression>CC-BY-NC-4.0</PackageLicenseExpression>
