@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Fixed
+
+### Removed
+
+## [0.3.0] - 2023-12-06
+
+### Changed
+
+### Added
+
 - Passive income options
 
 ### Fixed
