@@ -106,7 +106,7 @@ Group starting credits can be configured.
 ## FAQ
 
 ### How do I install the mod?
-See [Installation](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/blob/main/docs/Installation.md)
+See [Installation](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/blob/main/Docs/Installation.md)
 
 ### Is this mod compatible with X?
 This mod is mostly compatible with other BepInEx mods.
@@ -137,7 +137,7 @@ please [open an issue on GitHub](https://github.com/Lordfirespeed/Lethal-Company
 
 ## Changelog
 
-See the [Changelog](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/blob/main/docs/Changelog.md)
+See the [Changelog](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/blob/main/Docs/Changelog.md)
 
 ## Releases
 
