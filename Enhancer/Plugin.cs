@@ -87,6 +87,11 @@ public class Plugin : BaseUnityPlugin
             .SetLoadCondition(() => BoundConfig.StartingCreditsEnabled)
             .Build(),
         new PatchInfo.Builder()
+            .SetName("Passive income")
+            .SetPatchType(typeof(PassiveIncome))
+            .SetLoadCondition(() => BoundConfig.PassiveIncomeEnabled)
+            .Build(),
+        new PatchInfo.Builder()
             .SetName("Suit unlock")
             .SetPatchType(typeof(UnlockSuits))
             .SetLoadCondition(() => BoundConfig.SuitUnlocksEnabled)
