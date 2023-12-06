@@ -30,7 +30,7 @@ Supply the proportion of items that you would like to (approximately) keep. For 
 - The maximum death penalty factor per player can be configured (ideal for small groups).
 - The death penalty discount for recovering bodies can be configured.
 - The death penalty scaling curvature can be configured.
-- 
+
 <details>
 <summary><strong>Scaling Curvature</strong></summary>
 
@@ -53,7 +53,7 @@ Ideal for watching the output from `view monitor`.
 ### Minimum Company Buying Factor
 The minimum company buying factor can be configured.
 
-Prevents the company from offering buying factors below. Should be enforced regardless of the 
+Prevents the company from offering buying factors below the configured value. Should be enforced regardless of the 
 [randomizer](#company-buying-factor-randomizer)'s enabledness.
 
 ### Company Buying Factor Randomizer
@@ -130,7 +130,7 @@ Please set the `bEnabled` option to `false` (and disable other installed mods) w
 players that do not have mods installed.
 
 ### How do I change settings?
-All this mod's configuration is contained within one file, `/BepInEx/config/lordfirespeed.enhancer.cfg`.
+All this mod's configuration is contained within one file, `/BepInEx/config/com.github.lordfirespeed.augmented_enhancer.cfg`.
 
 If an option's description is too confusing or not well-enough explained, 
 please [open an issue on GitHub](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/issues).
