@@ -97,6 +97,9 @@ Assignment Duration (Days Per Quota): The quota assignment duration can be confi
 ### Starting Credits
 Group starting credits can be configured.
 
+### Passive Income
+'Passive income' (credits handed out at the end of each day) can be configured.
+
 ### Quota Formula 
 - The starting quota can be configured
 - The multiplier for quadratic quota increase can be configured
