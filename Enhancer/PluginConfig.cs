@@ -28,6 +28,8 @@ public class PluginConfig
 
     public readonly bool StartingCreditsEnabled;
     public readonly int StartingCredits;
+    public readonly bool PassiveIncomeEnabled;
+    public readonly int PassiveIncomeQuantity;
     
     public readonly bool DaysPerQuotaEnabled;
     public readonly int DaysPerQuota;
@@ -128,6 +130,18 @@ public class PluginConfig
             "iStartingCredits",
             60,
             "How many credits the group starts with on a new run.\nHost Required: Yes"
+        ).Value;
+        PassiveIncomeEnabled = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "bPassiveIncomeEnabled",
+            false,
+            "Feature flag for the 'passive income' variable.\nHost Required: Yes"
+        ).Value;
+        PassiveIncomeQuantity = bindingPlugin.Config.Bind(
+            PluginInfo.PLUGIN_GUID,
+            "iPassiveIncomeAmount",
+            0,
+            "The number of credits you will be given at the end of each level.\nHost Required: Yes"
         ).Value;
         
         DaysPerQuotaEnabled = bindingPlugin.Config.Bind(

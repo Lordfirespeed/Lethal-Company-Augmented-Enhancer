@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.3.0] - 2023-12-06
+
+### Added
+
+- Passive income options
+
 ## [0.2.0] - 2023-12-05
 
 ### Changed
@@ -46,8 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The 'release' workflow was failing when there was no changelog to commit
 - Scrap protection attempting to remove items 
-
-### Removed
 
 ## [0.1.3] - 2023-12-04
 
