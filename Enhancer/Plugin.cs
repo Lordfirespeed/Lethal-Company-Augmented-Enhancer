@@ -170,10 +170,11 @@ public class Plugin : BaseUnityPlugin
 
         public class Builder
         {
-            private string _thisName;
-            private Type _thisPatchType;
-            private Func<bool> _thisLoadCondition;
-            private List<string> _thisDelegateToModGuids = new();
+            private string? _thisName;
+            private Type? _thisPatchType;
+            private Func<bool>? _thisEnabledCondition;
+            private readonly List<ConfigEntryBase> _thisListenToConfigEntries = new();
+            private readonly List<string> _thisDelegateToModGuids = new();
             
             public Builder SetName(string newName)
             {
@@ -187,9 +188,15 @@ public class Plugin : BaseUnityPlugin
                 return this;
             }
 
-            public Builder SetLoadCondition(Func<bool> loadCondition)
+            public Builder ListenTo(ConfigEntryBase configEntry)
             {
-                _thisLoadCondition = loadCondition;
+                _thisListenToConfigEntries.Add(configEntry);
+                return this;
+            }
+
+            public Builder SetEnabledCondition(Func<bool> loadCondition)
+            {
+                _thisEnabledCondition = loadCondition;
                 return this;
             }
 
@@ -199,13 +206,13 @@ public class Plugin : BaseUnityPlugin
                 return this;
             }
 
-            public PatchInfo Build() => new()
-            {
-                Name = _thisName,
-                PatchType = _thisPatchType,
-                _loadCondition = _thisLoadCondition,
-                _delegateToModGuids = _thisDelegateToModGuids.ToArray(),
-            };
+            public PatchInfo Build() => new(
+                _thisName ?? throw new Exception("PatchInfo Name must be set."),
+                _thisPatchType ?? throw new Exception("PatchInfo PatchType must be set."), 
+                _thisEnabledCondition,
+                _thisListenToConfigEntries.ToArray(),
+                _thisDelegateToModGuids.ToArray()
+            );
         }
     }
 }
