@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Dynamic patching - Patches can be enabled/disabled while the game is running (using in-game config editor from another mod)
+
 ### Fixed
 
 ### Removed
