@@ -16,11 +16,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using BepInEx;
 using BepInEx.Bootstrap;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 using Enhancer.Patches;
 using HarmonyLib;
+using MonoMod.RuntimeDetour;
 using UnityEngine.UIElements.Collections;
 
 namespace Enhancer;
