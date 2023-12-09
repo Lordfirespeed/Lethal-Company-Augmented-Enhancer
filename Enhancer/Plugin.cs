@@ -155,12 +155,12 @@ public class Plugin : BaseUnityPlugin
         public bool IsEnabled() => (_enabledCondition == null || _enabledCondition()) && !HasLoadedDelegate();
         public bool HasLoadedDelegate()
         {
-            if (!BoundConfig.DelegationEnabled) return false;
+            if (!BoundConfig.DelegationEnabled.Value) return false;
             
             var delegateToPluginInfosEnumerable = from delegateToModGuid in _delegateToModGuids 
                 select Chainloader.PluginInfos.Get(delegateToModGuid);
             var delegateToPluginInfos = delegateToPluginInfosEnumerable as BepInEx.PluginInfo[] ?? delegateToPluginInfosEnumerable.ToArray();
-            if (!delegateToPluginInfos.Any()) return false;
+            if (!delegateToPluginInfos.Any(info => info is not null)) return false;
             Log.LogWarning($"{Name} feature is disabled due to the presence of '{String.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'");
             return true;
         }
