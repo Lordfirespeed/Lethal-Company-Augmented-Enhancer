@@ -27,6 +27,11 @@ jobs:
       # Update Unreleased section with the current release note TODO
       - name: Patch Changelog
         run: echo
+        
+      # Add reference to Enhancer.csproj.user (.gitignored)
+      - name: Reference Lethal Company assemblies
+        run: |
+          ./build.sh --target AddLethalCompanyAssembliesPackageReference
 
       # Build package and publish to Thunderstore
       - name: Build & Publish
