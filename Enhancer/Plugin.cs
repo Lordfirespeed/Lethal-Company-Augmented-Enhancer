@@ -30,8 +30,8 @@ namespace Enhancer;
 [BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
-    public static ManualLogSource Log { get; private set; }
-    public static PluginConfig BoundConfig { get; private set; }
+    public static ManualLogSource Log { get; private set; } = null!;
+    public static PluginConfig BoundConfig { get; private set; } = null!;
     
     private static readonly PatchInfo[] Patches = new[]
     {
