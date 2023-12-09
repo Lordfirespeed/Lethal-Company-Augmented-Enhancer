@@ -124,7 +124,7 @@ public class Plugin : BaseUnityPlugin
         Log = Logger;
         BoundConfig = new(this);
 
-        if (!BoundConfig.Enabled)
+        if (!BoundConfig.Enabled.Value)
         {
             Logger.LogInfo("Globally disabled, exiting. Goodbye!");
             return;
