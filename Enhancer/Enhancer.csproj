@@ -26,7 +26,8 @@
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" />
-    <PackageReference Include="LethalAPI.GameLibs" Version="40.0.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Core" Version="3.5.21022.801" />
   </ItemGroup>
 
   <ItemGroup>
