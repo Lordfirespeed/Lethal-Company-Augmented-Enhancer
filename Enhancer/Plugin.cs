@@ -23,7 +23,6 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using Enhancer.Patches;
 using HarmonyLib;
-using MonoMod.RuntimeDetour;
 using UnityEngine.UIElements.Collections;
 
 namespace Enhancer;
@@ -227,8 +226,8 @@ public class Plugin : BaseUnityPlugin
                     throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
                 if (_patchedMethods is null) return;
                 
-                Log.LogInfo($"Detaching ${Name} patches...");
-                _patchedMethods.Do(original => _harmony.Unpatch(original.GetIdentifiable(), HarmonyPatchType.All, _harmony.Id));
+                Log.LogInfo($"Detaching {Name} patches...");
+                _patchedMethods.Do(original => _harmony.Unpatch(original, HarmonyPatchType.All, _harmony.Id));
                 _patchedMethods = null;
             }
         }
