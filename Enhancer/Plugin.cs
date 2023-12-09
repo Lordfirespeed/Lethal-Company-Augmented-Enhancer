@@ -130,15 +130,11 @@ public class Plugin : BaseUnityPlugin
             return;
         }
 
-        Harmony patcher = new(PluginInfo.PLUGIN_GUID);
+        Harmony harmony = new(PluginInfo.PLUGIN_GUID);
         
-        Logger.LogInfo("Enabled, applying patches");
-        foreach (var patch in Patches)
-        {
-            if (!patch.ShouldLoad()) continue;
-            Logger.LogInfo($"Applying {patch.Name} patches...");
-            patcher.PatchAll(patch.PatchType);
-        }
+        Logger.LogInfo("Enabled, initialising patches...");
+        GetPatches().Do(patch => patch.Initialise(harmony));
+        Logger.LogInfo("Done!");
     }
 
     private class PatchInfo
