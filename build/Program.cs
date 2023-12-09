@@ -114,6 +114,28 @@ public sealed class PatchBuildPropsTask : FrostingTask<BuildContext>
     }
 }
 
+[TaskName("AddLethalCompanyAssembliesPackageReference")]
+public sealed class AddLethalCompanyAssembliesPackageReferenceTask : FrostingTask<BuildContext>
+{
+    public override void Run(BuildContext ctx)
+    {
+        var enhancerLocalBuildProperties = new Project();
+        enhancerLocalBuildProperties.AddItem(
+            "PackageReference", 
+            "LethalApi.GameLibs", 
+            new []
+            {
+                new KeyValuePair<string, string>("Version", "40.0.0"),
+            }
+        );
+        enhancerLocalBuildProperties.Save(ctx.RootDirectory
+            .Combine("Enhancer")
+            .CombineWithFilePath("Enhancer.csproj.user")
+            .FullPath
+        );
+    }
+}
+
 [TaskName("Compile")]
 [IsDependentOn(typeof(CleanTask))]
 [IsDependentOn(typeof(PatchBuildPropsTask))]
