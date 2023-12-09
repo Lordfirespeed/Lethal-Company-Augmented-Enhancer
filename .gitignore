@@ -8,9 +8,6 @@
 ## Assets
 !assets/
 
-## Source
-!src/
-
 ## Build System/Scripts
 !NuGet.Config
 !Directory.Build.props
