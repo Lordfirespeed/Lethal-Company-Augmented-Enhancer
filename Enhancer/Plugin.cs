@@ -129,12 +129,30 @@ public class Plugin : BaseUnityPlugin
 
     private class PatchInfo
     {
-        public string Name { get; private set; }
-        public Type PatchType { get; private set; }
-        private Func<bool> _loadCondition;
-        private string[] _delegateToModGuids;
+        public string Name { get; }
+        public Type PatchType { get; }
+        private readonly Func<bool>? _enabledCondition;
+        private ConfigEntryBase[] _listenToConfigEntries;
+        private readonly string[] _delegateToModGuids;
+        private List<MethodInfo>? _patchedMethods;
+        private Harmony? _harmony;
+        private readonly object _patchLock = new();
 
-        public bool ShouldLoad() => (_loadCondition == null || _loadCondition()) && !HasLoadedDelegate();
+        private PatchInfo(
+            string name, 
+            Type patchType, 
+            Func<bool>? enabledCondition, 
+            ConfigEntryBase[] listenToConfigEntries, 
+            string[] delegateToModGuids
+        ) {
+            Name = name;
+            PatchType = patchType;
+            _enabledCondition = enabledCondition;
+            _listenToConfigEntries = listenToConfigEntries;
+            _delegateToModGuids = delegateToModGuids;
+        }
+
+        public bool IsEnabled() => (_enabledCondition == null || _enabledCondition()) && !HasLoadedDelegate();
         public bool HasLoadedDelegate()
         {
             if (!BoundConfig.DelegationEnabled) return false;
