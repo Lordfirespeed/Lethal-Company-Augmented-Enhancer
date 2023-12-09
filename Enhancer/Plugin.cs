@@ -36,7 +36,7 @@ public class Plugin : BaseUnityPlugin
     public static ManualLogSource Log { get; private set; } = null!;
     public static PluginConfig BoundConfig { get; private set; } = null!;
     
-    private static readonly PatchInfo[] Patches = new[]
+    private PatchInfo[] GetPatches() => new[]
     {
         new PatchInfo.Builder()
             .SetName("Always show terminal")
