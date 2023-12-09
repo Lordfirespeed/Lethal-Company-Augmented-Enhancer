@@ -129,11 +129,11 @@ public class Plugin : BaseUnityPlugin
             Logger.LogInfo("Globally disabled, exiting. Goodbye!");
             return;
         }
-
-        Harmony harmony = new(PluginInfo.PLUGIN_GUID);
+        
+        var harmonyFactory = (string harmonyName) => new Harmony(String.Join(PluginInfo.PLUGIN_GUID, ".", harmonyName));
         
         Logger.LogInfo("Enabled, initialising patches...");
-        GetPatches().Do(patch => patch.Initialise(harmony));
+        GetPatches().Do(patch => patch.Initialise(harmonyFactory));
         Logger.LogInfo("Done!");
     }
 
@@ -144,7 +144,7 @@ public class Plugin : BaseUnityPlugin
         private readonly Func<bool>? _enabledCondition;
         private ConfigEntryBase[] _listenToConfigEntries;
         private readonly string[] _delegateToModGuids;
-        private List<MethodInfo>? _patchedMethods;
+        private List<MethodInfo>? _replacementMethods;
         private Harmony? _harmony;
         private readonly object _patchLock = new();
 
@@ -175,12 +175,12 @@ public class Plugin : BaseUnityPlugin
             return true;
         }
 
-        public void Initialise(Harmony harmony)
+        public void Initialise(Func<string, Harmony> harmonyFactory)
         {
             if (_harmony is not null)
                 throw new Exception("PatchInfo has already been initialised!");
 
-            _harmony = harmony;
+            _harmony = harmonyFactory(PatchType.Name);
             var onChangeHandler = new EventHandler<SettingChangedEventArgs>(
                 (sender, eventArgs) =>
                 {
@@ -211,10 +211,10 @@ public class Plugin : BaseUnityPlugin
             {
                 if (_harmony is null)
                     throw new Exception("PatchInfo has not been initialised. Cannot patch without a Harmony instance.");
-                if (_patchedMethods is not null) return;
+                if (_replacementMethods is not null) return;
                 
                 Log.LogInfo($"Attaching {Name} patches...");
-                _patchedMethods = _harmony.CreateClassProcessor(PatchType, true).Patch();
+                _replacementMethods = _harmony.CreateClassProcessor(PatchType, true).Patch();
             }
         }
 
@@ -224,11 +224,11 @@ public class Plugin : BaseUnityPlugin
             {
                 if (_harmony is null)
                     throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
-                if (_patchedMethods is null) return;
+                if (_replacementMethods is null) return;
                 
                 Log.LogInfo($"Detaching {Name} patches...");
-                _patchedMethods.Do(original => _harmony.Unpatch(original, HarmonyPatchType.All, _harmony.Id));
-                _patchedMethods = null;
+                _harmony.UnpatchSelf();
+                _replacementMethods = null;
             }
         }
 
