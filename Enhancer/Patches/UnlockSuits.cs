@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using HarmonyLib;
 
@@ -5,11 +6,11 @@ namespace Enhancer.Patches;
 
 public static class UnlockSuits
 {
-    private static readonly MethodInfo unlockItem = typeof(StartOfRound).GetMethod("SpawnUnlockable", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly MethodInfo UnlockItem = typeof(StartOfRound).GetMethod("SpawnUnlockable", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException("Couldn't find method: StartOfRound.SpawnUnlockable");
 
     public static void SpawnUnlockableDelegate(StartOfRound instance, int ID)
     {
-        unlockItem.Invoke(instance, new object[] { ID });
+        UnlockItem.Invoke(instance, new object[] { ID });
     }
 
     [HarmonyPatch(typeof(StartOfRound), "Start")]

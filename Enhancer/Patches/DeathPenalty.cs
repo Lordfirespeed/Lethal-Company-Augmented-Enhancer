@@ -14,8 +14,8 @@ public class DeathPenalty
     {
         return Mathf.Clamp(
             Mathf.Min(
-                Plugin.BoundConfig.MaximumDeathPenalty,
-                CountTotalPlayersInSession() * Plugin.BoundConfig.MaximumDeathPenaltyPerPlayer
+                Plugin.BoundConfig.MaximumDeathPenalty.Value,
+                CountTotalPlayersInSession() * Plugin.BoundConfig.MaximumDeathPenaltyPerPlayer.Value
             ), 
             0, 
             1
@@ -24,14 +24,14 @@ public class DeathPenalty
 
     private static float ComputePenaltyFactor(float deathCoefficient, float maximumPenaltyFactor)
     {
-        float exponent = Mathf.Pow(2, Plugin.BoundConfig.DeathPenaltyScalingCurvature);
+        float exponent = Mathf.Pow(2, Plugin.BoundConfig.DeathPenaltyScalingCurvature.Value);
         float penaltyFactor = Mathf.Pow(deathCoefficient, exponent) * Mathf.Pow(CountTotalPlayersInSession(), -exponent) * maximumPenaltyFactor;
         return Mathf.Clamp(penaltyFactor, 0f, 1f);
     }
 
     private static float ComputeDeathCoefficient(int playersDead, int bodiesInsured)
     {
-        return playersDead - bodiesInsured + (1f - Mathf.Max(0, Plugin.BoundConfig.DeadBodyRecoveryDiscount)) * bodiesInsured;
+        return playersDead - bodiesInsured + (1f - Mathf.Max(0, Plugin.BoundConfig.DeadBodyRecoveryDiscount.Value)) * bodiesInsured;
     }
     
     [HarmonyPatch(typeof(HUDManager), nameof(HUDManager.ApplyPenalty))]

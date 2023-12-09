@@ -8,7 +8,7 @@ public class HangarDoorCloseDuration
     [HarmonyPostfix]
     public static void HangarShipDoorPost(HangarShipDoor __instance)
     {
-        Plugin.Log.LogInfo($"Setting Hangar door power to last for {Plugin.BoundConfig.DoorPowerDuration} seconds...");
-        __instance.doorPowerDuration = Plugin.BoundConfig.DoorPowerDuration;
+        Plugin.Log.LogInfo($"Setting Hangar door power to last for {Plugin.BoundConfig.DoorPowerDuration.Value} seconds...");
+        __instance.doorPowerDuration = Plugin.BoundConfig.DoorPowerDuration.Value;
     }
 }

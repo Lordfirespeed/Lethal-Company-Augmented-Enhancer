@@ -1,3 +1,5 @@
+using BepInEx.Logging;
+using Dissonance;
 using HarmonyLib;
 
 namespace Enhancer.Patches;
@@ -27,19 +29,19 @@ public static class ThreatScannerInScanCommand
     
     private static string? GetThreatDescription(int enemyPower, int enemyMaxPower, int enemyCount)
     {
-        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.Disabled) return null;
+        if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.Disabled) return null;
         
-        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.Contacts) {
+        if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.Contacts) {
             return $"\nHostile Contacts: {enemyCount}\n";
         }
         
         float threatCoefficient = (float)enemyPower / enemyMaxPower;
 
-        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.ThreatLevelPercentage) {
+        if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.ThreatLevelPercentage) {
             return $"\nThreat Level: {threatCoefficient:p1}\n";
         }
 
-        if (Plugin.BoundConfig.ThreatScanner is ThreatScannerMode.ThreatLevelName)
+        if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.ThreatLevelName)
         {
             return $"\nThreat Level: {GetThreatLevel(threatCoefficient)}\n";
         }
@@ -58,7 +60,7 @@ public static class ThreatScannerInScanCommand
         if (node.name != "ScanInfo") return;
         
         //If scan command improvements are disabled, do nothing
-        if (Plugin.BoundConfig.ThreatScanner == 0) return;
+        if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.Disabled) return;
 
         //If there are no enemies in the level, do nothing
         if (!RoundManager.Instance.currentLevel.spawnEnemiesAndScrap) return;

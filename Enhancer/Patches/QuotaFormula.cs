@@ -10,10 +10,10 @@ public class QuotaFormula
     {
         Plugin.Log.LogInfo("Setting quota formula variables...");
         var quotaSettings = TimeOfDay.Instance.quotaVariables;
-        quotaSettings.startingQuota = Plugin.BoundConfig.StartingQuota;
+        quotaSettings.startingQuota = Plugin.BoundConfig.StartingQuota.Value;
         // vanilla 'increase steepness' is actually 'increase shallowness', so we reciprocate (1/x) the value
-        quotaSettings.increaseSteepness = 1f / Plugin.BoundConfig.QuotaIncreaseSteepness;
-        quotaSettings.baseIncrease = Plugin.BoundConfig.QuotaBaseIncrease;
-        quotaSettings.randomizerMultiplier = Plugin.BoundConfig.QuotaIncreaseRandomFactor;
+        quotaSettings.increaseSteepness = 1f / Plugin.BoundConfig.QuotaIncreaseSteepness.Value;
+        quotaSettings.baseIncrease = Plugin.BoundConfig.QuotaBaseIncrease.Value;
+        quotaSettings.randomizerMultiplier = Plugin.BoundConfig.QuotaIncreaseRandomFactor.Value;
     }
 }

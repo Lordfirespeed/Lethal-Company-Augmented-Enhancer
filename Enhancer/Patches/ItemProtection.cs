@@ -39,21 +39,21 @@ public static class ItemProtection
         if (despawnAllItems) return;
         if (!StartOfRound.Instance.allPlayersDead) return;
         
-        ThisPassProtectionProbability = Plugin.BoundConfig.ScrapProtection;
+        ThisPassProtectionProbability = Plugin.BoundConfig.ScrapProtection.Value;
         if (
-            Plugin.BoundConfig.ScrapProtectionRandomness <= 0f && 
-            (Plugin.BoundConfig.ScrapProtection <= 0f || Plugin.BoundConfig.ScrapProtection >= 1f)
+            Plugin.BoundConfig.ScrapProtectionRandomness.Value <= 0f && 
+            (Plugin.BoundConfig.ScrapProtection.Value <= 0f || Plugin.BoundConfig.ScrapProtection.Value >= 1f)
         ) return;
         
         RandomGenerator = new System.Random(StartOfRound.Instance.randomMapSeed + 83);
         
-        if (Plugin.BoundConfig.ScrapProtectionRandomness <= 0f) return;
+        if (Plugin.BoundConfig.ScrapProtectionRandomness.Value <= 0f) return;
         // get randomly from the quota randomizer curve (which is approximately the same shape as the quantile function)
         ThisPassProtectionProbability += (
-            Plugin.BoundConfig.ScrapProtectionRandomness * 2 * 
+            Plugin.BoundConfig.ScrapProtectionRandomness.Value * 2 * 
             TimeOfDay.Instance.quotaVariables.randomizerCurve.Evaluate((float)RandomGenerator.NextDouble())
         );
-        ThisPassProtectionProbability = Mathf.Clamp(ThisPassProtectionProbability.Value, 0f, 1f);
+        ThisPassProtectionProbability = Mathf.Clamp(ThisPassProtectionProbability!.Value, 0f, 1f);
     }
     
     [HarmonyPostfix]
@@ -69,7 +69,7 @@ public static class ItemProtection
 
     public static bool ShouldSaveScrap()
     {
-        return Plugin.BoundConfig.ScrapProtection switch
+        return Plugin.BoundConfig.ScrapProtection.Value switch
         {
             0f => false,
             1f => true,
