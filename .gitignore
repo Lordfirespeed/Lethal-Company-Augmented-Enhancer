@@ -47,3 +47,4 @@ build/[Bb]in/
 build/[Oo]bj/
 
 # Explicit exceptions/ignores
+**.user
