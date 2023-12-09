@@ -122,6 +122,7 @@ public class Plugin : BaseUnityPlugin
     private void Awake()
     {
         Log = Logger;
+        Logger.LogInfo("Binding config...");
         BoundConfig = new(this);
 
         if (!BoundConfig.Enabled.Value)
