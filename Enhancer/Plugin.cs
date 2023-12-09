@@ -168,6 +168,63 @@ public class Plugin : BaseUnityPlugin
             return true;
         }
 
+        public void Initialise(Harmony harmony)
+        {
+            if (_harmony is not null)
+                throw new Exception("PatchInfo has already been initialised!");
+
+            _harmony = harmony;
+            var onChangeHandler = new EventHandler<SettingChangedEventArgs>(
+                (sender, eventArgs) =>
+                {
+                    if (!_listenToConfigEntries.Contains(eventArgs.ChangedSetting)) return;
+                    OnChange();
+                }
+            );
+            _listenToConfigEntries
+                .Do(entry => entry.ConfigFile.SettingChanged += onChangeHandler);
+
+            OnChange();
+        }
+
+        private void OnChange()
+        {
+            if (IsEnabled())
+            {
+                Patch();
+                return;
+            }
+            
+            Unpatch();
+        }
+
+        private void Patch()
+        {
+            lock (_patchLock)
+            {
+                if (_harmony is null)
+                    throw new Exception("PatchInfo has not been initialised. Cannot patch without a Harmony instance.");
+                if (_patchedMethods is not null) return;
+                
+                Log.LogInfo($"Attaching {Name} patches...");
+                _patchedMethods = _harmony.CreateClassProcessor(PatchType, true).Patch();
+            }
+        }
+
+        private void Unpatch()
+        {
+            lock (_patchLock)
+            {
+                if (_harmony is null)
+                    throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
+                if (_patchedMethods is null) return;
+                
+                Log.LogInfo($"Detaching ${Name} patches...");
+                _patchedMethods.Do(original => _harmony.Unpatch(original.GetIdentifiable(), HarmonyPatchType.All, _harmony.Id));
+                _patchedMethods = null;
+            }
+        }
+
         public class Builder
         {
             private string? _thisName;
