@@ -10,6 +10,6 @@ public class PassiveIncome
     {
         Terminal objectOfType = UnityEngine.Object.FindObjectOfType<Terminal>();
         if (objectOfType == null) return;
-        objectOfType.groupCredits += Plugin.BoundConfig.PassiveIncomeQuantity;
+        objectOfType.groupCredits += Plugin.BoundConfig.PassiveIncomeQuantity.Value;
     } 
 }
