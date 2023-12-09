@@ -38,25 +38,25 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>../lib/Assembly-CSharp.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Unity Netcode">
-      <HintPath>../lib/Unity.Netcode.Runtime.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.Netcode.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Netstandard">
-      <HintPath>../lib/netstandard.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/netstandard.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine UIModule">
-      <HintPath>../lib/UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine Core">
-      <HintPath>../lib/UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>../lib/UnityEngine.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TMP">
-      <HintPath>../lib/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.TextMeshPro.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
