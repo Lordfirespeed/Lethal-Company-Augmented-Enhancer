@@ -27,7 +27,7 @@ using UnityEngine.UIElements.Collections;
 
 namespace Enhancer;
 
-[BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("mom.llama.enhancer", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
@@ -130,7 +130,7 @@ public class Plugin : BaseUnityPlugin
             return;
         }
         
-        var harmonyFactory = (string harmonyName) => new Harmony(String.Join(PluginInfo.PLUGIN_GUID, ".", harmonyName));
+        var harmonyFactory = (string harmonyName) => new Harmony(String.Join(MyPluginInfo.PLUGIN_GUID, ".", harmonyName));
         
         Logger.LogInfo("Enabled, initialising patches...");
         GetPatches().Do(patch => patch.Initialise(harmonyFactory));
