@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class HangarDoorCloseDuration
+public class HangarDoorCloseDuration : IPatch
 {
     [HarmonyPatch(typeof(HangarShipDoor), "Start")]
     [HarmonyPostfix]

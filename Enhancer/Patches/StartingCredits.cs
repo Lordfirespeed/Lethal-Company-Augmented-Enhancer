@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class StartingCredits
+public class StartingCredits : IPatch
 {
     [HarmonyPatch(typeof(Terminal), "Start")]
     [HarmonyPrefix]

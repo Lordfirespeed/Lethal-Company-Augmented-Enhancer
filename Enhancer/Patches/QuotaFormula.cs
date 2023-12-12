@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class QuotaFormula
+public class QuotaFormula : IPatch
 {
     [HarmonyPatch(typeof(StartOfRound), "Start")]
     [HarmonyPrefix]

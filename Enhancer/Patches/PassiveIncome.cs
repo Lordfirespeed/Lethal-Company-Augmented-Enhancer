@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class PassiveIncome
+public class PassiveIncome : IPatch
 {
     [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.OnDayChanged))]
     [HarmonyPostfix]

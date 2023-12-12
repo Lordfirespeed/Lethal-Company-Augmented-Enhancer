@@ -12,7 +12,7 @@ public enum ThreatScannerMode
     ThreatLevelName,
 }
 
-public static class ThreatScannerInScanCommand
+public class ThreatScannerInScanCommand : IPatch
 {
     private static string GetThreatLevel(float threatCoefficient)
     {

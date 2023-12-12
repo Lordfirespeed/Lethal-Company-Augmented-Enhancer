@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public static class UnlockSuits
+public class UnlockSuits : IPatch
 {
     private static readonly MethodInfo UnlockItem = typeof(StartOfRound).GetMethod("SpawnUnlockable", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException("Couldn't find method: StartOfRound.SpawnUnlockable");
 

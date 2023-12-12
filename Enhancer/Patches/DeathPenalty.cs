@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enhancer.Patches;
 
-public class DeathPenalty
+public class DeathPenalty : IPatch
 {
     private static int CountTotalPlayersInSession()
     {

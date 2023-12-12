@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace Enhancer.Patches;
 
-public static class CompanyBuyingFactorRandomizer
+public class CompanyBuyingFactorRandomizer : IPatch
 {
     private static float GetRandomPriceFactor()
     {

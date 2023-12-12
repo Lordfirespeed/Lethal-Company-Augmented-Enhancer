@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Enhancer.Patches;
 
 [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.DespawnPropsAtEndOfRound))]
-public static class ItemProtection
+public class ItemProtection : IPatch
 {
     public static bool IsUnprotectedScrap(Item item)
     {

@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class DaysPerQuota
+public class DaysPerQuota : IPatch
 {
     [HarmonyPatch(typeof(StartOfRound), "Start")]
     [HarmonyPrefix]
