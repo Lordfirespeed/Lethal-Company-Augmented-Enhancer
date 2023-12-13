@@ -147,7 +147,7 @@ public class PublishData : ITomlMetadataProvider
     public List<string> Communities { get; } = new();
     
     [DataMember(Name = "categories")] 
-    public List<string> Categories { get; } = new();
+    public TomlDictionary<string, List<string>> Categories { get; } = new();
     
     // storage for comments and whitespace
     TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }

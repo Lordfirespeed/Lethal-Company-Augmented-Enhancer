@@ -34,3 +34,6 @@ target = "CHANGELOG.md"
 
 [publish]
 communities = ["lethal-company"]
+
+[publish.categories]
+lethal-company = ["bepinex", "misc", "tools", "clientside", "serverside"]
