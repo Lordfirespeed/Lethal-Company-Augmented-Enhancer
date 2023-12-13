@@ -11,7 +11,7 @@ public class ItemProtection : IPatch
 {
     public static bool IsUnprotectedScrap(Item item)
     {
-        Plugin.Log.LogDebug($"Considering item {item} for destruction...");
+        Plugin.Logger.LogDebug($"Considering item {item} for destruction...");
         return item.isScrap && !ShouldSaveScrap();
     }
     
@@ -34,7 +34,7 @@ public class ItemProtection : IPatch
     [HarmonyPrefix]
     static void Prefix(RoundManager __instance, bool despawnAllItems)
     {
-        Plugin.Log.LogInfo("Getting ready to consider items for destruction");
+        Plugin.Logger.LogInfo("Getting ready to consider items for destruction");
         
         if (despawnAllItems) return;
         if (!StartOfRound.Instance.allPlayersDead) return;
@@ -59,7 +59,7 @@ public class ItemProtection : IPatch
     [HarmonyPostfix]
     static void Postfix()
     {
-        Plugin.Log.LogInfo("Finished considering items for destruction");
+        Plugin.Logger.LogInfo("Finished considering items for destruction");
         RandomGenerator = null;
         ThisPassProtectionProbability = null;
     }

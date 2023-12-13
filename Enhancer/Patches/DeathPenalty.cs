@@ -48,14 +48,14 @@ public class DeathPenalty : IPatch
         Terminal terminalInstance = UnityEngine.Object.FindObjectOfType<Terminal>();
         int penaltyTotal = (int)(terminalInstance.groupCredits * penaltyFactor);
         
-        Plugin.Log.LogInfo($"Death Penalty is {penaltyFactor:p1} of {terminalInstance.groupCredits} = {penaltyTotal} credits.");
+        Plugin.Logger.LogInfo($"Death Penalty is {penaltyFactor:p1} of {terminalInstance.groupCredits} = {penaltyTotal} credits.");
         
         terminalInstance.groupCredits = Mathf.Max(0, terminalInstance.groupCredits - penaltyTotal);
 
         HUDManager.Instance.statsUIElements.penaltyAddition.text = $"{playersDead} casualties: -{penaltyFactor:p0}\n({bodiesInsured} bodies recovered)";
         HUDManager.Instance.statsUIElements.penaltyTotal.text = $"DUE: {penaltyTotal}";
         
-        Plugin.Log.LogInfo($"Death penalty has been applied. New group credits: {terminalInstance.groupCredits}.");
+        Plugin.Logger.LogInfo($"Death penalty has been applied. New group credits: {terminalInstance.groupCredits}.");
         
         return false;
     }

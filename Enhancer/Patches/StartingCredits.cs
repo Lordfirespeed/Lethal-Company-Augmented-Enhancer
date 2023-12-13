@@ -8,7 +8,7 @@ public class StartingCredits : IPatch
     [HarmonyPrefix]
     public static void TerminalStartPre()
     {
-        Plugin.Log.LogInfo($"Setting starting credits to {Plugin.BoundConfig.StartingCredits.Value}...");
+        Plugin.Logger.LogInfo($"Setting starting credits to {Plugin.BoundConfig.StartingCredits.Value}...");
         var quotaSettings = TimeOfDay.Instance.quotaVariables;
         quotaSettings.startingCredits = Plugin.BoundConfig.StartingCredits.Value;
     }

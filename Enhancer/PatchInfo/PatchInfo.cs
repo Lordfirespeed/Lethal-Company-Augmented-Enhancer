@@ -43,7 +43,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
         var delegateToPluginInfos = delegateToPluginInfosEnumerable as BepInEx.PluginInfo [] ??
         delegateToPluginInfosEnumerable.ToArray();
         if (!delegateToPluginInfos.Any(info => info is not null)) return false;
-        Plugin.Log.LogWarning(
+        Plugin.Logger.LogWarning(
             $"{Name} feature is disabled due to the presence of '{String.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'"
         );
         return true;
@@ -87,7 +87,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
                 throw new Exception("PatchInfo has not been initialised. Cannot patch without a Harmony instance.");
             if (PatchInstance is not null) return;
             
-            Plugin.Log.LogInfo($"Attaching {Name} patches...");
+            Plugin.Logger.LogInfo($"Attaching {Name} patches...");
             PatchInstance = new TPatch();
             PatchInstance.OnPatch();
             PatchHarmony.CreateClassProcessor(typeof(TPatch), true).Patch();
@@ -102,7 +102,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
                 throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
             if (PatchInstance is null) return;
             
-            Plugin.Log.LogInfo($"Detaching {Name} patches...");
+            Plugin.Logger.LogInfo($"Detaching {Name} patches...");
             PatchHarmony.UnpatchSelf();
             PatchInstance.OnUnpatch();
             PatchInstance = null;

@@ -46,7 +46,7 @@ public class ThreatScannerInScanCommand : IPatch
             return $"\nThreat Level: {GetThreatLevel(threatCoefficient)}\n";
         }
         
-        Plugin.Log.LogWarning("Invalid threat scanner type is configured.");
+        Plugin.Logger.LogWarning("Invalid threat scanner type is configured.");
         return null;
     }
     

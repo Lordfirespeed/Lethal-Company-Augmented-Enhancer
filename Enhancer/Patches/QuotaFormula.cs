@@ -8,7 +8,7 @@ public class QuotaFormula : IPatch
     [HarmonyPrefix]
     public static void StartOfRoundShipStartPre()
     {
-        Plugin.Log.LogInfo("Setting quota formula variables...");
+        Plugin.Logger.LogInfo("Setting quota formula variables...");
         var quotaSettings = TimeOfDay.Instance.quotaVariables;
         quotaSettings.startingQuota = Plugin.BoundConfig.StartingQuota.Value;
         // vanilla 'increase steepness' is actually 'increase shallowness', so we reciprocate (1/x) the value

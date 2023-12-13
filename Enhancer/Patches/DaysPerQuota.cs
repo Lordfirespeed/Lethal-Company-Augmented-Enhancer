@@ -8,7 +8,7 @@ public class DaysPerQuota : IPatch
     [HarmonyPrefix]
     public static void StartOfRoundShipStartPre()
     {
-        Plugin.Log.LogInfo($"Setting days per quota to {Plugin.BoundConfig.DaysPerQuota.Value}...");
+        Plugin.Logger.LogInfo($"Setting days per quota to {Plugin.BoundConfig.DaysPerQuota.Value}...");
         var quotaSettings = TimeOfDay.Instance.quotaVariables;
         quotaSettings.deadlineDaysAmount = Plugin.BoundConfig.DaysPerQuota.Value;
     }

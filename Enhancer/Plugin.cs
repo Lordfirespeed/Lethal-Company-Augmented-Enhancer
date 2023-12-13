@@ -28,7 +28,7 @@ namespace Enhancer;
 [BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
-    public static ManualLogSource Log { get; private set; } = null!;
+    public new static ManualLogSource Logger { get; private set; } = null!;
     public static PluginConfig BoundConfig { get; private set; } = null!;
     
     private IEnumerable<IPatchInfo<IPatch>> GetPatches() => new List<IPatchInfo<IPatch>>
@@ -104,20 +104,20 @@ public class Plugin : BaseUnityPlugin
     
     private void Awake()
     {
-        Log = base.Logger;
-        Log.LogInfo("Binding config...");
+        Logger = base.Logger;
+        Logger.LogInfo("Binding config...");
         BoundConfig = new(this);
 
         if (!BoundConfig.Enabled.Value)
         {
-            Log.LogInfo("Globally disabled, exiting. Goodbye!");
+            Logger.LogInfo("Globally disabled, exiting. Goodbye!");
             return;
         }
         
         var harmonyFactory = (string harmonyName) => new Harmony(String.Join(MyPluginInfo.PLUGIN_GUID, ".", harmonyName));
         
-        Log.LogInfo("Enabled, initialising patches...");
+        Logger.LogInfo("Enabled, initialising patches...");
         GetPatches().Do(patch => patch.Initialise(harmonyFactory));
-        Log.LogInfo("Done!");
+        Logger.LogInfo("Done!");
     }
 }

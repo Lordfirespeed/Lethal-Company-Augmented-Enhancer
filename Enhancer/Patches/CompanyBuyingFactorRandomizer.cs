@@ -13,7 +13,7 @@ public class CompanyBuyingFactorRandomizer : IPatch
             return 1.0f;
         }
             
-        Plugin.Log.LogInfo("Choosing random price factor");
+        Plugin.Logger.LogInfo("Choosing random price factor");
 
         //Company mood factor
         float moodFactor = GetMoodFactor();
@@ -29,8 +29,8 @@ public class CompanyBuyingFactorRandomizer : IPatch
         System.Random rng = new(StartOfRound.Instance.randomMapSeed + 77);
         float priceFactor = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
         
-        Plugin.Log.LogInfo("New price % set at" + priceFactor);
-        Plugin.Log.LogInfo("    factors " + moodFactor + " : " + daysFactor + " : " + (StartOfRound.Instance.randomMapSeed + 77));
+        Plugin.Logger.LogInfo("New price % set at" + priceFactor);
+        Plugin.Logger.LogInfo("    factors " + moodFactor + " : " + daysFactor + " : " + (StartOfRound.Instance.randomMapSeed + 77));
 
         return priceFactor;
     }
@@ -48,7 +48,7 @@ public class CompanyBuyingFactorRandomizer : IPatch
 
     private static float GetMoodFactor()
     {
-        Plugin.Log.LogInfo("Getting mood factor");
+        Plugin.Logger.LogInfo("Getting mood factor");
         
         try
         {
@@ -62,7 +62,7 @@ public class CompanyBuyingFactorRandomizer : IPatch
         }
         finally
         {
-            Plugin.Log.LogInfo("Got mood factor");
+            Plugin.Logger.LogInfo("Got mood factor");
         }
     }
     
@@ -70,7 +70,7 @@ public class CompanyBuyingFactorRandomizer : IPatch
     [HarmonyPostfix]
     public static void BuyingRatePost(TimeOfDay __instance)
     {
-        Plugin.Log.LogInfo("TimeOfDay SetBuyingRateForDay");
+        Plugin.Logger.LogInfo("TimeOfDay SetBuyingRateForDay");
 
         if (!NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsServer)
         {

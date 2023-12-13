@@ -17,7 +17,7 @@ public class UnlockSuits : IPatch
     [HarmonyPostfix]
     public static void StartOfRoundSuitPatch(StartOfRound __instance)
     {
-        Plugin.Log.LogInfo("Setting unlocked suits this round");
+        Plugin.Logger.LogInfo("Setting unlocked suits this round");
 
         //Green Suit
         SpawnUnlockableDelegate(__instance, 1);
