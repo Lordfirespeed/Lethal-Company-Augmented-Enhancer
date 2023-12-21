@@ -6,10 +6,13 @@ public class PassiveIncome
 {
     [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.OnDayChanged))]
     [HarmonyPostfix]
-    public static void AddPassiveIncome()
+    public static void AddPassiveIncome(TimeOfDay __instance)
     {
-        Terminal objectOfType = UnityEngine.Object.FindObjectOfType<Terminal>();
-        if (objectOfType == null) return;
-        objectOfType.groupCredits += Plugin.BoundConfig.PassiveIncomeQuantity.Value;
+        if (!__instance.IsServer) return;
+        
+        Plugin.Log.LogInfo($"Adding {Plugin.BoundConfig.PassiveIncomeQuantity.Value} passive income credits...");
+        Terminal? objectOfType = UnityEngine.Object.FindObjectOfType<Terminal>();
+        objectOfType!.groupCredits += Plugin.BoundConfig.PassiveIncomeQuantity.Value;
+        objectOfType.SyncGroupCreditsServerRpc(objectOfType.groupCredits, objectOfType.numberOfItemsInDropship);
     } 
 }
