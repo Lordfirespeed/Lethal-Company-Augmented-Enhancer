@@ -33,7 +33,7 @@ source = "../Docs/Changelog.md"
 target = "CHANGELOG.md"
 
 [publish]
-communities = ["lethal-company"]
+communities = [ "lethal-company", ]
 
 [publish.categories]
-lethal-company = ["bepinex", "misc", "tools", "clientside", "serverside"]
+lethal-company = [ "mods", "bepinex", "misc", "tools", "clientside", "serverside", ]
