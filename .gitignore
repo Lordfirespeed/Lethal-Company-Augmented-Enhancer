@@ -9,6 +9,7 @@
 !assets/
 
 ## Build System/Scripts
+!/.config/
 !NuGet.Config
 !Directory.Build.props
 !build.sh
