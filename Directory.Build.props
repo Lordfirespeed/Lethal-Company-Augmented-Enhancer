@@ -1,6 +1,5 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>0.3.0</VersionPrefix>
     <Authors>Crunchepillar, Lordfirespeed</Authors>
     <LangVersion>latest</LangVersion>
     <PackageLicenseExpression>CC-BY-NC-4.0</PackageLicenseExpression>
@@ -8,4 +7,11 @@
     <RepositoryUrl>https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="4.3.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>
