@@ -73,7 +73,7 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="PackThunderstore" AfterTargets="NetcodeWeave" Condition="$(PACK_THUNDERSTORE) == 'true' and $(TargetFramework) == 'netstandard2.1'">
+  <Target Name="PackThunderstore" AfterTargets="PostBuildEvent" Condition="$(PACK_THUNDERSTORE) == 'true'">
     <Message Importance="high" Text="MinVer version is $(MinVerVersion)" />
     <PropertyGroup>
       <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
