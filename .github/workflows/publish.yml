@@ -21,9 +21,8 @@ jobs:
         with:
           dotnet-version: "8.0.100"
 
-      - name: Install Thunderstore CLI
-        run: |
-          dotnet tool install -g tcli
+      - name: Install tools
+        run: dotnet tool restore
 
       - name: Build and pack solution
         run: |
@@ -73,9 +72,8 @@ jobs:
         with:
           dotnet-version: "8.0.100"
 
-      - name: Install Thunderstore CLI
-        run: |
-          dotnet tool install -g tcli
+      - name: Install Tools
+        run: dotnet tool restore
 
       - name: Publish to Thunderstore
         env:
