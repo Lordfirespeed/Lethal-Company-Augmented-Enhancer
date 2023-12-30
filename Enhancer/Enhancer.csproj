@@ -62,4 +62,21 @@
   <ItemGroup Condition="$(CI) == 'true'">
     <PackageReference Include="LethalCompany.GameLibs.Steam" Version="45.0.2-alpha.1" />
   </ItemGroup>
+  <Target Name="SetPluginVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
+    <PropertyGroup>
+      <BepInExPluginVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</BepInExPluginVersion>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="PackThunderstore" AfterTargets="NetcodeWeave" Condition="$(PACK_THUNDERSTORE) == 'true' and $(TargetFramework) == 'netstandard2.1'">
+    <Message Importance="high" Text="MinVer version is $(MinVerVersion)" />
+    <PropertyGroup>
+      <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
+    </PropertyGroup>
+    <Exec Command="tcli build --config-path $(SolutionDir)assets/thunderstore.toml --package-version $(PlainVersion)" />
+    <ItemGroup>
+      <FilesToRename Include="$(SolutionDir)dist/*-$(PlainVersion).zip" />
+    </ItemGroup>
+    <Move SourceFiles="@(FilesToRename)" DestinationFiles="@(FilesToRename -&gt; Replace($(PlainVersion), $(MinVerVersion)))" />
+  </Target>
 </Project>
