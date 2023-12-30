@@ -38,7 +38,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(CI) != 'true'">
     <Reference Include="Assembly-CSharp" Publicize="true">
       <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -57,5 +57,9 @@
     <Reference Include="UnityEngine.TMP">
       <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.TextMeshPro.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(CI) == 'true'">
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="45.0.2-alpha.1" />
   </ItemGroup>
 </Project>
