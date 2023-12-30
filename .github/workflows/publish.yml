@@ -24,9 +24,8 @@ jobs:
       - name: Install tools
         run: dotnet tool restore
 
-      - name: Build and pack solution
-        run: |
-          dotnet pack
+      - name: Build solution
+        run: dotnet build
 
       - name: Upload Thunderstore artifact
         uses: actions/upload-artifact@v4

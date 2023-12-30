@@ -28,8 +28,7 @@ jobs:
       
       # Build packages
       - name: Build
-        run: |
-          dotnet build
+        run: dotnet build
       
       # Store the built packages as an artifact 
       - name: Upload Artifacts
