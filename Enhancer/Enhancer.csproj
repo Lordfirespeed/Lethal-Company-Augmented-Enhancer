@@ -78,7 +78,7 @@
     <PropertyGroup>
       <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
     </PropertyGroup>
-    <Exec Command="tcli build --config-path $(SolutionDir)assets/thunderstore.toml --package-version $(PlainVersion)" />
+    <Exec Command="dotnet tcli build --config-path $(SolutionDir)assets/thunderstore.toml --package-version $(PlainVersion)" />
     <ItemGroup>
       <FilesToRename Include="$(SolutionDir)dist/*-$(PlainVersion).zip" />
     </ItemGroup>
