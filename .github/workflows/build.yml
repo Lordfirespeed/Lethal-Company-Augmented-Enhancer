@@ -8,34 +8,28 @@ on:
   pull_request:
 
 jobs:
-  
   # Prepare environment and build packages
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: tree:0
       
-      # Set up .NET environment for the next steps
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "8.0.100"
       
-      # Install the building/publishing capability of Thunderstore CLI
-      - name: Install TCLI
+      - name: Install Thunderstore CLI
         run: dotnet tool install -g tcli
-        
-      # Add reference to Enhancer.csproj.user (.gitignored)
-      - name: Reference Lethal Company assemblies
-        run: |
-          ./build.sh --target AddLethalCompanyAssembliesPackageReference
       
       # Build packages
       - name: Build
         run: |
-          ./build.sh --target BuildThunderstore
+          dotnet build
       
       # Store the built packages as an artifact 
       - name: Upload Artifacts
