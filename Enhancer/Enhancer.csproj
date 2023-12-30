@@ -62,6 +62,11 @@
   <ItemGroup Condition="$(CI) == 'true'">
     <PackageReference Include="LethalCompany.GameLibs.Steam" Version="45.0.2-alpha.1" />
   </ItemGroup>
+  
+  <PropertyGroup Condition="$(CI) == 'true'">
+    <PACK_THUNDERSTORE>true</PACK_THUNDERSTORE>
+  </PropertyGroup>
+
   <Target Name="SetPluginVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
     <PropertyGroup>
       <BepInExPluginVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</BepInExPluginVersion>
