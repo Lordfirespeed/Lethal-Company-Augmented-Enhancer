@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Dynamic patching - Patches can be enabled/disabled while the game is running (using in-game config editor from another mod)
 - Patch lifecycle methods
+- Scrap value/quantity scalars
+- 'Fairness Scaling' - increases number of scrap items but decreases scrap value w/ more players present
 
 ### Fixed
 
