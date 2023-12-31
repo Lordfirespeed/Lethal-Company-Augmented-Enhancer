@@ -11,7 +11,7 @@ namespace Enhancer.PatchInfo;
 
 internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPatch, new()
 {
-    public required string Name { get; set; }
+    public string Name { get; set; }
     public Func<bool>? EnabledCondition { get; set; }
     public ConfigEntryBase[] ListenToConfigEntries { get; set; } = Array.Empty<ConfigEntryBase>();
     public string[] DelegateToModGuids { get; set; } = Array.Empty<string>();
@@ -58,9 +58,15 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     
     private void OnChange()
     {
-        if (ShouldLoad)
+        if (ShouldLoad && PatchInstance == null)
         {
             Patch();
+            return;
+        }
+
+        if (ShouldLoad)
+        {
+            PatchInstance!.OnConfigChange();
             return;
         }
         

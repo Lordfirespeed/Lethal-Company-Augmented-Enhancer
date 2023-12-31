@@ -4,4 +4,5 @@ public interface IPatch
 {
     public void OnPatch() {}
     public void OnUnpatch() {}
+    public void OnConfigChange() {}
 }
