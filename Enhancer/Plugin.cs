@@ -54,7 +54,7 @@ public class Plugin : BaseUnityPlugin
         new PatchInfo<ScrapTweaks> {
             Name = "Scrap Tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value,
-            ListenToConfigEntries = [BoundConfig.ScrapFairnessScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
+            ListenToConfigEntries = [BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
         },
         new PatchInfo<HangarDoorCloseDuration> {
             Name = "Hangar door close duration",

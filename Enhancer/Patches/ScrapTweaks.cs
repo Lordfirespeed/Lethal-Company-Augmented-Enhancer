@@ -106,13 +106,13 @@ public class ScrapTweaks : IPatch
         RoundManager.Instance.scrapValueMultiplier = _originalScrapValueMultiplier * Plugin.BoundConfig.ScrapValueScalar.Value;
         RoundManager.Instance.scrapAmountMultiplier = _originalScrapAmountMultiplier * Plugin.BoundConfig.ScrapQuantityScalar.Value;
         
-        if (playerCount <= 4 || Plugin.BoundConfig.ScrapFairnessScaling.Value == 0f) return;
+        if (playerCount <= 4 || Plugin.BoundConfig.ScrapPlayercountScaling.Value == 0f) return;
 
         var extraPlayers = playerCount - 4;
 
         RoundManager.Instance.scrapValueMultiplier += 
-            RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapFairnessScaling.Value * extraPlayers / 4;
+            RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value * extraPlayers / 4;
         RoundManager.Instance.scrapAmountMultiplier -= 
-            RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapFairnessScaling.Value * extraPlayers / playerCount;
+            RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value * extraPlayers / playerCount;
     }
 }
