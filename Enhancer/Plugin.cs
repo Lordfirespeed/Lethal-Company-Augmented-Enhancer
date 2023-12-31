@@ -50,11 +50,6 @@ public class Plugin : BaseUnityPlugin
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DeathPenaltyFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DeathPenaltyFormulaEnabled],
         },
-        new PatchInfo<ScrapTweaks> {
-            Name = "Scrap Tweaks",
-            EnabledCondition = () => BoundConfig.Enabled.Value,
-            ListenToConfigEntries = [BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
-        },
         new PatchInfo<HangarDoorCloseDuration> {
             Name = "Hangar door close duration",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DoorPowerDurationEnabled.Value,
@@ -83,6 +78,11 @@ public class Plugin : BaseUnityPlugin
             Name = "Quota formula",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.QuotaFormulaEnabled],
+        },
+        new PatchInfo<ScrapTweaks> {
+            Name = "Scrap Tweaks",
+            EnabledCondition = () => BoundConfig.Enabled.Value,
+            ListenToConfigEntries = [BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
         },
         new PatchInfo<StartingCredits> {
             Name = "Starting credits",
