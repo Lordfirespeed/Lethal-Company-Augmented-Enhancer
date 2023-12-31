@@ -25,11 +25,12 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     protected bool HasLoadedDelegate() {
         if (!Plugin.BoundConfig.DelegationEnabled.Value) return false;
 
-        var delegateToPluginInfosEnumerable = from delegateToModGuid in DelegateToModGuids
-        select Chainloader.PluginInfos.Get(delegateToModGuid);
-        var delegateToPluginInfos = delegateToPluginInfosEnumerable as BepInEx.PluginInfo [] ??
-        delegateToPluginInfosEnumerable.ToArray();
-        if (!delegateToPluginInfos.Any(info => info is not null)) return false;
+        var delegateToPluginInfos = DelegateToModGuids
+            .Select(guid => Chainloader.PluginInfos.Get(guid))
+            .ToArray();
+        if (delegateToPluginInfos.Any(info => info is not null))
+            return false;
+        
         Plugin.Logger.LogWarning(
             $"{Name} feature is disabled due to the presence of '{String.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'"
         );
