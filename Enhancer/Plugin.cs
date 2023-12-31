@@ -124,6 +124,6 @@ public class Plugin : BaseUnityPlugin
 
     private void OnDestroy()
     {
-        
+        GetPatches().Do(patch => patch.Dispose());
     }
 }

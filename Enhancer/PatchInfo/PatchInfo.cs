@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
@@ -11,6 +10,7 @@ namespace Enhancer.PatchInfo;
 
 internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPatch, new()
 {
+    // I want to use 'required' here but netstandard2.1 doesn't have support.
     public string Name { get; set; }
     public Func<bool>? EnabledCondition { get; set; }
     public ConfigEntryBase[] ListenToConfigEntries { get; set; } = Array.Empty<ConfigEntryBase>();
@@ -18,9 +18,20 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     private object PatchingLock { get; } = new();
     private Harmony? PatchHarmony { get; set; }
     private TPatch? PatchInstance { get; set; }
+    private bool _disposed = false;
     
     public bool IsEnabled => EnabledCondition == null || EnabledCondition();
     public bool ShouldLoad => IsEnabled && !HasLoadedDelegate();
+    private readonly EventHandler<SettingChangedEventArgs> _onChangeEventHandler;
+
+    public PatchInfo()
+    {
+        _onChangeEventHandler = (_, eventArgs) =>
+        {
+            if (!ListenToConfigEntries.Contains(eventArgs.ChangedSetting)) return;
+            OnChange();
+        };
+    }
 
     protected bool HasLoadedDelegate() {
         if (!Plugin.BoundConfig.DelegationEnabled.Value) return false;
@@ -39,19 +50,15 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
     public void Initialise(Func<string, Harmony> harmonyFactory)
     {
+        if (_disposed) 
+            throw new InvalidOperationException("PatchInfo has already been disposed!.");
         if (PatchHarmony is not null)
-            throw new Exception("PatchInfo has already been initialised!");
+            throw new InvalidOperationException("PatchInfo has already been initialised!");
 
         PatchHarmony = harmonyFactory(typeof(TPatch).Name);
-        var onChangeHandler = new EventHandler<SettingChangedEventArgs>(
-            (sender, eventArgs) =>
-            {
-                if (!ListenToConfigEntries.Contains(eventArgs.ChangedSetting)) return;
-                OnChange();
-            }
-        );
+        
         ListenToConfigEntries
-            .Do(entry => entry.ConfigFile.SettingChanged += onChangeHandler);
+            .Do(entry => entry.ConfigFile.SettingChanged += _onChangeEventHandler);
 
         OnChange();
     }
@@ -101,5 +108,25 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             PatchInstance.OnUnpatch();
             PatchInstance = null;
         }
+    }
+    
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed) return;
+
+        if (disposing)
+        {
+            ListenToConfigEntries
+                .Do(entry => entry.ConfigFile.SettingChanged -= _onChangeEventHandler);
+            Unpatch();
+        }
+
+        _disposed = true;
     }
 }
