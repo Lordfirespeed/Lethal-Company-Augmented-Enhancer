@@ -78,8 +78,16 @@ public class ScrapTweaks : IPatch
 
     private static void RestoreMultipliers(RoundManager manager)
     {
-        manager.scrapValueMultiplier = _originalScrapValueMultiplier; 
-        manager.scrapAmountMultiplier = _originalScrapAmountMultiplier;
+        try
+        {
+            manager.scrapValueMultiplier = _originalScrapValueMultiplier; 
+            manager.scrapAmountMultiplier = _originalScrapAmountMultiplier;
+        }
+        finally
+        {
+            Plugin.Logger.LogDebug($"Attempted to restore scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
+            Plugin.Logger.LogDebug($"Attempted to restore scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
+        }
     }
 
     private static void OnPlayerJoin(JoinedEventArgs args)
