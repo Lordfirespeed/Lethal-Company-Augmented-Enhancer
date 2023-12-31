@@ -42,8 +42,8 @@ public class Plugin : BaseUnityPlugin
         },
         new PatchInfo<DaysPerQuota> {
             Name = "Days per quota",
-            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.DaysPerQuotaEnabled],
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaAssignmentEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.DaysPerQuotaAssignmentEnabled],
             DelegateToModGuids = ["mom.llama.enhancer", "Haha.DynamicDeadline"],
         },
         new PatchInfo<DeathPenalty> {

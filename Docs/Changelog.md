@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Target framework is netstandard2
 - Build/publish workflows use MinVer to determine target version
+- `bDaysPerQuotaEnabled` renamed to `bDaysPerQuotaAssignmentEnabled`
+- `iQuotaDays` renamed to `iQuotaAssignmentDays` 
+- All config options are now sectioned tidily
 
 ### Added
 

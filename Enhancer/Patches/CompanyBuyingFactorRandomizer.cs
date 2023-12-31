@@ -18,7 +18,7 @@ public class CompanyBuyingFactorRandomizer : IPatch
         //Company mood factor
         float moodFactor = GetMoodFactor();
         //Small increase each day
-        float daysFactor = (float)(1.0 + 0.05f * (Plugin.BoundConfig.DaysPerQuota.Value - TimeOfDay.Instance.daysUntilDeadline));
+        float daysFactor = (float)(1.0 + 0.05f * (Plugin.BoundConfig.DaysPerQuotaAssignment.Value - TimeOfDay.Instance.daysUntilDeadline));
 
         //This maximum value should only happen after more than 10 days on a single quota
         daysFactor = Mathf.Clamp(daysFactor, 1.0f, 2.0f);

@@ -12,7 +12,7 @@ namespace Enhancer;
 
 public class PluginConfig
 {
-    public readonly ConfigEntry<bool> Enabled;
+    public readonly ConfigEntry<bool>  Enabled;
     public readonly ConfigEntry<bool>  DelegationEnabled;
     
     public readonly ConfigEntry<bool>  KeepConsoleEnabled;
@@ -28,15 +28,15 @@ public class PluginConfig
     public readonly ConfigEntry<float> DoorPowerDuration;
 
     public readonly ConfigEntry<bool>  StartingCreditsEnabled;
-    public readonly ConfigEntry<int> StartingCredits;
+    public readonly ConfigEntry<int>   StartingCredits;
     public readonly ConfigEntry<bool>  PassiveIncomeEnabled;
-    public readonly ConfigEntry<int> PassiveIncomeQuantity;
+    public readonly ConfigEntry<int>   PassiveIncomeQuantity;
     
-    public readonly ConfigEntry<bool>  DaysPerQuotaEnabled;
-    public readonly ConfigEntry<int> DaysPerQuota;
+    public readonly ConfigEntry<bool>  DaysPerQuotaAssignmentEnabled;
+    public readonly ConfigEntry<int>   DaysPerQuotaAssignment;
     
     public readonly ConfigEntry<bool>  QuotaFormulaEnabled;
-    public readonly ConfigEntry<int> StartingQuota;
+    public readonly ConfigEntry<int>   StartingQuota;
     public readonly ConfigEntry<float> QuotaIncreaseSteepness;
     public readonly ConfigEntry<float> QuotaBaseIncrease;
     public readonly ConfigEntry<float> QuotaIncreaseRandomFactor;
@@ -59,142 +59,159 @@ public class PluginConfig
 
     public PluginConfig(BaseUnityPlugin bindingPlugin)
     {
+        #region Global Config
         Enabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Global", 
             "bEnabled", 
             true, 
             "Globally enable/disable the plugin"
         );
         DelegationEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Global", 
             "bDelegationEnabled", 
             true, 
             "Globally enables/disables delegation for the plugin. When this is true, features will be disabled automatically (delegated to other mods) depending on the mods you have installed."
         );
+        #endregion
         
+        #region Misc Tweaks
         KeepConsoleEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Misc Tweaks", 
             "bAlwaysShowTerminal", 
             true, 
             "Whether to keep the terminal enabled after a player stops using it\nHost Required: No"
         );
         SuitUnlocksEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Misc Tweaks", 
             "bUnlockSuits", 
             false, 
             "Unlocks a few of the cheaper suits from the start so your crew has options.\nHost Required: Yes"
         );
+        #endregion
         
+        #region Company Buying Prices
         RandomiseCompanyBuyingFactor = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Company Buying Prices", 
             "bCompanyBuyingFactorRandomizerEnabled", 
             false, 
             "Randomises the company buying % when enabled. Great if you're using longer quota deadlines.\nThis uses a variety of things to randomize prices such as the company mood, time passed in the quota, etc.\nRespects the minimum sale value, too.\nHost Required: Yes"
         );
         MinimumCompanyBuyingFactor = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Company Buying Prices", 
             "fMinimumCompanyBuyingFactor", 
             0.0f, 
             "The default formula for selling items to the company isn't designed to handle more than 3 days remaining.\nThe Company will be prevented from offering a factor lower than this configured value.\nRecommended values for games above 3 days: 0.3 - 0.5\nHost Required: Yes"
         );
+        #endregion
         
+        #region Time Speed
         TimeSpeedEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Time Speed",
             "bTimeSpeedEnabled",
             false,
             "Feature flag for the 'time speed' variable.\nHost Required: Yes"
         );
         TimeSpeed = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Time Speed", 
             "fTimeSpeed", 
             1.0f, 
             "How fast time passes on moons. Lower values mean time passes more slowly.\nRecommended value for single play: 0.75\nHost Required: Yes"
         );
+        #endregion
         
+        #region Door Power
         DoorPowerDurationEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Door Power",
             "bDoorPowerDurationEnabled",
             false,
             "Feature flag for the 'door power duration' variable.\nHost Required: Yes"
         );
         DoorPowerDuration = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Door Power", 
             "fDoorPowerDuration", 
             30.0f, 
             "How long the hangar door can be kept shut at a time (in seconds)\nRecommended values: 60.0 - 180.0\nHost Required: All players should use the same value."
         );
-
+        #endregion
+        
+        #region Starting Credits & Passive Income
         StartingCreditsEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Starting Credits & Passive Income",
             "bStartingCreditsEnabled",
             false,
             "Feature flag for the 'starting credits' variable.\nHost Required: Yes"
         );
         StartingCredits = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Starting Credits & Passive Income",
             "iStartingCredits",
             60,
             "How many credits the group starts with on a new run.\nHost Required: Yes"
         );
         PassiveIncomeEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Starting Credits & Passive Income",
             "bPassiveIncomeEnabled",
             false,
             "Feature flag for the 'passive income' variable.\nHost Required: Yes"
         );
         PassiveIncomeQuantity = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Starting Credits & Passive Income",
             "iPassiveIncomeAmount",
             0,
             "The number of credits you will be given at the end of each level.\nHost Required: Yes"
         );
+        #endregion
         
-        DaysPerQuotaEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
-            "bDaysPerQuotaEnabled",
+        #region Quota Assignment Duration
+        DaysPerQuotaAssignmentEnabled = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "bDaysPerQuotaAssignmentEnabled",
             false,
             "Feature flag for the 'days per quota' variable.\nHost Required: Yes"
         );
-        DaysPerQuota = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
-            "iQuotaDays", 
+        DaysPerQuotaAssignment = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration", 
+            "iQuotaAssignmentDays", 
             3, 
             "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes"
         );
+        #endregion
         
+        #region Quota Calculation
         QuotaFormulaEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Quota Calculation",
             "bQuotaFormulaEnabled",
             false,
             "Feature flag for the 'quota formula' variables, which include:\n - 'starting quota'\n - 'quota increase steepness'\n - 'quota base increase'\n - 'quota increase randomness'\nHost Required: Yes"
         );
         StartingQuota = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Quota Calculation",
             "iStartingQuota",
             130,
             "The starting quota on a new run.\nHost Required: Yes"
         );
         QuotaIncreaseSteepness = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Quota Calculation",
             "fQuotaIncreaseSteepness",
             0.0625f,
             "Used in calculating quota increase. Multiplier for the quadratic increase factor.\nHost Required: Yes"
         );
         QuotaBaseIncrease = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Quota Calculation",
             "fQuotaBaseIncrease",
             100f,
             "Used in calculating quota increase. Multiplier for the constant increase factor.\nHost Required: Yes"
         );
         QuotaIncreaseRandomFactor = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Quota Calculation",
             "fQuotaIncreaseRandomFactor",
             1f,
             "Used in calculating quota increase. Multiplier for the random increase factor.\nHost Required: Yes"
         );
+        #endregion
 
+        #region Scrap Value, Quantity & Playercount Scaling
         ScrapValueScalar = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Scrap Value, Quantity & Playercount Scaling",
             "fScrapValueScalar",
             1f,
             new ConfigDescription(
@@ -204,7 +221,7 @@ public class PluginConfig
             )
         );
         ScrapQuantityScalar = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Scrap Value, Quantity & Playercount Scaling",
             "fScrapQuantityScalar",
             1f,
             new ConfigDescription(
@@ -214,7 +231,7 @@ public class PluginConfig
             )
         );
         ScrapFairnessScaling = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Scrap Value, Quantity & Playercount Scaling",
             "fScrapFairnessScaling",
             0f,
             new ConfigDescription(
@@ -225,16 +242,20 @@ public class PluginConfig
                 new AcceptableValueRange<float>(0, float.MaxValue)
             )
         );
+        #endregion
         
+        #region Threat Scanner
         ThreatScanner = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Threat Scanner", 
             "eThreatScannerMode", 
             ThreatScannerMode.Disabled, 
             "How the threat scanner functions. Valid types:\n - Disabled\n - Contacts: Number of Enemies on level\n - ThreatLevelPercentage: Percentage of max enemies on level\n - ThreatLevelName: Vague Text description (In order of threat level) [Clear -> Green -> Yellow -> Orange - Red]\nHost Required: No"
         );
-        
+        #endregion
+
+        #region Scrap Protection
         ScrapProtectionEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Threat Scanner",
             "bScrapProtectionEnabled",
             false,
             new ConfigDescription(
@@ -242,7 +263,7 @@ public class PluginConfig
             )
         );
         ScrapProtection = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Threat Scanner", 
             "fScrapProtection", 
             0f, 
             new ConfigDescription(
@@ -251,7 +272,7 @@ public class PluginConfig
             )
         );
         ScrapProtectionRandomness = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Threat Scanner", 
             "fScrapProtectionRandomnessScalar", 
             0f, 
             new ConfigDescription(
@@ -259,15 +280,17 @@ public class PluginConfig
                 new AcceptableValueRange<float>(0f, 1f)
             )
         );
-
+        #endregion
+        
+        #region Death Penalty
         DeathPenaltyFormulaEnabled = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID,
+            "Death Penalty",
             "bDeathPenaltyFormulaEnabled",
             false,
             "Feature flag for the 'death penalty formula' variables, which includes\n - 'max death penalty'\n - 'max death penalty per player'\n - 'body recovery discount'\n - 'death penalty scaling curvature'\nHost Required: Yes"
         );
         MaximumDeathPenalty = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Death Penalty", 
             "fMaximumDeathPenalty", 
             0.8f, 
             new ConfigDescription(
@@ -276,7 +299,7 @@ public class PluginConfig
             )
         );
         MaximumDeathPenaltyPerPlayer = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Death Penalty", 
             "fMaximumDeathPenaltyPerPlayer", 
             0.2f, 
             new ConfigDescription(
@@ -285,7 +308,7 @@ public class PluginConfig
             )
         );
         DeadBodyRecoveryDiscount = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Death Penalty", 
             "fDeadBodyRecoveryDiscount", 
             0.6f, 
             new ConfigDescription(
@@ -294,10 +317,11 @@ public class PluginConfig
             )
         );
         DeathPenaltyScalingCurvature = bindingPlugin.Config.Bind(
-            bindingPlugin.Info.Metadata.GUID, 
+            "Death Penalty", 
             "fDeathPenaltyCurveDegree", 
             0f, 
             "How curved the death penalty scaling is. Positive -> less fine for fewer deaths. Negative -> more fine for fewer deaths.\ne.g. with a 4-player lobby:\n0 - The fine scales linearly: 25%, 50%, 75%, 100%.\n1 - The fine scales quadratically: 6.3%, 25%, 56.3%, 100%\n-1 - The fine scales anti-quadratically: 50%, 70.1%, 86.6%, 100%\nHost Required: Yes"
         );
+        #endregion
     }
 }
