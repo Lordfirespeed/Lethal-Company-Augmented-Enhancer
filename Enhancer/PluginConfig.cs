@@ -17,7 +17,8 @@ public class PluginConfig
     
     public readonly ConfigEntry<bool>  KeepConsoleEnabled;
     public readonly ConfigEntry<bool>  SuitUnlocksEnabled;
-    
+
+    public readonly ConfigEntry<bool>  CompanyBuyingFactorTweaksEnabled;
     public readonly ConfigEntry<bool>  RandomiseCompanyBuyingFactor;
     public readonly ConfigEntry<float> MinimumCompanyBuyingFactor;
 
@@ -41,6 +42,7 @@ public class PluginConfig
     public readonly ConfigEntry<float> QuotaBaseIncrease;
     public readonly ConfigEntry<float> QuotaIncreaseRandomFactor;
 
+    public readonly ConfigEntry<bool>  ScrapTweaksEnabled;
     public readonly ConfigEntry<float> ScrapValueScalar;
     public readonly ConfigEntry<float> ScrapQuantityScalar;
     public readonly ConfigEntry<float> ScrapPlayercountScaling;
@@ -90,6 +92,13 @@ public class PluginConfig
         #endregion
         
         #region Company Buying Prices
+        CompanyBuyingFactorTweaksEnabled = bindingPlugin.Config.Bind(
+            "Company Buying Prices",
+            "bCompanyBuyingFactorTweaksEnabled",
+            false,
+            "Whether or not the company buying price tweaks are enabled.\nHost required: Yes"
+        );
+        
         RandomiseCompanyBuyingFactor = bindingPlugin.Config.Bind(
             "Company Buying Prices", 
             "bCompanyBuyingFactorRandomizerEnabled", 
@@ -210,6 +219,15 @@ public class PluginConfig
         #endregion
 
         #region Scrap Value, Quantity & Playercount Scaling
+        ScrapTweaksEnabled = bindingPlugin.Config.Bind(
+            "Scrap Value, Quantity & Playercount Scaling",
+            "bScrapTweaksEnabled",
+            false,
+            new ConfigDescription(
+                "Whether or not to enable scrap tweaks.\nHost required: Yes"
+            )
+        );
+        
         ScrapValueScalar = bindingPlugin.Config.Bind(
             "Scrap Value, Quantity & Playercount Scaling",
             "fScrapValueScalar",

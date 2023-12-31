@@ -69,9 +69,9 @@ public class Plugin : BaseUnityPlugin
             ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<CompanyBuyingFactorRandomizer> {
-            Name = "Price randomizer",
-            EnabledCondition = () => BoundConfig.Enabled.Value,
+        new PatchInfo<CompanyBuyingFactorTweaks> {
+            Name = "Company buying factor tweaks",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.CompanyBuyingFactorTweaksEnabled.Value,
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new PatchInfo<QuotaFormula> {
@@ -81,7 +81,7 @@ public class Plugin : BaseUnityPlugin
         },
         new PatchInfo<ScrapTweaks> {
             Name = "Scrap Tweaks",
-            EnabledCondition = () => BoundConfig.Enabled.Value,
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapTweaksEnabled.Value,
             ListenToConfigEntries = [BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
         },
         new PatchInfo<StartingCredits> {
@@ -113,12 +113,6 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
         Logger.LogInfo("Binding config...");
         BoundConfig = new(this);
-
-        if (!BoundConfig.Enabled.Value)
-        {
-            Logger.LogInfo("Globally disabled, exiting. Goodbye!");
-            return;
-        }
         
         var harmonyFactory = 
             (string harmonyName) => new Harmony(String.Join(MyPluginInfo.PLUGIN_GUID, ".", harmonyName));
@@ -126,5 +120,10 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo("Enabled, initialising patches...");
         GetPatches().Do(patch => patch.Initialise(harmonyFactory));
         Logger.LogInfo("Done!");
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }
