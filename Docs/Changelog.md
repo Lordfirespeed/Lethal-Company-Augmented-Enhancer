@@ -9,13 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Target framework is netstandard2
+- Build/publish workflows use MinVer to determine target version
+
 ### Added
 
 - Dynamic patching - Patches can be enabled/disabled while the game is running (using in-game config editor from another mod)
+- Patch lifecycle methods
 
 ### Fixed
 
 ### Removed
+
+- 'build' project
 
 ## [0.3.0] - 2023-12-06
 
