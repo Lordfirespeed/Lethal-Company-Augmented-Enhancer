@@ -102,17 +102,24 @@ public class ScrapTweaks : IPatch
     private static void ApplyMultipliers(int playerCount)
     {
         if (!RoundManager.Instance) return;
-        
-        RoundManager.Instance.scrapValueMultiplier = _originalScrapValueMultiplier * Plugin.BoundConfig.ScrapValueScalar.Value;
-        RoundManager.Instance.scrapAmountMultiplier = _originalScrapAmountMultiplier * Plugin.BoundConfig.ScrapQuantityScalar.Value;
-        
-        if (playerCount <= 4 || Plugin.BoundConfig.ScrapPlayercountScaling.Value == 0f) return;
+        try
+        {
+            RoundManager.Instance.scrapValueMultiplier = _originalScrapValueMultiplier * Plugin.BoundConfig.ScrapValueScalar.Value;
+            RoundManager.Instance.scrapAmountMultiplier = _originalScrapAmountMultiplier * Plugin.BoundConfig.ScrapQuantityScalar.Value;
 
-        var extraPlayers = playerCount - 4;
+            if (playerCount <= 4 || Plugin.BoundConfig.ScrapPlayercountScaling.Value == 0f) return;
 
-        RoundManager.Instance.scrapValueMultiplier += 
-            RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value * extraPlayers / 4;
-        RoundManager.Instance.scrapAmountMultiplier -= 
-            RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value * extraPlayers / playerCount;
+            var extraPlayers = playerCount - 4;
+
+            RoundManager.Instance.scrapValueMultiplier +=
+                RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value * extraPlayers / 4;
+            RoundManager.Instance.scrapAmountMultiplier -=
+                RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value * extraPlayers / playerCount;
+        }
+        finally
+        {
+            Plugin.Logger.LogDebug($"Attempted to update scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
+            Plugin.Logger.LogDebug($"Attempted to update scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
+        }
     }
 }
