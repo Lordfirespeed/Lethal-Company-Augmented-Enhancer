@@ -51,6 +51,11 @@ public class Plugin : BaseUnityPlugin
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DeathPenaltyFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DeathPenaltyFormulaEnabled],
         },
+        new PatchInfo<FairnessScaling> {
+            Name = "Scrap Settings",
+            EnabledCondition = () => BoundConfig.Enabled.Value,
+            ListenToConfigEntries = [BoundConfig.ScrapFairnessScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
+        },
         new PatchInfo<HangarDoorCloseDuration> {
             Name = "Hangar door close duration",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DoorPowerDurationEnabled.Value,
@@ -72,6 +77,7 @@ public class Plugin : BaseUnityPlugin
         },
         new PatchInfo<CompanyBuyingFactorRandomizer> {
             Name = "Price randomizer",
+            EnabledCondition = () => BoundConfig.Enabled.Value,
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new PatchInfo<QuotaFormula> {
