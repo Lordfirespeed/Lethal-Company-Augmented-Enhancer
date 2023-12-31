@@ -30,77 +30,76 @@ public class Plugin : BaseUnityPlugin
 {
     public new static ManualLogSource Logger { get; private set; } = null!;
     public static PluginConfig BoundConfig { get; private set; } = null!;
-    
-    private IEnumerable<IPatchInfo<IPatch>> GetPatches() => new List<IPatchInfo<IPatch>>
-    {
-        new PatchInfo<AlwaysShowTerminal>.Builder()
-            .SetName("Always show terminal")
-            .SetEnabledCondition(() => BoundConfig.KeepConsoleEnabled.Value)
-            .ListenTo(BoundConfig.KeepConsoleEnabled)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-        new PatchInfo<DaysPerQuota>.Builder()
-            .SetName("Days per quota")
-            .SetEnabledCondition(() => BoundConfig.DaysPerQuotaEnabled.Value)
-            .ListenTo(BoundConfig.DaysPerQuotaEnabled)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .AddModGuidToDelegateTo("Haha.DynamicDeadline")
-            .Build(),
-        new PatchInfo<DeathPenalty>.Builder()
-            .SetName("Death penalty")
-            .SetEnabledCondition(() => BoundConfig.DeathPenaltyFormulaEnabled.Value)
-            .ListenTo(BoundConfig.DeathPenaltyFormulaEnabled)
-            .Build(),
-        new PatchInfo<HangarDoorCloseDuration>.Builder()
-            .SetName("Hangar door close duration")
-            .SetEnabledCondition(() => BoundConfig.DoorPowerDurationEnabled.Value)
-            .ListenTo(BoundConfig.DoorPowerDurationEnabled)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-        new PatchInfo<ThreatScannerInScanCommand>.Builder()
-            .SetName("Threat scanner")
-            .SetEnabledCondition(() => BoundConfig.ThreatScanner.Value is not ThreatScannerMode.Disabled)
-            .ListenTo(BoundConfig.ThreatScanner)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-        new PatchInfo<ItemProtection>.Builder()
-            .SetName("Item protection")
-            .SetEnabledCondition(() => BoundConfig.ScrapProtectionEnabled.Value)
-            .ListenTo(BoundConfig.ScrapProtectionEnabled)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-        new PatchInfo<CompanyBuyingFactorRandomizer>.Builder()
-            .SetName("Price randomizer")
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-        new PatchInfo<QuotaFormula>.Builder()
-            .SetName("Quota formula")
-            .SetEnabledCondition(() => BoundConfig.QuotaFormulaEnabled.Value)
-            .ListenTo(BoundConfig.QuotaFormulaEnabled)
-            .Build(),
-        new PatchInfo<StartingCredits>.Builder()
-            .SetName("Starting credits")
-            .SetEnabledCondition(() => BoundConfig.StartingCreditsEnabled.Value)
-            .ListenTo(BoundConfig.StartingCreditsEnabled)
-            .Build(),
-        new PatchInfo<PassiveIncome>.Builder()
-            .SetName("Passive income")
-            .SetEnabledCondition(() => BoundConfig.PassiveIncomeEnabled.Value)
-            .ListenTo(BoundConfig.PassiveIncomeEnabled)
-            .Build(),
-        new PatchInfo<UnlockSuits>.Builder()
-            .SetName("Suit unlock")
-            .SetEnabledCondition(() => BoundConfig.SuitUnlocksEnabled.Value)
-            .ListenTo(BoundConfig.SuitUnlocksEnabled)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-        new PatchInfo<TimeSpeed>.Builder()
-            .SetName("Time speed")
-            .SetEnabledCondition(() => BoundConfig.TimeSpeedEnabled.Value)
-            .ListenTo(BoundConfig.TimeSpeedEnabled)
-            .AddModGuidToDelegateTo("mom.llama.enhancer")
-            .Build(),
-    };
+
+    private IEnumerable<IPatchInfo<IPatch>> GetPatches() => [
+        new PatchInfo<AlwaysShowTerminal> {
+            Name = "Always show terminal",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.KeepConsoleEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.KeepConsoleEnabled],
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        },
+        new PatchInfo<DaysPerQuota> {
+            Name = "Days per quota",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.DaysPerQuotaEnabled],
+            DelegateToModGuids = ["mom.llama.enhancer", "Haha.DynamicDeadline"],
+        },
+        new PatchInfo<DeathPenalty> {
+            Name = "Death penalty",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DeathPenaltyFormulaEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.DeathPenaltyFormulaEnabled],
+        },
+        new PatchInfo<HangarDoorCloseDuration> {
+            Name = "Hangar door close duration",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DoorPowerDurationEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.DoorPowerDurationEnabled],
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        },
+        new PatchInfo<ThreatScannerInScanCommand> {
+            Name = "Threat scanner",
+            EnabledCondition = () =>
+                BoundConfig.Enabled.Value && BoundConfig.ThreatScanner.Value is not ThreatScannerMode.Disabled,
+            ListenToConfigEntries = [BoundConfig.ThreatScanner],
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        },
+        new PatchInfo<ItemProtection> {
+            Name = "Item protection",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapProtectionEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        },
+        new PatchInfo<CompanyBuyingFactorRandomizer> {
+            Name = "Price randomizer",
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        },
+        new PatchInfo<QuotaFormula> {
+            Name = "Quota formula",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.QuotaFormulaEnabled],
+        },
+        new PatchInfo<StartingCredits> {
+            Name = "Starting credits",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.StartingCreditsEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.StartingCreditsEnabled],
+        },
+        new PatchInfo<PassiveIncome> {
+            Name = "Passive income",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.PassiveIncomeEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.PassiveIncomeEnabled],
+        },
+        new PatchInfo<UnlockSuits> {
+            Name = "Suit unlock",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.SuitUnlocksEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.SuitUnlocksEnabled],
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        },
+        new PatchInfo<TimeSpeed> {
+            Name = "Time speed",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.TimeSpeedEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.TimeSpeedEnabled],
+            DelegateToModGuids = ["mom.llama.enhancer"],
+        }
+    ];
     
     private void Awake()
     {

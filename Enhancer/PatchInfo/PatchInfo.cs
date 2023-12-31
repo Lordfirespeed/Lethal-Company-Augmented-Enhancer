@@ -11,28 +11,15 @@ namespace Enhancer.PatchInfo;
 
 internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPatch, new()
 {
-    public string Name { get; }
-    private readonly Func<bool>? _enabledCondition;
-    public bool IsEnabled => _enabledCondition == null || _enabledCondition();
-    protected ConfigEntryBase[] ListenToConfigEntries { get; }
-    protected string[] DelegateToModGuids { get; }
+    public required string Name { get; set; }
+    public Func<bool>? EnabledCondition { get; set; }
+    public ConfigEntryBase[] ListenToConfigEntries { get; set; } = Array.Empty<ConfigEntryBase>();
+    public string[] DelegateToModGuids { get; set; } = Array.Empty<string>();
     private object PatchingLock { get; } = new();
     private Harmony? PatchHarmony { get; set; }
     private TPatch? PatchInstance { get; set; }
-
-    private PatchInfo(
-        string name,
-        Func<bool>? enabledCondition,
-        ConfigEntryBase[] listenToConfigEntries,
-        string[] delegateToModGuids
-    )
-    {
-        Name = name;
-        _enabledCondition = enabledCondition;
-        ListenToConfigEntries = listenToConfigEntries;
-        DelegateToModGuids = delegateToModGuids;
-    }
-
+    
+    public bool IsEnabled => EnabledCondition == null || EnabledCondition();
     public bool ShouldLoad => IsEnabled && !HasLoadedDelegate();
 
     protected bool HasLoadedDelegate() {
@@ -107,44 +94,5 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             PatchInstance.OnUnpatch();
             PatchInstance = null;
         }
-    }
-    
-    public class Builder
-    {
-        private string? _thisName;
-        private Func<bool>? _thisEnabledCondition;
-        private readonly List<ConfigEntryBase> _thisListenToConfigEntries = new();
-        private readonly List<string> _thisDelegateToModGuids = new();
-            
-        public Builder SetName(string newName)
-        {
-            _thisName = newName;
-            return this;
-        }
-
-        public Builder ListenTo(ConfigEntryBase configEntry)
-        {
-            _thisListenToConfigEntries.Add(configEntry);
-            return this;
-        }
-
-        public Builder SetEnabledCondition(Func<bool> loadCondition)
-        {
-            _thisEnabledCondition = loadCondition;
-            return this;
-        }
-
-        public Builder AddModGuidToDelegateTo(string delegateToModGuid)
-        {
-            _thisDelegateToModGuids.Add(delegateToModGuid);
-            return this;
-        }
-
-        public PatchInfo<TPatch> Build() => new(
-            _thisName ?? throw new Exception("PatchInfo Name must be set."),
-            _thisEnabledCondition,
-            _thisListenToConfigEntries.ToArray(),
-            _thisDelegateToModGuids.ToArray()
-        );
     }
 }
