@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+### Added
+
+### Fixed 
+
+### Removed
+
+## [0.4.0] 2023-12-31
+
+### Changed
+
 - Target framework is netstandard2
 - Build/publish workflows use MinVer to determine target version
 - `bDaysPerQuotaEnabled` renamed to `bDaysPerQuotaAssignmentEnabled`
@@ -21,8 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Patch lifecycle methods
 - Scrap value/quantity scalars
 - 'Fairness Scaling' - increases number of scrap items but decreases scrap value w/ more players present
-
-### Fixed
 
 ### Removed
 
