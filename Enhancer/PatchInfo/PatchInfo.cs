@@ -58,9 +58,15 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     
     private void OnChange()
     {
-        if (ShouldLoad)
+        if (ShouldLoad && PatchInstance == null)
         {
             Patch();
+            return;
+        }
+
+        if (ShouldLoad)
+        {
+            PatchInstance!.OnConfigChange();
             return;
         }
         
