@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.4.1] 2023-12-31
+
+### Fixed
+
+- Publish workflow was not using tcli from local toolcache, so failed
+
 ## [0.4.0] 2023-12-31
 
 ### Changed
