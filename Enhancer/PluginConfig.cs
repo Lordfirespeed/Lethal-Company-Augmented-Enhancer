@@ -41,6 +41,10 @@ public class PluginConfig
     public readonly ConfigEntry<float> QuotaBaseIncrease;
     public readonly ConfigEntry<float> QuotaIncreaseRandomFactor;
 
+    public readonly ConfigEntry<float> ScrapValueScalar;
+    public readonly ConfigEntry<float> ScrapQuantityScalar;
+    public readonly ConfigEntry<float> ScrapFairnessScaling;
+
     public readonly ConfigEntry<ThreatScannerMode> ThreatScanner;
 
     public readonly ConfigEntry<bool>  ScrapProtectionEnabled;
@@ -187,6 +191,39 @@ public class PluginConfig
             "fQuotaIncreaseRandomFactor",
             1f,
             "Used in calculating quota increase. Multiplier for the random increase factor.\nHost Required: Yes"
+        );
+
+        ScrapValueScalar = bindingPlugin.Config.Bind(
+            bindingPlugin.Info.Metadata.GUID,
+            "fScrapValueScalar",
+            1f,
+            new ConfigDescription(
+                "Multiplier for value of spawned scrap items. Should be a positive float." + 
+                "\nHost Required: Yes",
+                new AcceptableValueRange<float>(0, float.MaxValue)
+            )
+        );
+        ScrapQuantityScalar = bindingPlugin.Config.Bind(
+            bindingPlugin.Info.Metadata.GUID,
+            "fScrapQuantityScalar",
+            1f,
+            new ConfigDescription(
+                "Multiplier for quantity of spawned scrap items. Should be a positive float.\n" + 
+                "Host Required: Yes",
+                new AcceptableValueRange<float>(0, float.MaxValue)
+            )
+        );
+        ScrapFairnessScaling = bindingPlugin.Config.Bind(
+            bindingPlugin.Info.Metadata.GUID,
+            "fScrapFairnessScaling",
+            0f,
+            new ConfigDescription(
+                "Multiplier for 'fairness scaling' - Higher values increase scrap spawn quantity but decrease scrap value.\n" + 
+                "Has no effect when 4 or fewer players are present.\n" + "A value of 0 disables fairness scaling.\n" + 
+                "A value of 1.0 means that each additional player will cause 25% more scrap items to spawn (linear, not compounding) and reduce scrap value by an equal factor.\n" + 
+                "Host Required: Yes",
+                new AcceptableValueRange<float>(0, float.MaxValue)
+            )
         );
         
         ThreatScanner = bindingPlugin.Config.Bind(
