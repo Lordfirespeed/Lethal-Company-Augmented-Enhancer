@@ -51,8 +51,8 @@ public class Plugin : BaseUnityPlugin
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DeathPenaltyFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DeathPenaltyFormulaEnabled],
         },
-        new PatchInfo<FairnessScaling> {
-            Name = "Scrap Settings",
+        new PatchInfo<ScrapTweaks> {
+            Name = "Scrap Tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value,
             ListenToConfigEntries = [BoundConfig.ScrapFairnessScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
         },

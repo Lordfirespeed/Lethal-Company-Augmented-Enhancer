@@ -3,7 +3,7 @@ using LC_API.GameInterfaceAPI.Events.EventArgs.Player;
 
 namespace Enhancer.Patches;
 
-public class FairnessScaling : IPatch
+public class ScrapTweaks : IPatch
 {
     private static float _originalScrapValueMultiplier = 1f;
     private static float _originalScrapAmountMultiplier = 1f;
