@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public static class UnlockSuits
+public class UnlockSuits : IPatch
 {
     private static readonly MethodInfo UnlockItem = typeof(StartOfRound).GetMethod("SpawnUnlockable", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException("Couldn't find method: StartOfRound.SpawnUnlockable");
 
@@ -17,7 +17,7 @@ public static class UnlockSuits
     [HarmonyPostfix]
     public static void StartOfRoundSuitPatch(StartOfRound __instance)
     {
-        Plugin.Log.LogInfo("Setting unlocked suits this round");
+        Plugin.Logger.LogInfo("Setting unlocked suits this round");
 
         //Green Suit
         SpawnUnlockableDelegate(__instance, 1);

@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public static class AlwaysShowTerminal
+public class AlwaysShowTerminal : IPatch
 {
     [HarmonyPatch(typeof(Terminal), "Update")]
     [HarmonyPostfix]

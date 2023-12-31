@@ -12,7 +12,7 @@ public enum ThreatScannerMode
     ThreatLevelName,
 }
 
-public static class ThreatScannerInScanCommand
+public class ThreatScannerInScanCommand : IPatch
 {
     private static string GetThreatLevel(float threatCoefficient)
     {
@@ -46,7 +46,7 @@ public static class ThreatScannerInScanCommand
             return $"\nThreat Level: {GetThreatLevel(threatCoefficient)}\n";
         }
         
-        Plugin.Log.LogWarning("Invalid threat scanner type is configured.");
+        Plugin.Logger.LogWarning("Invalid threat scanner type is configured.");
         return null;
     }
     

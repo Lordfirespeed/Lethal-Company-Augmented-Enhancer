@@ -7,10 +7,17 @@
   <PropertyGroup>
     <LETHAL_COMPANY_DIR>$(HOME)/Steam/steamapps/common/Lethal Company</LETHAL_COMPANY_DIR>
     <TEST_PROFILE_DIR>$(HOME)/.config/r2modmanPlus-local/LethalCompany/profiles/Test Enhancer</TEST_PROFILE_DIR>
+      <PACK_THUNDERSTORE>false</PACK_THUNDERSTORE>
   </PropertyGroup>
 
-  <Target Name="CopyToTestProfile" AfterTargets="PostBuildEvent" Condition="false">
-    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(TEST_PROFILE_DIR)/BepInEx/plugins/Lordfirespeed-Augmented_Enhancer/&quot;" />
-  </Target>
+    <!-- Create your 'Test Profile' using your modman of choice before enabling this. 
+  Enable by setting the Condition attribute to "true". *nix users should switch out `copy` for `cp`. -->
+    <Target Name="CopyToTestProfile" AfterTargets="PostBuildEvent" Condition="false">
+        <MakeDir
+                Directories="$(TEST_PROFILE_DIR)/BepInEx/plugins/Lordfirespeed-Augmented_Enhancer"
+                Condition="Exists('$(TEST_PROFILE_DIR)') And !Exists('$(TEST_PROFILE_DIR)/BepInEx/plugins/Lordfirespeed-Augmented_Enhancer')"
+        />
+        <Exec Command="cp &quot;$(TargetPath)&quot; &quot;$(TEST_PROFILE_DIR)/BepInEx/plugins/Lordfirespeed-Augmented_Enhancer/&quot;" />
+    </Target>
 </Project>
 ```
