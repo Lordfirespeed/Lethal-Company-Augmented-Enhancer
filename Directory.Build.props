@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Authors>Crunchepillar, Lordfirespeed</Authors>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <PackageLicenseExpression>CC-BY-NC-4.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer</RepositoryUrl>
