@@ -96,7 +96,8 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     }
 
     private void InstantiatePatch()
-    {
+    {   
+        Plugin.Logger.LogDebug($"Instantiating patch...");
         PatchInstance = new TPatch();
 
         if (PatchLogger is null)
@@ -106,6 +107,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             return;
         }
         
+        Plugin.Logger.LogDebug($"Assigning logger...");
         PatchInstance.SetLogger(PatchLogger);
     }
 

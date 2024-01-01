@@ -116,7 +116,7 @@ public class Plugin : BaseUnityPlugin
         PatchInfoInitializers.HarmonyFactory = 
             harmonyName => new Harmony($"{MyPluginInfo.PLUGIN_GUID}-{harmonyName}");
         PatchInfoInitializers.LogSourceFactory =
-            patchName => new ManualLogSource($"{MyPluginInfo.PLUGIN_GUID}/{patchName}");
+            patchName => BepInEx.Logging.Logger.CreateLogSource($"{MyPluginInfo.PLUGIN_NAME}/{patchName}");
         
         Logger.LogInfo("Initialising patches...");
         GetPatches().Do(patch => patch.Initialise());

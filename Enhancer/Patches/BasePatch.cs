@@ -8,6 +8,7 @@ public abstract class BasePatch : IPatch
 
     public void SetLogger(ManualLogSource logger)
     {
+        logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
 }
