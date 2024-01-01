@@ -79,7 +79,7 @@ public class ScrapTweaks : BasePatch
 
     private static void CacheMultipliers(RoundManager manager)
     {
-        _originalScrapAmountMultiplier = manager.scrapValueMultiplier;
+        _originalScrapValueMultiplier = manager.scrapValueMultiplier;
         _originalScrapAmountMultiplier = manager.scrapAmountMultiplier;
     }
 
