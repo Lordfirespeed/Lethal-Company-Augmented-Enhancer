@@ -3,7 +3,7 @@ using LC_API.GameInterfaceAPI.Events.EventArgs.Player;
 
 namespace Enhancer.Patches;
 
-public class ScrapTweaks : IPatch
+public class ScrapTweaks : BasePatch
 {
     private static float _originalScrapValueMultiplier = 1f;
     private static float _originalScrapAmountMultiplier = 1f;
@@ -44,7 +44,9 @@ public class ScrapTweaks : IPatch
     [HarmonyPrefix]
     public static void RoundManagerAwaken(RoundManager __instance)
     {
+        Logger.LogDebug("Round manager awoke!");
         if (!__instance.playersManager.IsHost && !__instance.playersManager.IsServer) return;
+        Logger.LogDebug("I am the server!");
         
         SubscribeToEvents();
         CacheMultipliers(__instance);
@@ -55,11 +57,16 @@ public class ScrapTweaks : IPatch
     [HarmonyPrefix]
     public static void RoundManagerDestruction(RoundManager __instance)
     {
+        Logger.LogDebug("Round manager destroying!");
+        if (!__instance.playersManager.IsHost && !__instance.playersManager.IsServer) return;
+        Logger.LogDebug("I am the server!");
+        
         UnsubscribeFromEvents();
     }
 
     private static void SubscribeToEvents()
     {
+        Logger.LogDebug("Subscribed to join/leave!");
         LC_API.GameInterfaceAPI.Events.Handlers.Player.Joined += OnPlayerJoin;
         LC_API.GameInterfaceAPI.Events.Handlers.Player.Left += OnPlayerLeave;
     }
@@ -85,8 +92,8 @@ public class ScrapTweaks : IPatch
         }
         finally
         {
-            Plugin.Logger.LogDebug($"Attempted to restore scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
-            Plugin.Logger.LogDebug($"Attempted to restore scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
+            Logger.LogDebug($"Attempted to restore scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
+            Logger.LogDebug($"Attempted to restore scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
         }
     }
 
@@ -126,8 +133,8 @@ public class ScrapTweaks : IPatch
         }
         finally
         {
-            Plugin.Logger.LogDebug($"Attempted to update scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
-            Plugin.Logger.LogDebug($"Attempted to update scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
+            Logger.LogDebug($"Attempted to update scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
+            Logger.LogDebug($"Attempted to update scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
         }
     }
 }
