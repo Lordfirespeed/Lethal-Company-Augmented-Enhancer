@@ -1,14 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using HarmonyLib;
+using UnityEngine.UI;
 
 namespace Enhancer.Patches;
 
 public class AlwaysShowTerminal : IPatch
 {
-    [HarmonyPatch(typeof(Terminal), nameof(Terminal.waitUntilFrameEndToSetActive))]
-    [HarmonyPostfix]
-    public static void TerminalUpdatePost(Terminal __instance)
+    private static readonly MethodInfo WaitUntilFrameEndToSetActiveMethod = AccessTools.Method(typeof(Terminal), nameof(Terminal.waitUntilFrameEndToSetActive));
+    private static readonly MethodInfo StartCoroutineMethod = AccessTools.Method(typeof(UnityEngine.MonoBehaviour), nameof(UnityEngine.MonoBehaviour.StartCoroutine), [typeof(IEnumerator)]);
+
+    private static readonly FieldInfo TerminalScrollBarVertical = AccessTools.Field(typeof(Terminal), nameof(Terminal.scrollBarVertical));
+    private static readonly PropertyInfo ScrollbarValue = AccessTools.Property(typeof(Scrollbar), nameof(Scrollbar.value));
+    
+    [HarmonyPatch(typeof(Terminal), nameof(Terminal.QuitTerminal))]
+    [HarmonyTranspiler]
+    public static IEnumerable<CodeInstruction> TerminalQuitTranspile(IEnumerable<CodeInstruction> instructions)
     {
-        if (__instance.terminalUIScreen.gameObject.activeSelf) return;
-        __instance.terminalUIScreen.gameObject.SetActive(true);
+        var matcher = new CodeMatcher(instructions);
+
+        matcher
+            .Start()
+            .MatchForward(false,
+                new CodeMatch(OpCodes.Call, WaitUntilFrameEndToSetActiveMethod),
+                new CodeMatch(OpCodes.Call, StartCoroutineMethod)
+            )
+            .MatchBack(false,
+                new CodeMatch(OpCodes.Ldc_I4_0)
+            )
+            .SetOpcodeAndAdvance(OpCodes.Ldc_I4_1)
+            .MatchForward(false,
+                new CodeMatch(OpCodes.Ldarg_0),
+                new CodeMatch(OpCodes.Ldfld, TerminalScrollBarVertical),
+                new CodeMatch(OpCodes.Ldc_R4, 0f),
+                new CodeMatch(OpCodes.Callvirt, ScrollbarValue.GetSetMethod())
+            )
+            .SetOpcodeAndAdvance(OpCodes.Nop)
+            .RemoveInstructions(3);
+
+        return matcher.InstructionEnumeration();
     }
 }
