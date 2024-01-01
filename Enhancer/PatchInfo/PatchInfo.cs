@@ -65,7 +65,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     
     private void OnChange()
     {
-        if (ShouldLoad && PatchInstance == null)
+        if (ShouldLoad && PatchInstance is null)
         {
             Patch();
             return;
@@ -120,7 +120,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     {
         if (_disposed) return;
 
-        if (disposing)
+        if (disposing && PatchHarmony is not null)
         {
             ListenToConfigEntries
                 .Do(entry => entry.ConfigFile.SettingChanged -= _onChangeEventHandler);
