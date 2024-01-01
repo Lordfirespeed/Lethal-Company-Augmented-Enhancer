@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using Enhancer.Patches;
@@ -38,8 +39,10 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
         var delegateToPluginInfos = DelegateToModGuids
             .Select(guid => Chainloader.PluginInfos.Get(guid))
+            .Where(info => info is not null)
+            .Cast<PluginInfo>()
             .ToArray();
-        if (delegateToPluginInfos.Any(info => info is not null))
+        if (delegateToPluginInfos.Any())
             return false;
         
         Plugin.Logger.LogWarning(
