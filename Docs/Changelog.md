@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AlwaysShowTerminal patch updated to use a transpiler
   - Scroll will no longer reset when exiting the terminal
 - Some log-messages that were previously on the `Info` channel have been moved to `Debug`
+- Ran JetBrains formatter on all project sources
 
 ### Added
 
