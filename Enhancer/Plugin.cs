@@ -13,7 +13,6 @@
     how to use this mod in your game
 ***********************************************************/
 
-using System;
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Logging;
@@ -114,11 +113,13 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo("Binding config...");
         BoundConfig = new(this);
         
-        var harmonyFactory = 
-            (string harmonyName) => new Harmony(String.Join(MyPluginInfo.PLUGIN_GUID, ".", harmonyName));
+        PatchInfoInitializers.HarmonyFactory = 
+            harmonyName => new Harmony($"{MyPluginInfo.PLUGIN_GUID}-{harmonyName}");
+        PatchInfoInitializers.LogSourceFactory =
+            patchName => new ManualLogSource($"{MyPluginInfo.PLUGIN_GUID}/{patchName}");
         
         Logger.LogInfo("Initialising patches...");
-        GetPatches().Do(patch => patch.Initialise(harmonyFactory));
+        GetPatches().Do(patch => patch.Initialise());
         Logger.LogInfo("Done!");
     }
 
