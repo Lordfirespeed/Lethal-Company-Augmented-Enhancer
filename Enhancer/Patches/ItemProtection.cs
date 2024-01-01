@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
 
@@ -9,9 +10,17 @@ namespace Enhancer.Patches;
 [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.DespawnPropsAtEndOfRound))]
 public class ItemProtection : IPatch
 {
+    protected static ManualLogSource Logger { get; set; } = null!;
+
+    public void SetLogger(ManualLogSource logger)
+    {
+        logger.LogDebug("Logger assigned.");
+        Logger = logger;
+    }
+    
     public static bool IsUnprotectedScrap(Item item)
     {
-        Plugin.Logger.LogDebug($"Considering item {item} for destruction...");
+        Logger.LogDebug($"Considering item {item} for destruction...");
         return item.isScrap && !ShouldSaveScrap();
     }
     
@@ -34,7 +43,7 @@ public class ItemProtection : IPatch
     [HarmonyPrefix]
     static void Prefix(RoundManager __instance, bool despawnAllItems)
     {
-        Plugin.Logger.LogInfo("Getting ready to consider items for destruction");
+        Logger.LogInfo("Getting ready to consider items for destruction");
         
         if (despawnAllItems) return;
         if (!StartOfRound.Instance.allPlayersDead) return;
@@ -59,7 +68,7 @@ public class ItemProtection : IPatch
     [HarmonyPostfix]
     static void Postfix()
     {
-        Plugin.Logger.LogInfo("Finished considering items for destruction");
+        Logger.LogInfo("Finished considering items for destruction");
         RandomGenerator = null;
         ThisPassProtectionProbability = null;
     }
