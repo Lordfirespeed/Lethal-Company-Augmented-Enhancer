@@ -44,7 +44,8 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             .ToArray();
         if (delegateToPluginInfos.Any())
             return false;
-        
+
+        Plugin.Logger.LogDebug(delegateToPluginInfos);
         Plugin.Logger.LogWarning(
             $"{Name} feature is disabled due to the presence of '{String.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'"
         );
@@ -68,14 +69,14 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     
     private void OnChange()
     {
-        if (ShouldLoad && PatchInstance is null)
-        {
-            Patch();
-            return;
-        }
-
         if (ShouldLoad)
         {
+            if (PatchInstance is null)
+            {
+                Patch();
+                return;
+            }
+            
             PatchInstance!.OnConfigChange();
             return;
         }
