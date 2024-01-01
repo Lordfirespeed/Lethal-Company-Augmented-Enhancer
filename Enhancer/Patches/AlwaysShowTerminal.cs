@@ -9,12 +9,18 @@ namespace Enhancer.Patches;
 
 public class AlwaysShowTerminal : IPatch
 {
-    private static readonly MethodInfo WaitUntilFrameEndToSetActiveMethod = AccessTools.Method(typeof(Terminal), nameof(Terminal.waitUntilFrameEndToSetActive));
-    private static readonly MethodInfo StartCoroutineMethod = AccessTools.Method(typeof(UnityEngine.MonoBehaviour), nameof(UnityEngine.MonoBehaviour.StartCoroutine), [typeof(IEnumerator)]);
+    private static readonly MethodInfo WaitUntilFrameEndToSetActiveMethod =
+        AccessTools.Method(typeof(Terminal), nameof(Terminal.waitUntilFrameEndToSetActive));
 
-    private static readonly FieldInfo TerminalScrollBarVertical = AccessTools.Field(typeof(Terminal), nameof(Terminal.scrollBarVertical));
-    private static readonly PropertyInfo ScrollbarValue = AccessTools.Property(typeof(Scrollbar), nameof(Scrollbar.value));
-    
+    private static readonly MethodInfo StartCoroutineMethod = AccessTools.Method(typeof(UnityEngine.MonoBehaviour),
+        nameof(UnityEngine.MonoBehaviour.StartCoroutine), [typeof(IEnumerator)]);
+
+    private static readonly FieldInfo TerminalScrollBarVertical =
+        AccessTools.Field(typeof(Terminal), nameof(Terminal.scrollBarVertical));
+
+    private static readonly PropertyInfo ScrollbarValue =
+        AccessTools.Property(typeof(Scrollbar), nameof(Scrollbar.value));
+
     [HarmonyPatch(typeof(Terminal), nameof(Terminal.QuitTerminal))]
     [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> TerminalQuitTranspile(IEnumerable<CodeInstruction> instructions)

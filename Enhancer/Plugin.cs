@@ -9,7 +9,7 @@
     See LICENSE.md for information about copying
     distributing this project
 
-    See Docs/Installation.md for information on 
+    See Docs/Installation.md for information on
     how to use this mod in your game
 ***********************************************************/
 
@@ -111,13 +111,13 @@ public class Plugin : BaseUnityPlugin
     {
         Logger = base.Logger;
         Logger.LogInfo("Binding config...");
-        BoundConfig = new(this);
-        
-        PatchInfoInitializers.HarmonyFactory = 
+        BoundConfig = new PluginConfig(this);
+
+        PatchInfoInitializers.HarmonyFactory =
             harmonyName => new Harmony($"{MyPluginInfo.PLUGIN_GUID}-{harmonyName}");
         PatchInfoInitializers.LogSourceFactory =
             patchName => BepInEx.Logging.Logger.CreateLogSource($"{MyPluginInfo.PLUGIN_NAME}/{patchName}");
-        
+
         Logger.LogInfo("Initialising patches...");
         GetPatches().Do(patch => patch.Initialise());
         Logger.LogInfo("Done!");

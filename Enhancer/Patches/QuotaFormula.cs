@@ -12,7 +12,7 @@ public class QuotaFormula : IPatch
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-    
+
     [HarmonyPatch(typeof(StartOfRound), "Start")]
     [HarmonyPrefix]
     public static void StartOfRoundShipStartPre()

@@ -12,7 +12,7 @@ public class StartingCredits : IPatch
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-    
+
     [HarmonyPatch(typeof(Terminal), "Start")]
     [HarmonyPrefix]
     public static void TerminalStartPre()

@@ -14,20 +14,18 @@ public class CompanyBuyingFactorTweaks : IPatch
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-    
+
     private static float GetRandomPriceFactor()
     {
-        if (TimeOfDay.Instance.daysUntilDeadline < 1)
-        {
-            return 1.0f;
-        }
-            
+        if (TimeOfDay.Instance.daysUntilDeadline < 1) return 1.0f;
+
         Logger.LogInfo("Choosing random buying factor...");
 
         //Company mood factor
-        float moodFactor = GetMoodFactor();
+        var moodFactor = GetMoodFactor();
         //Small increase each day
-        float daysFactor = (float)(1.0 + 0.05f * (Plugin.BoundConfig.DaysPerQuotaAssignment.Value - TimeOfDay.Instance.daysUntilDeadline));
+        var daysFactor =
+            1.0f + 0.05f * (Plugin.BoundConfig.DaysPerQuotaAssignment.Value - TimeOfDay.Instance.daysUntilDeadline);
 
         //This maximum value should only happen after more than 10 days on a single quota
         daysFactor = Mathf.Clamp(daysFactor, 1.0f, 2.0f);
@@ -36,14 +34,14 @@ public class CompanyBuyingFactorTweaks : IPatch
 
         //Use the level seed to get prices
         System.Random rng = new(StartOfRound.Instance.randomMapSeed + 77);
-        float priceFactor = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
-        
+        var priceFactor = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
+
         Logger.LogInfo($"New buying % set at {priceFactor}");
         Logger.LogDebug($"    factors {moodFactor} : {daysFactor} : {StartOfRound.Instance.randomMapSeed + 77}");
 
         return priceFactor;
     }
-    
+
     private static string? GetCompanyMoodName()
     {
         if (TimeOfDay.Instance is null)
@@ -58,15 +56,14 @@ public class CompanyBuyingFactorTweaks : IPatch
     private static float GetMoodFactor()
     {
         Logger.LogDebug("Getting mood factor");
-        
+
         try
         {
-            return GetCompanyMoodName() switch
-            {
+            return GetCompanyMoodName() switch {
                 "SilentCalm" => 0.35f,
                 "SnoringGiant" => 0.45f,
                 "Agitated" => 0.25f,
-                _ => 0.40f,
+                _ => 0.40f
             };
         }
         finally
@@ -74,22 +71,17 @@ public class CompanyBuyingFactorTweaks : IPatch
             Logger.LogDebug("Got mood factor");
         }
     }
-    
+
     [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SetBuyingRateForDay))]
     [HarmonyPostfix]
     public static void BuyingRatePost(TimeOfDay __instance)
     {
         Logger.LogInfo("Setting company buying rate ...");
 
-        if (!NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsServer)
-        {
-            return;
-        }
-        
+        if (!NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsServer) return;
+
         if (Plugin.BoundConfig.RandomiseCompanyBuyingFactor.Value)
-        {
             StartOfRound.Instance.companyBuyingRate = GetRandomPriceFactor();
-        }
 
         //Minimum sale rate fixes negative rates
         if (StartOfRound.Instance.companyBuyingRate < Plugin.BoundConfig.MinimumCompanyBuyingFactor.Value)

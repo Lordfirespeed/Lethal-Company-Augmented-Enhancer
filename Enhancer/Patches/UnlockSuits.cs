@@ -24,7 +24,7 @@ public class UnlockSuits : IPatch
     public static void StartOfRoundSuitPatch(StartOfRound __instance)
     {
         Logger.LogInfo("Setting unlocked suits this round");
-        
+
         __instance.unlockablesList.unlockables
             .Select((unlockable, index) => new { unlockable, index })
             .Where(item => {

@@ -12,7 +12,7 @@ public class TimeSpeed : IPatch
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-    
+
     [HarmonyPatch(typeof(TimeOfDay), "Start")]
     [HarmonyPostfix]
     public static void TimeOfDayOnStartPost(TimeOfDay __instance)

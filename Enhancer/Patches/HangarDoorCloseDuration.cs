@@ -12,7 +12,7 @@ public class HangarDoorCloseDuration : IPatch
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-    
+
     [HarmonyPatch(typeof(HangarShipDoor), "Start")]
     [HarmonyPostfix]
     public static void HangarShipDoorPost(HangarShipDoor __instance)

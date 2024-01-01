@@ -10,9 +10,9 @@ using UnityEngine.UIElements.Collections;
 
 namespace Enhancer.PatchInfo;
 
-static class PatchInfoInitializers
+internal static class PatchInfoInitializers
 {
-    public static Func<string, Harmony> HarmonyFactory { get; set; } = 
+    public static Func<string, Harmony> HarmonyFactory { get; set; } =
         s => throw new InvalidOperationException("PatchInfo HarmonyFactory has not been initialized.");
 
     public static Func<string, ManualLogSource> LogSourceFactory { get; set; } =
@@ -32,20 +32,20 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     private TPatch? PatchInstance { get; set; }
     private readonly EventHandler<SettingChangedEventArgs> _onChangeEventHandler;
     private bool _disposed = false;
-    
+
     public bool IsEnabled => EnabledCondition == null || EnabledCondition();
     public bool ShouldLoad => IsEnabled && !HasLoadedDelegate();
 
     public PatchInfo()
     {
-        _onChangeEventHandler = (_, eventArgs) =>
-        {
+        _onChangeEventHandler = (_, eventArgs) => {
             if (!ListenToConfigEntries.Contains(eventArgs.ChangedSetting)) return;
             OnChange();
         };
     }
 
-    protected bool HasLoadedDelegate() {
+    protected bool HasLoadedDelegate()
+    {
         if (!Plugin.BoundConfig.DelegationEnabled.Value) return false;
 
         var delegateToPluginInfos = DelegateToModGuids
@@ -55,29 +55,29 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             .ToArray();
         if (!delegateToPluginInfos.Any())
             return false;
-        
+
         Plugin.Logger.LogWarning(
-            $"{Name} feature is disabled due to the presence of '{String.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'"
+            $"{Name} feature is disabled due to the presence of '{string.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'"
         );
         return true;
     }
 
     public void Initialise()
     {
-        if (_disposed) 
+        if (_disposed)
             throw new InvalidOperationException("PatchInfo has already been disposed!.");
         if (PatchHarmony is not null)
             throw new InvalidOperationException("PatchInfo has already been initialised!");
 
         PatchHarmony = PatchInfoInitializers.HarmonyFactory(typeof(TPatch).Name);
         PatchLogger = PatchInfoInitializers.LogSourceFactory(Name);
-        
+
         ListenToConfigEntries
             .Do(entry => entry.ConfigFile.SettingChanged += _onChangeEventHandler);
 
         OnChange();
     }
-    
+
     private void OnChange()
     {
         if (ShouldLoad)
@@ -87,16 +87,16 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
                 Patch();
                 return;
             }
-            
+
             PatchInstance!.OnConfigChange();
             return;
         }
-        
+
         Unpatch();
     }
 
     private void InstantiatePatch()
-    {   
+    {
         Plugin.Logger.LogDebug($"Instantiating patch...");
         PatchInstance = new TPatch();
 
@@ -106,7 +106,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             PatchInstance.SetLogger(Plugin.Logger);
             return;
         }
-        
+
         Plugin.Logger.LogDebug($"Assigning logger...");
         PatchInstance.SetLogger(PatchLogger);
     }
@@ -118,7 +118,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             if (PatchHarmony is null)
                 throw new Exception("PatchInfo has not been initialised. Cannot patch without a Harmony instance.");
             if (PatchInstance is not null) return;
-            
+
             Plugin.Logger.LogInfo($"Attaching {Name} patches...");
             InstantiatePatch();
             PatchInstance!.OnPatch();
@@ -133,20 +133,20 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             if (PatchHarmony is null)
                 throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
             if (PatchInstance is null) return;
-            
+
             Plugin.Logger.LogInfo($"Detaching {Name} patches...");
             PatchHarmony.UnpatchSelf();
             PatchInstance.OnUnpatch();
             PatchInstance = null;
         }
     }
-    
+
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-    
+
     protected virtual void Dispose(bool disposing)
     {
         if (_disposed) return;
