@@ -1,3 +1,4 @@
+using BepInEx.Logging;
 using UnityEngine;
 using HarmonyLib;
 using Unity.Netcode;
@@ -6,6 +7,14 @@ namespace Enhancer.Patches;
 
 public class CompanyBuyingFactorTweaks : IPatch
 {
+    protected static ManualLogSource Logger { get; set; } = null!;
+
+    public void SetLogger(ManualLogSource logger)
+    {
+        logger.LogDebug("Logger assigned.");
+        Logger = logger;
+    }
+    
     private static float GetRandomPriceFactor()
     {
         if (TimeOfDay.Instance.daysUntilDeadline < 1)
@@ -13,7 +22,7 @@ public class CompanyBuyingFactorTweaks : IPatch
             return 1.0f;
         }
             
-        Plugin.Logger.LogInfo("Choosing random price factor");
+        Logger.LogInfo("Choosing random buying factor...");
 
         //Company mood factor
         float moodFactor = GetMoodFactor();
@@ -29,8 +38,8 @@ public class CompanyBuyingFactorTweaks : IPatch
         System.Random rng = new(StartOfRound.Instance.randomMapSeed + 77);
         float priceFactor = (float)rng.NextDouble() * (1.0f - moodFactor * daysFactor) + moodFactor;
         
-        Plugin.Logger.LogInfo("New price % set at" + priceFactor);
-        Plugin.Logger.LogInfo("    factors " + moodFactor + " : " + daysFactor + " : " + (StartOfRound.Instance.randomMapSeed + 77));
+        Logger.LogInfo($"New buying % set at {priceFactor}");
+        Logger.LogDebug($"    factors {moodFactor} : {daysFactor} : {StartOfRound.Instance.randomMapSeed + 77}");
 
         return priceFactor;
     }
@@ -48,7 +57,7 @@ public class CompanyBuyingFactorTweaks : IPatch
 
     private static float GetMoodFactor()
     {
-        Plugin.Logger.LogInfo("Getting mood factor");
+        Logger.LogDebug("Getting mood factor");
         
         try
         {
@@ -62,7 +71,7 @@ public class CompanyBuyingFactorTweaks : IPatch
         }
         finally
         {
-            Plugin.Logger.LogInfo("Got mood factor");
+            Logger.LogDebug("Got mood factor");
         }
     }
     
@@ -70,7 +79,7 @@ public class CompanyBuyingFactorTweaks : IPatch
     [HarmonyPostfix]
     public static void BuyingRatePost(TimeOfDay __instance)
     {
-        Plugin.Logger.LogInfo("TimeOfDay SetBuyingRateForDay");
+        Logger.LogInfo("Setting company buying rate ...");
 
         if (!NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsServer)
         {
