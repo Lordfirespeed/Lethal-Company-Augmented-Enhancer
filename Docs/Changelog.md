@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- All patches now have their own ManualLogSource
+- UnlockSuits patch refactored to be name-dependent (as opposed to index-dependent)
+- AlwaysShowTerminal patch updated to use a transpiler
+  - Scroll will no longer reset when exiting the terminal
+- Some log-messages that were previously on the `Info` channel have been moved to `Debug`
+
 ### Added
 
 ### Fixed 
