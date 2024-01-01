@@ -42,10 +42,9 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             .Where(info => info is not null)
             .Cast<PluginInfo>()
             .ToArray();
-        if (delegateToPluginInfos.Any())
+        if (!delegateToPluginInfos.Any())
             return false;
-
-        Plugin.Logger.LogDebug(delegateToPluginInfos);
+        
         Plugin.Logger.LogWarning(
             $"{Name} feature is disabled due to the presence of '{String.Join(", ", delegateToPluginInfos.Select(info => info.Metadata.Name))}'"
         );
