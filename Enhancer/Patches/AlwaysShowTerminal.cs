@@ -4,7 +4,7 @@ namespace Enhancer.Patches;
 
 public class AlwaysShowTerminal : IPatch
 {
-    [HarmonyPatch(typeof(Terminal), "Update")]
+    [HarmonyPatch(typeof(Terminal), nameof(Terminal.waitUntilFrameEndToSetActive))]
     [HarmonyPostfix]
     public static void TerminalUpdatePost(Terminal __instance)
     {
