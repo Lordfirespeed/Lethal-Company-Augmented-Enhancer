@@ -117,7 +117,7 @@ public class Plugin : BaseUnityPlugin
         var harmonyFactory = 
             (string harmonyName) => new Harmony(String.Join(MyPluginInfo.PLUGIN_GUID, ".", harmonyName));
         
-        Logger.LogInfo("Enabled, initialising patches...");
+        Logger.LogInfo("Initialising patches...");
         GetPatches().Do(patch => patch.Initialise(harmonyFactory));
         Logger.LogInfo("Done!");
     }
