@@ -1,18 +1,26 @@
+using BepInEx.Logging;
 using HarmonyLib;
 using LC_API.GameInterfaceAPI.Events.EventArgs.Player;
 
 namespace Enhancer.Patches;
 
-public class ScrapTweaks : BasePatch
+public class ScrapTweaks : IPatch
 {
+    protected static ManualLogSource Logger { get; set; } = null!;
+
+    public void SetLogger(ManualLogSource logger)
+    {
+        logger.LogDebug("Logger assigned.");
+        Logger = logger;
+    }
+    
     private static float _originalScrapValueMultiplier = 1f;
     private static float _originalScrapAmountMultiplier = 1f;
 
     private bool RoundManagerExistsAndIsServer()
     {
         if (!RoundManager.Instance) return false;
-        if (!RoundManager.Instance.playersManager) return false;
-        if (!RoundManager.Instance.playersManager.IsHost && !RoundManager.Instance.playersManager.IsServer) return false;
+        if (RoundManager.Instance is { IsHost: false, IsServer: false }) return false;
         return true;
     }
 
@@ -40,26 +48,26 @@ public class ScrapTweaks : BasePatch
         RestoreMultipliers(RoundManager.Instance);
     }
 
-    [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.Awake))]
+    [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.Start))]
     [HarmonyPrefix]
     public static void RoundManagerAwaken(RoundManager __instance)
     {
-        Logger.LogDebug("Round manager awoke!");
-        if (!__instance.playersManager.IsHost && !__instance.playersManager.IsServer) return;
+        Logger.LogDebug("Round manager started!");
+        if (__instance is { IsHost: false, IsServer: false }) return;
         Logger.LogDebug("I am the server!");
         
         SubscribeToEvents();
         CacheMultipliers(__instance);
-        ApplyMultipliers(RoundManager.Instance.playersManager.connectedPlayersAmount);
+        ApplyMultipliers(__instance.playersManager.connectedPlayersAmount);
     }
     
     [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.OnDestroy))]
     [HarmonyPrefix]
     public static void RoundManagerDestruction(RoundManager __instance)
     {
-        Logger.LogDebug("Round manager destroying!");
-        if (!__instance.playersManager.IsHost && !__instance.playersManager.IsServer) return;
-        Logger.LogDebug("I am the server!");
+        Plugin.Logger.LogDebug("Round manager destroying!");
+        if (__instance is { IsHost: false, IsServer: false }) return;
+        Plugin.Logger.LogDebug("I am the server!");
         
         UnsubscribeFromEvents();
     }
@@ -133,8 +141,8 @@ public class ScrapTweaks : BasePatch
         }
         finally
         {
-            Logger.LogDebug($"Attempted to update scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
-            Logger.LogDebug($"Attempted to update scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
+            Plugin.Logger.LogDebug($"Attempted to update scrap value multiplier. Value is now {RoundManager.Instance.scrapValueMultiplier}");
+            Plugin.Logger.LogDebug($"Attempted to update scrap quantity multiplier. Value is now {RoundManager.Instance.scrapAmountMultiplier}");
         }
     }
 }
