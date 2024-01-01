@@ -1,3 +1,4 @@
+using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
 
@@ -5,6 +6,14 @@ namespace Enhancer.Patches;
 
 public class DeathPenalty : IPatch
 {
+    protected static ManualLogSource Logger { get; set; } = null!;
+
+    public void SetLogger(ManualLogSource logger)
+    {
+        logger.LogDebug("Logger assigned.");
+        Logger = logger;
+    }
+    
     private static int CountTotalPlayersInSession()
     {
         return StartOfRound.Instance.connectedPlayersAmount + 1;
@@ -36,7 +45,7 @@ public class DeathPenalty : IPatch
     
     [HarmonyPatch(typeof(HUDManager), nameof(HUDManager.ApplyPenalty))]
     [HarmonyPrefix]
-    public static bool ApplyPenaltyPrefix(ref int playersDead, ref int bodiesInsured)
+    public static bool ApplyPenaltyPrefix(ref int playersDead, ref int bodiesInsured, HUDManager __instance)
     {   
         playersDead = Mathf.Max(playersDead, 0);
         bodiesInsured = Mathf.Max(bodiesInsured, 0);
@@ -45,17 +54,17 @@ public class DeathPenalty : IPatch
         float maximumPenaltyFactor = DetermineMaximumPenaltyFactor();
         float penaltyFactor = ComputePenaltyFactor(deathCoefficient, maximumPenaltyFactor);
         
-        Terminal terminalInstance = UnityEngine.Object.FindObjectOfType<Terminal>();
+        Terminal terminalInstance = Object.FindObjectOfType<Terminal>();
         int penaltyTotal = (int)(terminalInstance.groupCredits * penaltyFactor);
         
-        Plugin.Logger.LogInfo($"Death Penalty is {penaltyFactor:p1} of {terminalInstance.groupCredits} = {penaltyTotal} credits.");
+        Logger.LogInfo($"Death Penalty is {penaltyFactor:p1} of {terminalInstance.groupCredits} = {penaltyTotal} credits.");
         
         terminalInstance.groupCredits = Mathf.Max(0, terminalInstance.groupCredits - penaltyTotal);
 
-        HUDManager.Instance.statsUIElements.penaltyAddition.text = $"{playersDead} casualties: -{penaltyFactor:p0}\n({bodiesInsured} bodies recovered)";
-        HUDManager.Instance.statsUIElements.penaltyTotal.text = $"DUE: {penaltyTotal}";
+        __instance.statsUIElements.penaltyAddition.text = $"{playersDead} casualties: -{penaltyFactor:p0}\n({bodiesInsured} bodies recovered)";
+        __instance.statsUIElements.penaltyTotal.text = $"DUE: {penaltyTotal}";
         
-        Plugin.Logger.LogInfo($"Death penalty has been applied. New group credits: {terminalInstance.groupCredits}.");
+        Logger.LogInfo($"Death penalty has been applied. New group credits: {terminalInstance.groupCredits}.");
         
         return false;
     }
