@@ -1,27 +1,36 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using BepInEx.Logging;
 using HarmonyLib;
 
 namespace Enhancer.Patches;
 
 public class UnlockSuits : IPatch
 {
-    private static readonly MethodInfo UnlockItem = typeof(StartOfRound).GetMethod("SpawnUnlockable", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException("Couldn't find method: StartOfRound.SpawnUnlockable");
+    protected static ManualLogSource Logger { get; set; } = null!;
 
-    public static void SpawnUnlockableDelegate(StartOfRound instance, int ID)
+    public void SetLogger(ManualLogSource logger)
     {
-        UnlockItem.Invoke(instance, new object[] { ID });
+        logger.LogDebug("Logger assigned.");
+        Logger = logger;
     }
+
+    private static readonly HashSet<string> UnlockableNamesToSpawn = ["Green suit", "Hazard suit"];
 
     [HarmonyPatch(typeof(StartOfRound), "Start")]
     [HarmonyPostfix]
     public static void StartOfRoundSuitPatch(StartOfRound __instance)
     {
-        Plugin.Logger.LogInfo("Setting unlocked suits this round");
-
-        //Green Suit
-        SpawnUnlockableDelegate(__instance, 1);
-        //Hazard Suit
-        SpawnUnlockableDelegate(__instance, 2);
+        Logger.LogInfo("Setting unlocked suits this round");
+        
+        __instance.unlockablesList.unlockables
+            .Select((unlockable, index) => new { unlockable, index })
+            .Where(item => {
+                Logger.LogDebug(item.unlockable.unlockableName);
+                return UnlockableNamesToSpawn.Contains(item.unlockable.unlockableName);
+            })
+            .Do(item => __instance.SpawnUnlockable(item.index));
     }
 }
