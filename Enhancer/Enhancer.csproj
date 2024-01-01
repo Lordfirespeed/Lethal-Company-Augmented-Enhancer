@@ -43,6 +43,9 @@
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.Netcode.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/UnityEngine.UIModule.dll</HintPath>
     </Reference>
