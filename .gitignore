@@ -29,11 +29,6 @@
 ## GitHub specific
 !.github/
 
-## Dependencies folder
-!lib
-lib/*
-!lib/.gitkeep
-
 ## Projects
 !Lethal-Company-Enhancer.sln
 
@@ -41,11 +36,6 @@ lib/*
 !Enhancer/
 Enhancer/[Bb]in/
 Enhancer/[Oo]bj/
-
-### Build
-!build/
-build/[Bb]in/
-build/[Oo]bj/
 
 # Explicit exceptions/ignores
 **.user
