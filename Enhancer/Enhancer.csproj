@@ -49,7 +49,7 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TMP">
+    <Reference Include="UnityEngine.TextMeshPro">
       <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputSystem">
