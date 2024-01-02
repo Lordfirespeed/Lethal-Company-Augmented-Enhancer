@@ -7,6 +7,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using Enhancer.Patches;
+using Enhancer.Config;
 
 namespace Enhancer;
 
@@ -34,7 +35,14 @@ public class PluginConfig
     public readonly ConfigEntry<int> PassiveIncomeQuantity;
 
     public readonly ConfigEntry<bool> DaysPerQuotaAssignmentEnabled;
+    public readonly ConfigEntry<QuotaDurationBehaviour> DaysPerQuotaAssignmentBehaviour;
     public readonly ConfigEntry<int> DaysPerQuotaAssignment;
+    public readonly ConfigEntry<Bounds<int>> DaysPerQuotaAssignmentBounds;
+    public readonly ConfigEntry<int> BaseTargetIncomePerDay;
+    public readonly ConfigEntry<float> MaxTargetIncomePerDayScalar;
+    public readonly ConfigEntry<int> AssignmentsToReachMaximumTargetIncomePerDay;
+    public readonly ConfigEntry<float> TargetIncomePerDayScalarCurvature;
+    public readonly ConfigEntry<Bounds<float>> TargetIncomePerDayScalarRandomnessBounds;
 
     public readonly ConfigEntry<bool> QuotaFormulaEnabled;
     public readonly ConfigEntry<int> StartingQuota;
@@ -190,13 +198,74 @@ public class PluginConfig
             false,
             "Feature flag for the 'days per quota' variable.\nHost Required: Yes"
         );
+        DaysPerQuotaAssignmentBehaviour = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "eQuotaAssignmentBehaviour",
+            QuotaDurationBehaviour.Constant,
+            "The behaviour of the quota duration.\n" +
+            "- Constant: Quota duration remains constant throughout play.\n" +
+            "- Variable: Quota duration varies based upon 'target income per day' (configured below)\n" +
+            "- DynamicVariable: Quota duration varies upon your lifetime average income per day .\n" +
+            "Host Required: Yes"
+        );
         DaysPerQuotaAssignment = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
             "iQuotaAssignmentDays",
             3,
             "How long you have to meet each quota (in days)\nRecommended values: 3 - 7\nHost Required: Yes"
         );
-
+        DaysPerQuotaAssignmentBounds = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "bounds<i>QuotaAssignmentDays",
+            new Bounds<int>(),
+            new ConfigDescription(
+                "Bounds for the quota assignment duration when using variable quota duration behaviour.\n" + 
+                "Host Required: Yes"
+            )
+        );
+        BaseTargetIncomePerDay = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "iBaseTargetIncomePerDay",
+            200,
+            new ConfigDescription(
+                ""
+            )
+        );
+        MaxTargetIncomePerDayScalar = bindingPlugin.Config.Bind( 
+            "Quota Assignment Duration",
+            "bounds<f>TargetIncomePerDay",
+            1.5f,
+            new ConfigDescription(
+                "Upper bound for target income per day multiplier when using variable quota duration behaviour.\n" +
+                "Host Required: Yes"
+            )
+        );
+        AssignmentsToReachMaximumTargetIncomePerDay = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "iAssignmentCountToReachMaximumTargetIncomePerDay",
+            10,
+            new ConfigDescription(
+                "Number of assignments you must complete for target income per day to hit the upper-bound.\n" +
+                "Host Required: Yes"
+            )
+        );
+        TargetIncomePerDayScalarCurvature = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "fTargetIncomeScalarCurvature",
+            0f,
+            new ConfigDescription(
+                "How curved the graph of target income per day against quota assignments completed is.\n" +
+                "- 0: Target income per day increases linearly.\n" +
+                "- 1: "
+            )
+        );
+        TargetIncomePerDayScalarRandomnessBounds = bindingPlugin.Config.Bind(
+            "Quota Assignment Duration",
+            "bounds<f>TargetIncomeScalarRandomnessBounds",
+            new Bounds<float>(),
+            new ConfigDescription("")
+        );
+        
         #endregion
 
         #region Quota Calculation
