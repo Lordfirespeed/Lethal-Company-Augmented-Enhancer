@@ -1,5 +1,4 @@
 using BepInEx.Logging;
-using Dissonance;
 using HarmonyLib;
 
 namespace Enhancer.Patches;
