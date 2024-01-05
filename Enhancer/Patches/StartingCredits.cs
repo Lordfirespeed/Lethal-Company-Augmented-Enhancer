@@ -13,7 +13,7 @@ public class StartingCredits : IPatch
         Logger = logger;
     }
 
-    [HarmonyPatch(typeof(Terminal), "Start")]
+    [HarmonyPatch(typeof(Terminal), nameof(Terminal.Start))]
     [HarmonyPrefix]
     public static void TerminalStartPre()
     {
