@@ -1,3 +1,4 @@
+using System;
 using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class DaysPerQuota : IPatch
         Logger = logger;
     }
     
-    [HarmonyPatch(typeof(StartOfRound), "Start")]
+    [HarmonyPatch(typeof(Terminal), nameof(Terminal.Start))]
     [HarmonyPrefix]
     public static void StartOfRoundShipStartPre()
     {
@@ -29,6 +30,22 @@ public class DaysPerQuota : IPatch
     {
         timeUntilDeadline = Mathf.Clamp(Mathf.Ceil(profitQuota / 200), 4f, 10f);
     }
+
+    [HarmonyPatch(typeof(GameNetworkManager), nameof(GameNetworkManager.ResetSavedGameValues))]
+    [HarmonyPrefix]
+    static void ResetSavedValues(ref bool isHostingGame)
+    {
+        if (!isHostingGame)
+            return;
+        string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
+        ES3.Save("previousDeadlines", Array.Empty<PastQuotaAssignmentInfo>(), currentSaveFile);
+        ES3.Save("quotaVariables", TimeOfDay.Instance.quotaVariables, currentSaveFile);
+    }
+}
+
+public struct PastQuotaAssignmentInfo
+{
+    
 }
 
 public enum QuotaDurationBehaviour
