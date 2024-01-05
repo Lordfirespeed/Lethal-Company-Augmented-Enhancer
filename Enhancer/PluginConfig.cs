@@ -232,10 +232,11 @@ public class PluginConfig
         DaysPerQuotaAssignmentBounds = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
             "bounds<i>QuotaAssignmentDays",
-            new Bounds<int>(),
+            new Interval<int>(3, 10),
             new ConfigDescription(
                 "Bounds for the quota assignment duration when using variable quota duration behaviour.\n" + 
-                "Host Required: Yes"
+                "Host Required: Yes",
+                new AcceptableInterval<int>(new Interval<int>(1, int.MaxValue))
             )
         );
         BaseTargetIncomePerDay = bindingPlugin.Config.Bind(
@@ -248,7 +249,7 @@ public class PluginConfig
         );
         MaxTargetIncomePerDayScalar = bindingPlugin.Config.Bind( 
             "Quota Assignment Duration",
-            "bounds<f>TargetIncomePerDay",
+            "interval<f>TargetIncomePerDay",
             1.5f,
             new ConfigDescription(
                 "Upper bound for target income per day multiplier when using variable quota duration behaviour.\n" +
@@ -276,9 +277,11 @@ public class PluginConfig
         );
         TargetIncomePerDayScalarRandomnessBounds = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
-            "bounds<f>TargetIncomeScalarRandomnessBounds",
-            new Bounds<float>(),
-            new ConfigDescription("")
+            "interval<f>TargetIncomeScalarRandomnessBounds",
+            new Interval<float>(-0.2f, 0.2f),
+            new ConfigDescription(
+                ""
+            )
         );
         
         #endregion
@@ -297,11 +300,17 @@ public class PluginConfig
             130,
             "The starting quota on a new run.\nHost Required: Yes"
         );
-        QuotaIncreaseSteepness = bindingPlugin.Config.Bind(
+        QuotaIncreaseSteepnessCoefficient = bindingPlugin.Config.Bind(
             "Quota Calculation",
             "fQuotaIncreaseSteepness",
             0.0625f,
-            "Used in calculating quota increase. Multiplier for the quadratic increase factor.\nHost Required: Yes"
+            "Used in calculating quota increase. Coefficient for the increase factor dependent on the number of completed quota assignments.\nHost Required: Yes"
+        );
+        QuotaIncreaseSteepnessExponent = bindingPlugin.Config.Bind(
+            "Quota Calculation",
+            "fQuotaIncreaseSteepnessExponent",
+            2f,
+            "Used in calculating quota increase. Exponent for the increase factor dependent on the number of completed quota assignments.\nHost Required: Yes"
         );
         QuotaBaseIncrease = bindingPlugin.Config.Bind(
             "Quota Calculation",
