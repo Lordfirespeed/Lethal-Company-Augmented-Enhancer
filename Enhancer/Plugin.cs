@@ -111,6 +111,7 @@ public class Plugin : BaseUnityPlugin
     {
         Logger = base.Logger;
         Logger.LogInfo("Binding config...");
+        PluginConfig.RegisterTypeConverters();
         BoundConfig = new PluginConfig(this);
 
         PatchInfoInitializers.HarmonyFactory =

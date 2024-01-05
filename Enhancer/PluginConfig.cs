@@ -4,10 +4,12 @@
     All configuration options go in here
 ***********************************************************/
 
+using System;
 using BepInEx;
 using BepInEx.Configuration;
 using Enhancer.Patches;
 using Enhancer.Config;
+using Enhancer.Config.AcceptableValues;
 
 namespace Enhancer;
 
@@ -67,6 +69,18 @@ public class PluginConfig
     public readonly ConfigEntry<float> DeadBodyRecoveryDiscount;
     public readonly ConfigEntry<float> DeathPenaltyScalingCurvature;
 
+    public static void RegisterTypeConverters()
+    {
+        TomlTypeConverter.AddConverter(typeof(Interval<int>), new TypeConverter {
+            ConvertToString = (Func<object, Type, string>)((obj, type) => obj.ToString()),
+            ConvertToObject = (Func<string, Type, object>)((str, type) => Interval<int>.Parse(str))
+        });
+        TomlTypeConverter.AddConverter(typeof(Interval<float>), new TypeConverter {
+            ConvertToString = (Func<object, Type, string>)((obj, type) => obj.ToString()),
+            ConvertToObject = (Func<string, Type, object>)((str, type) => Interval<float>.Parse(str))
+        });
+    }
+    
     public PluginConfig(BaseUnityPlugin bindingPlugin)
     {
         #region Global Config
