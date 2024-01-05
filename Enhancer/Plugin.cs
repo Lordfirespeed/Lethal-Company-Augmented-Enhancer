@@ -113,6 +113,13 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo("Binding config...");
         PluginConfig.RegisterTypeConverters();
         BoundConfig = new PluginConfig(this);
+        
+        /*
+        var go = new GameObject("Enhancer");
+        go.hideFlags = HideFlags.HideAndDontSave;
+        go.AddComponent<EnhancerPatcher>();
+        DontDestroyOnLoad(go);
+        */
 
         PatchInfoInitializers.HarmonyFactory =
             harmonyName => new Harmony($"{MyPluginInfo.PLUGIN_GUID}-{harmonyName}");
