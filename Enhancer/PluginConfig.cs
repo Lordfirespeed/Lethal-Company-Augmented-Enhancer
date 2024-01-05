@@ -39,16 +39,17 @@ public class PluginConfig
     public readonly ConfigEntry<bool> DaysPerQuotaAssignmentEnabled;
     public readonly ConfigEntry<QuotaDurationBehaviour> DaysPerQuotaAssignmentBehaviour;
     public readonly ConfigEntry<int> DaysPerQuotaAssignment;
-    public readonly ConfigEntry<Bounds<int>> DaysPerQuotaAssignmentBounds;
+    public readonly ConfigEntry<Interval<int>> DaysPerQuotaAssignmentBounds;
     public readonly ConfigEntry<int> BaseTargetIncomePerDay;
     public readonly ConfigEntry<float> MaxTargetIncomePerDayScalar;
     public readonly ConfigEntry<int> AssignmentsToReachMaximumTargetIncomePerDay;
     public readonly ConfigEntry<float> TargetIncomePerDayScalarCurvature;
-    public readonly ConfigEntry<Bounds<float>> TargetIncomePerDayScalarRandomnessBounds;
+    public readonly ConfigEntry<Interval<float>> TargetIncomePerDayScalarRandomnessBounds;
 
     public readonly ConfigEntry<bool> QuotaFormulaEnabled;
     public readonly ConfigEntry<int> StartingQuota;
-    public readonly ConfigEntry<float> QuotaIncreaseSteepness;
+    public readonly ConfigEntry<float> QuotaIncreaseSteepnessCoefficient;
+    public readonly ConfigEntry<float> QuotaIncreaseSteepnessExponent;
     public readonly ConfigEntry<float> QuotaBaseIncrease;
     public readonly ConfigEntry<float> QuotaIncreaseRandomFactor;
 
