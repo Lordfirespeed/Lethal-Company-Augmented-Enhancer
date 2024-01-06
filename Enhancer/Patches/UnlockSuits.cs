@@ -19,7 +19,7 @@ public class UnlockSuits : IPatch
 
     private static readonly HashSet<string> UnlockableNamesToSpawn = ["Green suit", "Hazard suit"];
 
-    [HarmonyPatch(typeof(StartOfRound), "Start")]
+    [HarmonyPatch(typeof(StartOfRound), nameof(StartOfRound.Start))]
     [HarmonyPostfix]
     public static void StartOfRoundSuitPatch(StartOfRound __instance)
     {
