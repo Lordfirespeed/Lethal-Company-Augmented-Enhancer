@@ -40,7 +40,7 @@ public class Plugin : BaseUnityPlugin
         },
         new PatchInfo<DaysPerQuota> {
             Name = "Days per quota",
-            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaAssignmentEnabled.Value,
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaAssignmentEnabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DaysPerQuotaAssignmentEnabled],
             DelegateToModGuids = ["mom.llama.enhancer", "Haha.DynamicDeadline"],
         },
@@ -106,14 +106,14 @@ public class Plugin : BaseUnityPlugin
             DelegateToModGuids = ["mom.llama.enhancer"],
         }
     ];
-    
+
     private void Awake()
     {
         Logger = base.Logger;
         Logger.LogInfo("Binding config...");
         PluginConfig.RegisterTypeConverters();
         BoundConfig = new PluginConfig(this);
-        
+
         /*
         var go = new GameObject("Enhancer");
         go.hideFlags = HideFlags.HideAndDontSave;
