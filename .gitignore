@@ -2,6 +2,10 @@
 /*
 
 # Specific includes
+
+## Editorconfig
+!.editorconfig
+
 ## Docs
 !Docs/
 
