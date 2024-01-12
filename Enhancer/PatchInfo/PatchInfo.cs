@@ -4,6 +4,7 @@ using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
+using Enhancer.Extensions;
 using Enhancer.Patches;
 using HarmonyLib;
 using UnityEngine.UIElements.Collections;
@@ -122,7 +123,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
             Plugin.Logger.LogInfo($"Attaching {Name} patches...");
             InstantiatePatch();
             PatchInstance!.OnPatch();
-            PatchHarmony.CreateClassProcessor(typeof(TPatch), true).Patch();
+            PatchHarmony.PatchAllWithNestedTypes(typeof(TPatch));
         }
     }
 
