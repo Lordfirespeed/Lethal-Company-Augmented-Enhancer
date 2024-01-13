@@ -15,7 +15,7 @@ namespace Enhancer.Patches;
 public class QuotaFormula : IPatch
 {
     protected static ManualLogSource Logger { get; set; } = null!;
-    protected static QuotaFormula? Instance { get; private set; }
+    public static QuotaFormula? Instance { get; private set; }
     protected static readonly string QuotaVariablesKey = $"{MyPluginInfo.PLUGIN_GUID}-QuotaVariables";
     protected static readonly string PastAssignmentsKey = $"{MyPluginInfo.PLUGIN_GUID}-PastAssignments";
 
