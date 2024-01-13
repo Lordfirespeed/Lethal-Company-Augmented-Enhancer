@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
@@ -8,44 +9,104 @@ namespace Enhancer.Patches;
 public class DaysPerQuota : IPatch
 {
     protected static ManualLogSource Logger { get; set; } = null!;
-    
+
     public void SetLogger(ManualLogSource logger)
     {
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-    
+
+    private static float DifficultyScalar {
+        get {
+            var quotasCompleted = TimeOfDay.Instance.timesFulfilledQuota;
+            var quotasToCompleteForMaximumScalar = Plugin.BoundConfig.AssignmentsToReachMaximumTargetIncomePerDay.Value;
+            if (quotasCompleted >= quotasToCompleteForMaximumScalar)
+                return Plugin.BoundConfig.MaxTargetIncomePerDayScalar.Value;
+            if (quotasCompleted == 0) return 1;
+
+            var exponent = Mathf.Pow(2, Plugin.BoundConfig.TargetIncomePerDayScalarCurvature.Value);
+            return 1 + Mathf.Pow((float)quotasCompleted / quotasToCompleteForMaximumScalar, exponent) * (Plugin.BoundConfig.MaxTargetIncomePerDayScalar.Value - 1);
+        }
+    }
+
+    private static float RandomnessScalar {
+        get {
+            var randomnessScalar = Plugin.BoundConfig.TargetIncomePerDayRandomnessScalar.Value;
+            if (randomnessScalar == 0) return 0;
+            return 1 + randomnessScalar * 2 * TimeOfDay.Instance.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f));
+        }
+    }
+
+    private static float BaseTargetDailyIncome {
+        get {
+            switch (Plugin.BoundConfig.DaysPerQuotaAssignmentBehaviour.Value)
+            {
+                case QuotaDurationBehaviour.Constant:
+                    throw new InvalidOperationException();
+                case QuotaDurationBehaviour.Variable:
+                    return Plugin.BoundConfig.BaseTargetIncomePerDay.Value;
+                case QuotaDurationBehaviour.DynamicVariable:
+                    return QuotaFormula.Instance!.PastAssignments.Average(info => (float)info.Income / info.Duration);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
+    private static float TargetDailyIncome => BaseTargetDailyIncome * DifficultyScalar * RandomnessScalar;
+
+    private static float QuotaMagnitude {
+        get {
+            var quotaFormula = QuotaFormula.Instance!;
+            var totalAdditions = quotaFormula.PastAssignments.Sum(info => info.BaseIncreaseCoefficient * info.PolynomialIncreaseCoefficient);
+            return quotaFormula.RunQuotaVariables.StartingQuota + totalAdditions;
+        }
+    }
+
+    private static int AssignmentDuration {
+        get {
+            if (Plugin.BoundConfig.DaysPerQuotaAssignmentBehaviour.Value is QuotaDurationBehaviour.Constant)
+                return Plugin.BoundConfig.DaysPerQuotaAssignment.Value;
+
+            var duration = Mathf.CeilToInt(QuotaMagnitude / TargetDailyIncome);
+            return Plugin.BoundConfig.DaysPerQuotaAssignmentBounds.Value.Clamp(duration);
+        }
+    }
+
+    private static void SetQuotaDuration()
+    {
+        var newDuration = AssignmentDuration;
+        Logger.LogInfo($"Setting quota duration to {newDuration}...");
+        var quotaSettings = TimeOfDay.Instance.quotaVariables;
+        quotaSettings.deadlineDaysAmount = newDuration;
+    }
+
+    private static void TrySetQuotaDuration()
+    {
+        try
+        {
+            SetQuotaDuration();
+        }
+        catch (Exception error)
+        {
+            Logger.LogError("Failed to set new quota duration");
+            Logger.LogError(error);
+        }
+    }
+
     [HarmonyPatch(typeof(Terminal), nameof(Terminal.Start))]
     [HarmonyPrefix]
     public static void StartOfRoundShipStartPre()
     {
-        Logger.LogInfo($"Setting days per quota to {Plugin.BoundConfig.DaysPerQuotaAssignment.Value}...");
-        var quotaSettings = TimeOfDay.Instance.quotaVariables;
-        quotaSettings.deadlineDaysAmount = Plugin.BoundConfig.DaysPerQuotaAssignment.Value;
+        TrySetQuotaDuration();
     }
-    
+
     [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SetNewProfitQuota))]
     [HarmonyPostfix]
-    static void SetDeadline(ref float timeUntilDeadline, ref float profitQuota)
+    static void SetDeadline(ref float timeUntilDeadline)
     {
-        timeUntilDeadline = Mathf.Clamp(Mathf.Ceil(profitQuota / 200), 4f, 10f);
+        TrySetQuotaDuration();
     }
-
-    [HarmonyPatch(typeof(GameNetworkManager), nameof(GameNetworkManager.ResetSavedGameValues))]
-    [HarmonyPrefix]
-    static void ResetSavedValues(ref bool isHostingGame)
-    {
-        if (!isHostingGame)
-            return;
-        string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
-        ES3.Save("previousDeadlines", Array.Empty<PastQuotaAssignmentInfo>(), currentSaveFile);
-        ES3.Save("quotaVariables", TimeOfDay.Instance.quotaVariables, currentSaveFile);
-    }
-}
-
-public struct PastQuotaAssignmentInfo
-{
-    
 }
 
 public enum QuotaDurationBehaviour
