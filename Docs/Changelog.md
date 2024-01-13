@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- 'Unlock Suits' option replaced with 'Free Unlockables'
+
 ### Added
+
+- Configurable list of unlockables to unlock at game start
+
 
 ### Fixed
 
