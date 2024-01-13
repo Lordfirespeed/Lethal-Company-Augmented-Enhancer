@@ -44,7 +44,7 @@ public class PluginConfig
     public readonly ConfigEntry<float> MaxTargetIncomePerDayScalar;
     public readonly ConfigEntry<int> AssignmentsToReachMaximumTargetIncomePerDay;
     public readonly ConfigEntry<float> TargetIncomePerDayScalarCurvature;
-    public readonly ConfigEntry<Interval<float>> TargetIncomePerDayScalarRandomnessBounds;
+    public readonly ConfigEntry<float> TargetIncomePerDayRandomnessScalar;
 
     public readonly ConfigEntry<bool> QuotaFormulaEnabled;
     public readonly ConfigEntry<int> StartingQuota;
@@ -81,7 +81,7 @@ public class PluginConfig
             ConvertToObject = (Func<string, Type, object>)((str, type) => Interval<float>.Parse(str))
         });
     }
-    
+
     public PluginConfig(BaseUnityPlugin bindingPlugin)
     {
         #region Global Config
@@ -275,15 +275,17 @@ public class PluginConfig
                 "- 1: "
             )
         );
-        TargetIncomePerDayScalarRandomnessBounds = bindingPlugin.Config.Bind(
+        TargetIncomePerDayRandomnessScalar = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
-            "interval<f>TargetIncomeScalarRandomnessBounds",
-            new Interval<float>(-0.2f, 0.2f),
+            "fTargetIncomeScalarRandomnessScalar",
+            0.4f,
             new ConfigDescription(
-                ""
+                "Randomness of target income per day value used to calculate the quota duration.\n" +
+                "Host Required: Yes",
+                new AcceptableValueRange<float>(0, float.MaxValue)
             )
         );
-        
+
         #endregion
 
         #region Quota Calculation
