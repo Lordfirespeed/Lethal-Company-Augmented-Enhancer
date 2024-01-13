@@ -67,8 +67,6 @@ public class AlwaysShowTerminal : IPatch
             .SetAndAdvance(OpCodes.Nop, null)
             .RemoveInstructions(6);
 
-        Plugin.Logger.LogDebug(string.Join("\n", matcher.Instructions()));
-
         return matcher.InstructionEnumeration();
     }
 }
