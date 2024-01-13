@@ -81,10 +81,8 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
     private void OnChange()
     {
-        if (ShouldLoad)
-        {
-            if (PatchInstance is null)
-            {
+        if (ShouldLoad) {
+            if (PatchInstance is null) {
                 Patch();
                 return;
             }
@@ -101,8 +99,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
         Plugin.Logger.LogDebug($"Instantiating patch...");
         PatchInstance = new TPatch();
 
-        if (PatchLogger is null)
-        {
+        if (PatchLogger is null) {
             Plugin.Logger.LogWarning($"PatchLogger is null, using global logger for {Name}.");
             PatchInstance.SetLogger(Plugin.Logger);
             return;
@@ -114,8 +111,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
     private void Patch()
     {
-        lock (PatchingLock)
-        {
+        lock (PatchingLock) {
             if (PatchHarmony is null)
                 throw new Exception("PatchInfo has not been initialised. Cannot patch without a Harmony instance.");
             if (PatchInstance is not null) return;
@@ -129,8 +125,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
     private void Unpatch()
     {
-        lock (PatchingLock)
-        {
+        lock (PatchingLock) {
             if (PatchHarmony is null)
                 throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
             if (PatchInstance is null) return;
@@ -152,8 +147,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
     {
         if (_disposed) return;
 
-        if (disposing && PatchHarmony is not null)
-        {
+        if (disposing && PatchHarmony is not null) {
             ListenToConfigEntries
                 .Do(entry => entry.ConfigFile.SettingChanged -= _onChangeEventHandler);
             Unpatch();

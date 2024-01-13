@@ -19,8 +19,7 @@ public static class CollectionExtensions
 
     static IEnumerable<TSource> TapIterator<TSource>(IEnumerable<TSource> source, Action<TSource> action)
     {
-        foreach (TSource element in source)
-        {
+        foreach (TSource element in source) {
             action(element);
             yield return element;
         }

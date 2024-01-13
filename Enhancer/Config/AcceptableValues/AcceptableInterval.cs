@@ -9,7 +9,7 @@ public class AcceptableInterval<T> : AcceptableValueBase where T : IComparable
     {
         Interval = interval ?? throw new ArgumentNullException(nameof(interval));
     }
-    
+
     public virtual Interval<T> Interval { get; }
 
     public override object Clamp(object value)

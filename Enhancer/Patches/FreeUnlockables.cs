@@ -24,9 +24,7 @@ public class FreeUnlockables : IPatch
         __instance.unlockablesList.unlockables
             .Select((unlockable, index) => new { unlockable, index })
             .Tap(item => Logger.LogDebug($"Unlockable item {item.index}: '{item.unlockable.unlockableName}'"))
-            .Where(item => {
-                return Plugin.BoundConfig.FreeUnlockablesList.Value.Contains(item.unlockable.unlockableName);
-            })
+            .Where(item => { return Plugin.BoundConfig.FreeUnlockablesList.Value.Contains(item.unlockable.unlockableName); })
             .Do(item => __instance.SpawnUnlockable(item.index));
     }
 }

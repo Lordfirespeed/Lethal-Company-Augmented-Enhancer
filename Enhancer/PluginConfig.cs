@@ -83,8 +83,7 @@ public class PluginConfig
             ConvertToString = (Func<object, Type, string>)((obj, type) => obj.ToString()),
             ConvertToObject = (Func<string, Type, object>)((str, type) => Interval<float>.Parse(str))
         });
-        TomlTypeConverter.AddConverter(typeof(List<string>), new TypeConverter
-        {
+        TomlTypeConverter.AddConverter(typeof(List<string>), new TypeConverter {
             ConvertToString = (Func<object, Type, string>)((obj, type) => JsonConvert.SerializeObject(obj, type, new())),
             ConvertToObject = (Func<string, Type, object>)((str, type) => JsonConvert.DeserializeObject(str, type) ?? throw new InvalidOperationException())
         });

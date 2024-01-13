@@ -10,8 +10,7 @@ public static class HarmonyExtensions
 
     public static void PatchAllNestedTypesOnly(this Harmony harmony, Type type)
     {
-        foreach (var nestedType in type.GetNestedTypes(SearchNestedTypeBindingFlags))
-        {
+        foreach (var nestedType in type.GetNestedTypes(SearchNestedTypeBindingFlags)) {
             PatchAllWithNestedTypes(harmony, nestedType);
         }
     }

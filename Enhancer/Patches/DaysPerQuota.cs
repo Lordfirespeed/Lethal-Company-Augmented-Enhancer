@@ -43,22 +43,19 @@ public class DaysPerQuota : IPatch
 
     private static float BaseTargetDailyIncome {
         get {
-            switch (Plugin.BoundConfig.DaysPerQuotaAssignmentBehaviour.Value)
-            {
+            switch (Plugin.BoundConfig.DaysPerQuotaAssignmentBehaviour.Value) {
                 case QuotaDurationBehaviour.Constant:
                     throw new InvalidOperationException();
                 case QuotaDurationBehaviour.Variable:
                     return Plugin.BoundConfig.BaseTargetIncomePerDay.Value;
                 case QuotaDurationBehaviour.DynamicVariable:
-                    try
-                    {
+                    try {
                         var averageIncomePerDay =
                             QuotaFormula.Instance!.PastAssignments.Average(info => (float)info.Income / info.Duration);
                         Logger.LogInfo($"Average income is currently {averageIncomePerDay:f1}");
                         return averageIncomePerDay;
                     }
-                    catch (InvalidOperationException)
-                    {
+                    catch (InvalidOperationException) {
                         return Plugin.BoundConfig.BaseTargetIncomePerDay.Value;
                     }
                 default:
@@ -97,12 +94,10 @@ public class DaysPerQuota : IPatch
 
     private static void TrySetQuotaDuration()
     {
-        try
-        {
+        try {
             SetQuotaDuration();
         }
-        catch (Exception error)
-        {
+        catch (Exception error) {
             Logger.LogError("Failed to set new quota duration.");
             Logger.LogError(error);
         }

@@ -57,8 +57,7 @@ public class CompanyBuyingFactorTweaks : IPatch
     {
         Logger.LogDebug("Getting mood factor");
 
-        try
-        {
+        try {
             return GetCompanyMoodName() switch {
                 "SilentCalm" => 0.35f,
                 "SnoringGiant" => 0.45f,
@@ -66,8 +65,7 @@ public class CompanyBuyingFactorTweaks : IPatch
                 _ => 0.40f
             };
         }
-        finally
-        {
+        finally {
             Logger.LogDebug("Got mood factor");
         }
     }

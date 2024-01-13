@@ -23,6 +23,7 @@ public class QuotaFormula : IPatch
         AccessTools.Method(typeof(Object), nameof(Object.FindObjectOfType), generics: [typeof(TimeOfDay),]);
 
     private AugmentedQuotaVariables? _runQuotaVariables;
+
     public AugmentedQuotaVariables RunQuotaVariables {
         get {
             if (!NetworkManager.Singleton.IsConnectedClient)
@@ -41,6 +42,7 @@ public class QuotaFormula : IPatch
     }
 
     private QuotaAssignmentInfo? _currentAssignmentInfo;
+
     private QuotaAssignmentInfo? CurrentAssignmentInfo {
         get {
             if (!NetworkManager.Singleton.IsConnectedClient)
@@ -173,7 +175,7 @@ public class QuotaFormula : IPatch
                 new CodeMatch(
                     OpCodes.Ldfld,
                     AccessTools.Field(typeof(QuotaSettings), nameof(QuotaSettings.startingQuota))
-                    )
+                )
             )
             // Set the run quota settings *before* saving the current profit quota
             .Insert(
@@ -322,8 +324,7 @@ public class QuotaFormula : IPatch
         {
             if (Instance is null) return;
 
-            Instance._currentAssignmentInfo = new QuotaAssignmentInfo
-            {
+            Instance._currentAssignmentInfo = new QuotaAssignmentInfo {
                 Quota = __instance.profitQuota,
                 Income = __instance.quotaFulfilled,
                 Duration = __instance.quotaVariables.deadlineDaysAmount,

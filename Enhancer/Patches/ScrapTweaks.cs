@@ -86,15 +86,13 @@ public class ScrapTweaks : IPatch
 
     private static void CacheMultipliers(RoundManager manager)
     {
-        try
-        {
+        try {
             _originalScrapValueMultiplier = manager.scrapValueMultiplier;
             _originalScrapAmountMultiplier = manager.scrapAmountMultiplier;
         }
-        finally
-        {
+        finally {
             Logger.LogDebug(
-                $"Attempted to cache scrap value multiplier. " + 
+                $"Attempted to cache scrap value multiplier. " +
                 $"Value is currently {RoundManager.Instance.scrapValueMultiplier}"
             );
             Logger.LogDebug(
@@ -106,15 +104,13 @@ public class ScrapTweaks : IPatch
 
     private static void RestoreMultipliers(RoundManager manager)
     {
-        try
-        {
+        try {
             manager.scrapValueMultiplier = _originalScrapValueMultiplier;
             manager.scrapAmountMultiplier = _originalScrapAmountMultiplier;
         }
-        finally
-        {
+        finally {
             Logger.LogDebug(
-                $"Attempted to restore scrap value multiplier. " + 
+                $"Attempted to restore scrap value multiplier. " +
                 $"Value is now {RoundManager.Instance.scrapValueMultiplier}"
             );
             Logger.LogDebug(
@@ -144,8 +140,7 @@ public class ScrapTweaks : IPatch
     private static void ApplyMultipliers(int playerCount)
     {
         if (!RoundManager.Instance) return;
-        try
-        {
+        try {
             RoundManager.Instance.scrapValueMultiplier =
                 _originalScrapValueMultiplier * Plugin.BoundConfig.ScrapValueScalar.Value;
             RoundManager.Instance.scrapAmountMultiplier =
@@ -162,15 +157,14 @@ public class ScrapTweaks : IPatch
                 RoundManager.Instance.scrapValueMultiplier * Plugin.BoundConfig.ScrapPlayercountScaling.Value *
                 extraPlayers / playerCount;
         }
-        finally
-        {
+        finally {
             Logger.LogDebug(
-                $"Attempted to update scrap value multiplier. " + 
+                $"Attempted to update scrap value multiplier. " +
                 $"Value is now {RoundManager.Instance.scrapValueMultiplier}"
             );
             Logger.LogDebug(
                 $"Attempted to update scrap quantity multiplier. " +
-                    $"Value is now {RoundManager.Instance.scrapAmountMultiplier}"
+                $"Value is now {RoundManager.Instance.scrapAmountMultiplier}"
             );
         }
     }

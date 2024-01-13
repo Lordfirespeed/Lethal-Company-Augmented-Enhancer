@@ -40,8 +40,7 @@ public class Plugin : BaseUnityPlugin
         EnhancerPatcher.Logger = Logger;
         EnhancerPatcher.BoundConfig = BoundConfig;
 
-        var enhancerGameObject = new GameObject("Enhancer")
-        {
+        var enhancerGameObject = new GameObject("Enhancer") {
             hideFlags = HideFlags.HideAndDontSave,
         };
         enhancerGameObject.AddComponent<EnhancerPatcher>();

@@ -59,8 +59,8 @@ public class ItemProtection : IPatch
 
         if (Plugin.BoundConfig.ScrapProtectionRandomness.Value <= 0f) return;
         // get randomly from the quota randomizer curve (which is approximately the same shape as the quantile function)
-        ThisPassProtectionProbability += 
-            Plugin.BoundConfig.ScrapProtectionRandomness.Value * 2 * 
+        ThisPassProtectionProbability +=
+            Plugin.BoundConfig.ScrapProtectionRandomness.Value * 2 *
             TimeOfDay.Instance.quotaVariables.randomizerCurve.Evaluate((float)RandomGenerator.NextDouble());
         ThisPassProtectionProbability = Mathf.Clamp(ThisPassProtectionProbability!.Value, 0f, 1f);
     }

@@ -25,6 +25,7 @@ public class ThreatScanCommand : IPatch
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
+
     private static string GetThreatLevel(float threatCoefficient)
     {
         return threatCoefficient switch {
@@ -61,8 +62,7 @@ public class ThreatScanCommand : IPatch
         _nounKeyword = TerminalApiHelper.CreateTerminalKeyword("threats");
         _nounKeyword.specialKeywordResult = _triggerNode;
 
-        TerminalApiHelper.AddTerminalKeyword(_nounKeyword, new CommandInfo
-        {
+        TerminalApiHelper.AddTerminalKeyword(_nounKeyword, new CommandInfo {
             TriggerNode = _triggerNode,
             DisplayTextSupplier = ThreatScanTextSupplier,
             Category = "Other",

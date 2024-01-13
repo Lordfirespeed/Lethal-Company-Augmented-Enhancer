@@ -9,9 +9,9 @@ public class Interval<T> where T : IComparable
     public Interval(T? lowerBound, T? upperBound)
     {
         if (upperBound == null)
-            throw new ArgumentNullException(nameof (upperBound));
+            throw new ArgumentNullException(nameof(upperBound));
         if (lowerBound == null)
-            throw new ArgumentNullException(nameof (lowerBound));
+            throw new ArgumentNullException(nameof(lowerBound));
         LowerEndpoint = lowerBound.CompareTo(upperBound) <= 0 ? lowerBound : throw new ArgumentException("lowerBound has to be lesser than or equal to than upperBound");
         UpperEndpoint = upperBound;
     }
@@ -41,8 +41,8 @@ public class Interval<T> where T : IComparable
         if (upperEndpointCompared > 0) upperEndpointClosed = interval.UpperEndpointClosed;
 
         return new Interval<T>(
-           lowerEndpointCompared <= 0 ? interval.LowerEndpoint : LowerEndpoint,
-           upperEndpointCompared  >= 0 ? interval.UpperEndpoint : UpperEndpoint
+            lowerEndpointCompared <= 0 ? interval.LowerEndpoint : LowerEndpoint,
+            upperEndpointCompared >= 0 ? interval.UpperEndpoint : UpperEndpoint
         ) {
             LowerEndpointClosed = lowerEndpointClosed,
             UpperEndpointClosed = upperEndpointClosed,
@@ -58,19 +58,17 @@ public class Interval<T> where T : IComparable
         if (lowerEndpointCompared == 0 && !LowerEndpointClosed && interval.LowerEndpointClosed) return false;
         if (upperEndpointCompared < 0) return false;
         if (upperEndpointCompared == 0 && !UpperEndpointClosed && interval.UpperEndpointClosed) return false;
-       return true;
+        return true;
     }
 
     public virtual T Clamp(T value)
     {
-        if (value.CompareTo(LowerEndpoint) <= 0)
-        {
+        if (value.CompareTo(LowerEndpoint) <= 0) {
             if (!LowerEndpointClosed) throw new InvalidOperationException("Can't clamp to a closed interval endpoint.");
             return LowerEndpoint;
         }
 
-        if (value.CompareTo(UpperEndpoint) >= 0)
-        {
+        if (value.CompareTo(UpperEndpoint) >= 0) {
             if (!UpperEndpointClosed) throw new InvalidOperationException("Can't clamp to a closed interval endpoint.");
             return UpperEndpoint;
         }
@@ -80,10 +78,10 @@ public class Interval<T> where T : IComparable
 
     public override string ToString()
     {
-        return $"{(LowerEndpointClosed ? '[': '(')}{LowerEndpoint}, {UpperEndpoint}{(UpperEndpointClosed ? ']' : ')')}";
+        return $"{(LowerEndpointClosed ? '[' : '(')}{LowerEndpoint}, {UpperEndpoint}{(UpperEndpointClosed ? ']' : ')')}";
     }
 
-    public static Regex IntervalRegex = new (@"(?<openingParen>[([])(?<lowerBound>.*), (?<upperBound>.*)(?<closingParen>[)\]])", RegexOptions.Compiled);
+    public static Regex IntervalRegex = new(@"(?<openingParen>[([])(?<lowerBound>.*), (?<upperBound>.*)(?<closingParen>[)\]])", RegexOptions.Compiled);
 
     public static Interval<T> Parse(string value)
     {
