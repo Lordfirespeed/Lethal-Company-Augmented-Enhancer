@@ -23,7 +23,8 @@ using HarmonyLib;
 namespace Enhancer;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-[BepInDependency("LC_API")]
+[BepInDependency("LC_API", "3.3.2")]
+[BepInDependency("atomic.terminalapi", "1.5.0")]
 [BepInDependency("mom.llama.enhancer", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
