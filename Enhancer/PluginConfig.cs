@@ -263,7 +263,7 @@ public class PluginConfig
             "iAssignmentCountToReachMaximumTargetIncomePerDay",
             10,
             new ConfigDescription(
-                "Number of assignments you must complete for target income per day to hit the upper-bound.\n" +
+                "Number of assignments you must complete to reach the maximum target income per day multiplier.\n" +
                 "Host Required: Yes"
             )
         );
