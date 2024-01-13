@@ -1,5 +1,7 @@
+using System;
 using BepInEx.Logging;
-using HarmonyLib;
+using TerminalApiHelper = TerminalApi.TerminalApi;
+using TerminalApi.Classes;
 
 namespace Enhancer.Patches;
 
@@ -15,12 +17,14 @@ public class ThreatScannerInScanCommand : IPatch
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 
+    private TerminalNode? _triggerNode;
+    private TerminalKeyword? _nounKeyword;
+
     public void SetLogger(ManualLogSource logger)
     {
         logger.LogDebug("Logger assigned.");
         Logger = logger;
     }
-
     private static string GetThreatLevel(float threatCoefficient)
     {
         return threatCoefficient switch {
@@ -33,7 +37,7 @@ public class ThreatScannerInScanCommand : IPatch
         };
     }
 
-    private static string? GetThreatDescription(int enemyPower, int enemyMaxPower, int enemyCount)
+    private static string GetThreatDescription(int enemyPower, int enemyMaxPower, int enemyCount)
     {
         if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.Disabled) return null;
 
@@ -48,40 +52,39 @@ public class ThreatScannerInScanCommand : IPatch
         if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.ThreatLevelName)
             return $"\nThreat Level: {GetThreatLevel(threatCoefficient)}\n";
 
-        Logger.LogWarning("Invalid threat scanner type is configured.");
-        return null;
+        throw new ArgumentOutOfRangeException($"Invalid threat scanner type '{enemyPower}'.");
     }
 
-    //Todo: This should probably be changed to a postfix on the text modifier
-    //function so I can add custom tags to terminal nodes
-    [HarmonyPatch(typeof(Terminal), nameof(Terminal.LoadNewNode))]
-    [HarmonyPostfix]
-    public static void TerminalLoadHackPost(Terminal __instance, TerminalNode node)
+    public void OnPatch()
     {
-        //If the command is not 'scan', do nothing
-        if (node.name != "ScanInfo") return;
+        _triggerNode = TerminalApiHelper.CreateTerminalNode("Safe zone detected\n", true);
+        _nounKeyword = TerminalApiHelper.CreateTerminalKeyword("threats");
+        _nounKeyword.specialKeywordResult = _triggerNode;
 
-        //If scan command improvements are disabled, do nothing
-        if (Plugin.BoundConfig.ThreatScanner.Value is ThreatScannerMode.Disabled) return;
+        TerminalApiHelper.AddTerminalKeyword(_nounKeyword, new CommandInfo
+        {
+            TriggerNode = _triggerNode,
+            DisplayTextSupplier = ThreatScanTextSupplier,
+            Category = "Other",
+            Description = "Scan for threats on the current moon."
+        });
+    }
 
+    public void OnUnpatch()
+    {
+        if (_nounKeyword is not null)
+            TerminalApiHelper.DeleteKeyword(_nounKeyword.word);
+    }
+
+    public static string ThreatScanTextSupplier()
+    {
         //If there are no enemies in the level, do nothing
-        if (!RoundManager.Instance.currentLevel.spawnEnemiesAndScrap) return;
+        if (!RoundManager.Instance.currentLevel.spawnEnemiesAndScrap) return "Safe zone detected";
 
-        //Inject data into the command
-
-        /*
-            We cache these values (and the ones in the switch below) because
-            The actual in-game terminal crashes when accessing RoundManager
-            sometimes and I don't know why but this configuration works
-
-            Recommendation: Do not modify this function ever, it is a headache
-        */
         var power = RoundManager.Instance.currentEnemyPower;
         var maxp = RoundManager.Instance.currentLevel.maxEnemyPowerCount;
         var count = RoundManager.Instance.numberOfEnemiesInScene;
 
-        __instance.screenText.text += GetThreatDescription(power, maxp, count);
-        __instance.currentText = __instance.screenText.text;
-        __instance.textAdded = 0;
+        return GetThreatDescription(power, maxp, count);
     }
 }
