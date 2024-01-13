@@ -3,14 +3,14 @@
 [![Build](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml/badge.svg)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml)
 [![Release](https://img.shields.io/github/v/release/lordfirespeed/lethal-company-augmented-enhancer)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/releases)
 
-A mod for Lethal Company that adds additional configuration options to fit the player's preferences. 
+A mod for Lethal Company that adds additional configuration options to fit the player's preferences.
 
 ## Configurable Features
 
 ### Scrap Protection
 The mod allows configuring the following in the event that no players survive a mission:
 - The approximate average proportion of secured scrap items lost
-- The randomness of the proportion of secured scrap items lost 
+- The randomness of the proportion of secured scrap items lost
 
 <details>
 <summary><strong>Details</strong></summary>
@@ -42,17 +42,17 @@ For example, with 4 players:
 </details>
 
 ### Suit Unlocker
-Enabling this option unlocks the Green and Hazard suits from game start. 
+Enabling this option unlocks the Green and Hazard suits from game start.
 The PJs suit are not unlocked by default and remain available via the Company store.
 
 ### Always Show Terminal
-Enabling this option will prevent the ship terminal from closing on exit. 
+Enabling this option will prevent the ship terminal from closing on exit.
 Ideal for watching the output from `view monitor`.
 
 ### Minimum Company Buying Factor
 The minimum company buying factor can be configured.
 
-Prevents the company from offering buying factors below the configured value. Should be enforced regardless of the 
+Prevents the company from offering buying factors below the configured value. Should be enforced regardless of the
 [randomizer](#company-buying-factor-randomizer)'s enabledness.
 
 ### Company Buying Factor Randomizer
@@ -60,14 +60,14 @@ Enabling this option will randomize the company buying factor after each run.
 
 <details>
 <summary><strong>Details</strong></summary>
-By default, the company buying factor is inversely proportional to the remaining days on the quota, so that there is a 
-risk/reward tradeoff for holding on to your items after each run. 
+By default, the company buying factor is inversely proportional to the remaining days on the quota, so that there is a
+risk/reward tradeoff for holding on to your items after each run.
 
-This option exists because it can be very discouraging to lose many runs' worth of scrap when playing 
+This option exists because it can be very discouraging to lose many runs' worth of scrap when playing
 with longer-than-usual quota assignment durations.
 
-The random price will use in-game information when rolling such as 
-- The Company "mood" 
+The random price will use in-game information when rolling such as
+- The Company "mood"
 - How many days are left on the quota assignment
 
 Depending on the quota deadline duration, the company buying factor may be negative at the start of each assignment.
@@ -80,18 +80,22 @@ possible in the base game so this mod caps the buying factor at `1.0`.
 ### Time Speed
 How quickly time passes on moons can be configured.
 
-This can make the game drastically easier (or harder) because part of the monster spawning routine depends on 
+This can make the game drastically easier (or harder) because part of the monster spawning routine depends on
 how much time has passed.
 
 ### Ship Hangar Doors Power Duration
 The time it takes for the hangar doors to re-open due to lack of power can be configured.
 
 ### Threat Scanner
-The `scan` command on the terminal can be configured to provide additional information about the environment's 
+The `scan` command on the terminal can be configured to provide additional information about the environment's
 danger level due to enemy threats.
 
 ### Days Per Quota
-Assignment Duration (Days Per Quota): The quota assignment duration can be configured.
+Assignment Duration (Days Per Quota): The quota assignment duration can be configured, including
+variable options similar to Dynamic Deadline.
+
+### Scrap Spawns/Quantity
+Scrap spawns / quantity and player-count scaling can be configured.
 
 ### Starting Credits
 Group starting credits can be configured.
@@ -99,9 +103,10 @@ Group starting credits can be configured.
 ### Passive Income
 'Passive income' (credits handed out at the end of each day) can be configured.
 
-### Quota Formula 
+### Quota Formula
 - The starting quota can be configured
-- The multiplier for quadratic quota increase can be configured
+- The exponent for the polynomial quota increase can be configured
+- The multiplier for polynomial quota increase can be configured
 - The multiplier for constant quota increase can be configured
 - The randomness of quota increase can be configured
 
@@ -117,24 +122,24 @@ See [Compatability](https://github.com/Lordfirespeed/Lethal-Company-Augmented-En
 for details and exceptions.
 
 If you encounter issues, please [open an issue on GitHub](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/issues),
-making sure to provide information about other mods you have installed 
+making sure to provide information about other mods you have installed
 
 ### Will this mod work in online lobbies?
 Features in the config files have been marked to indicate whether they require the host to have them configured
-for them to take effect in a multiplayer game. 
+for them to take effect in a multiplayer game.
 
-Configuration values marked with `Host Required: No` control client-side features, 
+Configuration values marked with `Host Required: No` control client-side features,
 which will take effect regardless of the host's configuration.
 
-For the best experience, all players should use the same mods (down to their versions) with the same configuration. 
+For the best experience, all players should use the same mods (down to their versions) with the same configuration.
 
-Please set the `bEnabled` option to `false` (and disable other installed mods) when playing multiplayer with 
+Please set the `bEnabled` option to `false` (and disable other installed mods) when playing multiplayer with
 players that do not have mods installed.
 
 ### How do I change settings?
 All this mod's configuration is contained within one file, `/BepInEx/config/com.github.lordfirespeed.augmented_enhancer.cfg`.
 
-If an option's description is too confusing or not well-enough explained, 
+If an option's description is too confusing or not well-enough explained,
 please [open an issue on GitHub](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/issues).
 
 ## Changelog
@@ -143,7 +148,7 @@ See the [Changelog](https://github.com/Lordfirespeed/Lethal-Company-Augmented-En
 
 ## Releases
 
-Releases are published on [GitHub](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/releases) 
+Releases are published on [GitHub](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/releases)
 and [Thunderstore](https://thunderstore.io).
 
 ## Acknowledgements
