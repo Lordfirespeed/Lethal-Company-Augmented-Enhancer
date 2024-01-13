@@ -6,8 +6,6 @@
     <Product>Augmented Enhancer</Product>
     <Description>Tweaks plugin for Lethal Company</Description>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
