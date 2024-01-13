@@ -15,7 +15,7 @@ public class Interval<T> where T : IComparable
         LowerEndpoint = lowerBound.CompareTo(upperBound) <= 0 ? lowerBound : throw new ArgumentException("lowerBound has to be lesser than or equal to than upperBound");
         UpperEndpoint = upperBound;
     }
-    
+
     public virtual T LowerEndpoint { get; }
 
     public virtual T UpperEndpoint { get; }
@@ -39,7 +39,7 @@ public class Interval<T> where T : IComparable
         if (upperEndpointCompared < 0) upperEndpointClosed = UpperEndpointClosed;
         if (upperEndpointCompared == 0) upperEndpointClosed = UpperEndpointClosed && interval.UpperEndpointClosed;
         if (upperEndpointCompared > 0) upperEndpointClosed = interval.UpperEndpointClosed;
-        
+
         return new Interval<T>(
            lowerEndpointCompared <= 0 ? interval.LowerEndpoint : LowerEndpoint,
            upperEndpointCompared  >= 0 ? interval.UpperEndpoint : UpperEndpoint
@@ -82,9 +82,9 @@ public class Interval<T> where T : IComparable
     {
         return $"{(LowerEndpointClosed ? '[': '(')}{LowerEndpoint}, {UpperEndpoint}{(UpperEndpointClosed ? ']' : ')')}";
     }
-    
+
     public static Regex IntervalRegex = new (@"(?<openingParen>[([])(?<lowerBound>.*), (?<upperBound>.*)(?<closingParen>[)\]])", RegexOptions.Compiled);
-    
+
     public static Interval<T> Parse(string value)
     {
         var match = IntervalRegex.Match(value);
