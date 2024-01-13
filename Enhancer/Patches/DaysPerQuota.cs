@@ -117,6 +117,7 @@ public class DaysPerQuota : IPatch
 
     [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SetNewProfitQuota))]
     [HarmonyPostfix]
+    [HarmonyAfter([$"{MyPluginInfo.PLUGIN_GUID}-QuotaFormula"])]
     static void SetDeadline()
     {
         TrySetQuotaDuration();
