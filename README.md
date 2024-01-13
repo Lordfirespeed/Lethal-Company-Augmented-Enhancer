@@ -1,7 +1,9 @@
 # Augmented Enhancer
 
-[![Build](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml/badge.svg)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml)
-[![Release](https://img.shields.io/github/v/release/lordfirespeed/lethal-company-augmented-enhancer)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/releases)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Lordfirespeed/Lethal-Company-Augmented-Enhancer/build.yml?style=for-the-badge&logo=github)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/actions/workflows/build.yml)
+[![Release Version](https://img.shields.io/github/v/release/lordfirespeed/lethal-company-augmented-enhancer?style=for-the-badge&logo=github)](https://github.com/Lordfirespeed/Lethal-Company-Augmented-Enhancer/releases)
+[![Thunderstore Version](https://img.shields.io/thunderstore/v/Lordfirespeed/Augmented_Enhancer?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/Lordfirespeed/Augmented_Enhancer/)
+[![Thunderstore Downloads](https://img.shields.io/thunderstore/dt/Lordfirespeed/Augmented_Enhancer?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/Lordfirespeed/Augmented_Enhancer/)
 
 A mod for Lethal Company that adds additional configuration options to fit the player's preferences.
 
