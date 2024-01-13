@@ -244,7 +244,9 @@ public class PluginConfig
             "iBaseTargetIncomePerDay",
             200,
             new ConfigDescription(
-                ""
+                "Base target income per day. Used when calculating the quota duration with Variable behaviour.\n" +
+                "Host Required: Yes",
+                new AcceptableValueRange<int>(1, int.MaxValue)
             )
         );
         MaxTargetIncomePerDayScalar = bindingPlugin.Config.Bind( 
