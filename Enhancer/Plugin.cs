@@ -24,6 +24,7 @@ namespace Enhancer;
 [BepInDependency("atomic.terminalapi", "1.5.0")]
 [BepInDependency("mom.llama.enhancer", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInDependency("Haha.DynamicDeadline", BepInDependency.DependencyFlags.SoftDependency)]
+[BepInDependency("com.zduniusz.lethalcompany.24hourclock", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     internal new static ManualLogSource Logger { get; private set; } = null!;

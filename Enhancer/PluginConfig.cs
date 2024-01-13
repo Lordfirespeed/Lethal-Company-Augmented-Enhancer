@@ -23,6 +23,7 @@ public class PluginConfig
     public readonly ConfigEntry<bool> KeepConsoleEnabled;
     public readonly ConfigEntry<bool> FreeUnlockablesEnabled;
     public readonly ConfigEntry<List<string>> FreeUnlockablesList;
+    public readonly ConfigEntry<bool> MilitaryTime;
 
     public readonly ConfigEntry<bool> CompanyBuyingFactorTweaksEnabled;
     public readonly ConfigEntry<bool> RandomiseCompanyBuyingFactor;
@@ -127,6 +128,12 @@ public class PluginConfig
             "Free Unlockables List",
             ["Green suit", "Hazard suit", "Purple Suit"],
             "The unlockable item names to unlock when 'Free Unlockables' are enabled"
+        );
+        MilitaryTime = bindingPlugin.Config.Bind(
+            "Misc Tweaks",
+            "24-hour Clock",
+            false,
+            "Whether the time should display in 24-hour (military) format.\nHost Required: No"
         );
 
         #endregion

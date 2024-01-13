@@ -53,6 +53,12 @@ public class EnhancerPatcher : MonoBehaviour
             ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
+        new PatchInfo<MilitaryTime> {
+            Name = "24-hour clock",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.MilitaryTime.Value,
+            ListenToConfigEntries = [BoundConfig.MilitaryTime],
+            DelegateToModGuids = ["com.zduniusz.lethalcompany.24hourclock"],
+        },
         new PatchInfo<CompanyBuyingFactorTweaks> {
             Name = "Company buying factor tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.CompanyBuyingFactorTweaksEnabled.Value,

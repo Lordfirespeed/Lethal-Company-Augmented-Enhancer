@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Configurable list of unlockables to unlock at game start
-
+- 24 hour clock option
 
 ### Fixed
 
