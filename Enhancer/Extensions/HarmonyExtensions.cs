@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace Enhancer.Extensions;
 
-public static class HarmonyPatchNestedTypes
+public static class HarmonyExtensions
 {
     private const BindingFlags SearchNestedTypeBindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic;
 
