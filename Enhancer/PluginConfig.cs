@@ -125,7 +125,7 @@ public class PluginConfig
         FreeUnlockablesList = bindingPlugin.Config.Bind<List<string>>(
             "Misc Tweaks",
             "Free Unlockables List",
-            ["Green suit", "Hazard suit"],
+            ["Green suit", "Hazard suit", "Purple Suit"],
             "The unlockable item names to unlock when 'Free Unlockables' are enabled"
         );
 
