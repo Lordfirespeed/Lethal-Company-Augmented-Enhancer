@@ -9,16 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+### Added
+
+### Fixed
+
+### Removed
+
+## [0.5.0]
+
+> [!WARNING]
+> Contains breaking changes!
+
+### Changed
+
 - All patches now have their own ManualLogSource
 - UnlockSuits patch refactored to be name-dependent (as opposed to index-dependent)
 - AlwaysShowTerminal patch updated to use a transpiler
   - Scroll will no longer reset when exiting the terminal
 - Some log-messages that were previously on the `Info` channel have been moved to `Debug`
 - Ran JetBrains formatter on all project sources
+- AlwaysShowTerminal uses transpilers; prevents automatic 'help' command upon opening terminal + prevents scroll reset
+- All config options have been renamed / given sections
+- Use TerminalApi to register threat scan as its own command
 
 ### Added
 
-### Fixed 
+- 'Interval' config type + serializer
+- Quota increase exponent option
+- Scrap tweaks
+  - Scrap spawns scalar
+  - Scrap value scalar
+  - Scrap 'playercount scaling' - more players, more scrap (with less value per item)
+- Deadline duration tweaks
+  - Essentially integrate DynamicDeadline features
+
+### Fixed
+
+- Patcher now ensures nested types are also patched
 
 ### Removed
 
@@ -35,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Target framework is netstandard2
 - Build/publish workflows use MinVer to determine target version
 - `bDaysPerQuotaEnabled` renamed to `bDaysPerQuotaAssignmentEnabled`
-- `iQuotaDays` renamed to `iQuotaAssignmentDays` 
+- `iQuotaDays` renamed to `iQuotaAssignmentDays`
 - All config options are now sectioned tidily
 
 ### Added
@@ -85,7 +112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The 'release' workflow was failing when there was no changelog to commit
-- Scrap protection attempting to remove items 
+- Scrap protection attempting to remove items
 
 ## [0.1.3] - 2023-12-04
 
