@@ -63,17 +63,13 @@
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="45.0.2-alpha.1"/>
     </ItemGroup>
 
-    <PropertyGroup Condition="$(CI) == 'true'">
-        <PACK_THUNDERSTORE>true</PACK_THUNDERSTORE>
-    </PropertyGroup>
-
     <Target Name="SetPluginVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
         <PropertyGroup>
             <BepInExPluginVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</BepInExPluginVersion>
         </PropertyGroup>
     </Target>
 
-    <Target Name="PackThunderstore" AfterTargets="PostBuildEvent" Condition="$(PACK_THUNDERSTORE) == 'true'">
+    <Target Name="PackThunderstore" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
         <Message Importance="high" Text="MinVer version is $(MinVerVersion)"/>
         <PropertyGroup>
             <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
