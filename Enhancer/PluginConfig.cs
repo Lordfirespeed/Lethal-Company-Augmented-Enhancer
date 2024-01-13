@@ -234,7 +234,7 @@ public class PluginConfig
             "bounds<i>QuotaAssignmentDays",
             new Interval<int>(3, 10),
             new ConfigDescription(
-                "Bounds for the quota assignment duration when using variable quota duration behaviour.\n" + 
+                "Bounds for the quota assignment duration when using variable quota duration behaviour.\n" +
                 "Host Required: Yes",
                 new AcceptableInterval<int>(new Interval<int>(1, int.MaxValue))
             )
@@ -249,7 +249,7 @@ public class PluginConfig
                 new AcceptableValueRange<int>(1, int.MaxValue)
             )
         );
-        MaxTargetIncomePerDayScalar = bindingPlugin.Config.Bind( 
+        MaxTargetIncomePerDayScalar = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
             "interval<f>TargetIncomePerDay",
             1.5f,
