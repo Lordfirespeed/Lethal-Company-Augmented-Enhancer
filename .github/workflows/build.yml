@@ -23,15 +23,6 @@ jobs:
         with:
           dotnet-version: "8.0.100"
 
-      - name: Setup Netcode Patcher
-        if: false
-        id: setup-netcode-patcher
-        uses: Lordfirespeed/setup-netcode-patcher@v0
-        with:
-          netcode-patcher-version: 2.4.0
-          deps-packages: '[{"id": "UnityEngine.Modules", "version": "2022.3.9"}, {"id": "LethalCompany.GameLibs.Steam", "version": "45.0.2-alpha.1"}, {"id": "LethalCompany.LC-API", "version": "3.2.3"}]'
-          target-framework: "netstandard2.1"
-
       - name: Install Tools
         run: dotnet tool restore
 
