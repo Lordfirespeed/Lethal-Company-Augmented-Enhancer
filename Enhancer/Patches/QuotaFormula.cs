@@ -485,6 +485,9 @@ public class QuotaFormula : IPatch
             Instance.CurrentAssignmentInfo!.CombinedIncrease = __instance.profitQuota - Instance.CurrentAssignmentInfo!.Quota;
 
             Logger.LogDebug(Instance.CurrentAssignmentInfo);
+
+            Instance.PastAssignments.Add(Instance.CurrentAssignmentInfo);
+            Instance._currentAssignmentInfo = null;
         }
     }
 }
