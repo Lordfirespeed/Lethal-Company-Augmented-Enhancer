@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
+using UnityEngine;
 using UnityEngine.UI;
+using CodeMatch = HarmonyLib.CodeMatch;
 
 namespace Enhancer.Patches;
 
@@ -45,6 +47,27 @@ public class AlwaysShowTerminal : IPatch
             )
             .SetOpcodeAndAdvance(OpCodes.Nop)
             .RemoveInstructions(3);
+
+        return matcher.InstructionEnumeration();
+    }
+
+    [HarmonyPatch(typeof(Terminal), nameof(Terminal.BeginUsingTerminal))]
+    [HarmonyTranspiler]
+    public static IEnumerable<CodeInstruction> TerminalOpenTranspile(IEnumerable<CodeInstruction> instructions)
+    {
+        var matcher = new CodeMatcher(instructions);
+
+        matcher
+            .Start()
+            .MatchForward(
+                false,
+                new CodeMatch(instr => instr.opcode == OpCodes.Ldc_I4_S && instr.OperandIs(13))
+            )
+            .Advance(-4)
+            .SetAndAdvance(OpCodes.Nop, null)
+            .RemoveInstructions(6);
+
+        Plugin.Logger.LogDebug(string.Join("\n", matcher.Instructions()));
 
         return matcher.InstructionEnumeration();
     }
