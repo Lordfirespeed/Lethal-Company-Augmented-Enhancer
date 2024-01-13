@@ -34,14 +34,14 @@ jobs:
         run: dotnet tool restore
 
       - name: Build solution
-        run: dotnet build
+        run: dotnet build -c Release
 
       - name: Upload Thunderstore artifact
         uses: actions/upload-artifact@v4
         with:
           name: thunderstore-build
           path: dist/*.zip
-  
+
   upload-release-artifacts:
     name: Upload Release Artifacts
     needs: build
@@ -57,7 +57,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*.zip
-  
+
   deploy-thunderstore:
     name: Deploy to Thunderstore
     needs: build
@@ -87,4 +87,4 @@ jobs:
         env:
           TCLI_AUTH_TOKEN: ${{ secrets.THUNDERSTORE_API_TOKEN }}
         run: |
-          dotnet tcli publish --config-path ./assets/thunderstore.toml --file dist/*.zip 
+          dotnet tcli publish --config-path ./assets/thunderstore.toml --file dist/*.zip
