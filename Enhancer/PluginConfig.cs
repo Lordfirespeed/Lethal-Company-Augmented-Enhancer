@@ -393,7 +393,7 @@ public class PluginConfig
         #region Scrap Protection
 
         ScrapProtectionEnabled = bindingPlugin.Config.Bind(
-            "Threat Scanner",
+            "Scrap Protection",
             "Scrap Protection Enabled",
             false,
             new ConfigDescription(
@@ -401,8 +401,8 @@ public class PluginConfig
             )
         );
         ScrapProtection = bindingPlugin.Config.Bind(
-            "Threat Scanner",
             "Scrap Protection",
+            "Scrap Protection Probability",
             0f,
             new ConfigDescription(
                 "Sets the average probability that each scrap item is kept in the event that that no players survive a mission.\nThat is, this is the approximate average fraction of secured scrap items kept.\nHost Required: Yes",
@@ -410,7 +410,7 @@ public class PluginConfig
             )
         );
         ScrapProtectionRandomness = bindingPlugin.Config.Bind(
-            "Threat Scanner",
+            "Scrap Protection",
             "Scrap Protection Randomness Scalar",
             0f,
             new ConfigDescription(
