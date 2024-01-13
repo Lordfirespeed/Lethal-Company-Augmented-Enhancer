@@ -109,7 +109,7 @@ public class DaysPerQuota : IPatch
 
     [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SetNewProfitQuota))]
     [HarmonyPostfix]
-    static void SetDeadline(ref float timeUntilDeadline)
+    static void SetDeadline()
     {
         TrySetQuotaDuration();
     }
