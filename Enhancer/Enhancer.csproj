@@ -5,7 +5,6 @@
         <AssemblyName>com.github.lordfirespeed.augmented_enhancer</AssemblyName>
         <Product>Augmented Enhancer</Product>
         <Description>Tweaks plugin for Lethal Company</Description>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup>
