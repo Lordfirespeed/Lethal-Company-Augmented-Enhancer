@@ -32,13 +32,6 @@
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" PrivateAssets="all"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
-
     <ItemGroup Condition="$(CI) != 'true'">
         <Reference Include="Assembly-CSharp" Publicize="true">
             <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Assembly-CSharp.dll</HintPath>
