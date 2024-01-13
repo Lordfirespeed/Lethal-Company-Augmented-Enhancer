@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AlwaysShowTerminal uses transpilers; prevents automatic 'help' command upon opening terminal + prevents scroll reset
 - All config options have been renamed / given sections
 - Use TerminalApi to register threat scan as its own command
+- Creates a persistent GameObject to apply patches
 
 ### Added
 
