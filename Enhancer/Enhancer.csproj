@@ -5,11 +5,11 @@
         <AssemblyName>com.github.lordfirespeed.augmented_enhancer</AssemblyName>
         <Product>Augmented Enhancer</Product>
         <Description>Tweaks plugin for Lethal Company</Description>
-        
+
         <DebugType>embedded</DebugType>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
-    
+
     <PropertyGroup Condition="$(Configuration) == 'Release'">
         <Optimize>true</Optimize>
     </PropertyGroup>
@@ -38,6 +38,9 @@
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
             <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Assembly-CSharp-firstpass.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+            <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="Unity.Netcode.Runtime">
             <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.Netcode.Runtime.dll</HintPath>
