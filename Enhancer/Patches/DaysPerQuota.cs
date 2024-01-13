@@ -25,7 +25,9 @@ public class DaysPerQuota : IPatch
             if (quotasCompleted == 0) return 1;
 
             var exponent = Mathf.Pow(2, Plugin.BoundConfig.TargetIncomePerDayScalarCurvature.Value);
-            return 1 + Mathf.Pow((float)quotasCompleted / quotasToCompleteForMaximumScalar, exponent) * (Plugin.BoundConfig.MaxTargetIncomePerDayScalar.Value - 1);
+            var difficulty = 1 + Mathf.Pow((float)quotasCompleted / quotasToCompleteForMaximumScalar, exponent) * (Plugin.BoundConfig.MaxTargetIncomePerDayScalar.Value - 1);
+            Logger.LogInfo($"Difficulty scalar calculated to be {difficulty:f1}");
+            return difficulty;
         }
     }
 
@@ -33,7 +35,9 @@ public class DaysPerQuota : IPatch
         get {
             var randomnessScalar = Plugin.BoundConfig.TargetIncomePerDayRandomnessScalar.Value;
             if (randomnessScalar == 0) return 0;
-            return 1 + randomnessScalar * 2 * TimeOfDay.Instance.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f));
+            var randomness = 1 + randomnessScalar * 2 * TimeOfDay.Instance.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f));
+            Logger.LogInfo($"Randomness scalar selected to be {randomness:f1}");
+            return randomness;
         }
     }
 
@@ -46,7 +50,9 @@ public class DaysPerQuota : IPatch
                 case QuotaDurationBehaviour.Variable:
                     return Plugin.BoundConfig.BaseTargetIncomePerDay.Value;
                 case QuotaDurationBehaviour.DynamicVariable:
-                    return QuotaFormula.Instance!.PastAssignments.Average(info => (float)info.Income / info.Duration);
+                    var averageIncomePerDay = QuotaFormula.Instance!.PastAssignments.Average(info => (float)info.Income / info.Duration);
+                    Logger.LogInfo($"Average income is currently {averageIncomePerDay:f1}");
+                    return averageIncomePerDay;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -89,7 +95,7 @@ public class DaysPerQuota : IPatch
         }
         catch (Exception error)
         {
-            Logger.LogError("Failed to set new quota duration");
+            Logger.LogError("Failed to set new quota duration.");
             Logger.LogError(error);
         }
     }
