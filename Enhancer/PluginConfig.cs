@@ -211,7 +211,7 @@ public class PluginConfig
             "Quota Assignment Duration",
             "bDaysPerQuotaAssignmentEnabled",
             false,
-            "Feature flag for the 'days per quota' variable.\nHost Required: Yes"
+            "Feature flag for the 'days per quota' variable. 'Quota Formula' feature must also be enabled for this to take effect.\nHost Required: Yes"
         );
         DaysPerQuotaAssignmentBehaviour = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
