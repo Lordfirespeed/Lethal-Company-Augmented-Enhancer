@@ -13,7 +13,7 @@ public enum ThreatScannerMode
     ThreatLevelName
 }
 
-public class ThreatScannerInScanCommand : IPatch
+public class ThreatScanCommand : IPatch
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

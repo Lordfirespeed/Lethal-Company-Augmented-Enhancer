@@ -40,7 +40,7 @@ public class EnhancerPatcher : MonoBehaviour
             ListenToConfigEntries = [BoundConfig.DoorPowerDurationEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<ThreatScannerInScanCommand> {
+        new PatchInfo<ThreatScanCommand> {
             Name = "Threat scanner",
             EnabledCondition = () =>
                 BoundConfig.Enabled.Value && BoundConfig.ThreatScanner.Value is not ThreatScannerMode.Disabled,
