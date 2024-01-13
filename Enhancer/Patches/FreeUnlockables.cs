@@ -5,7 +5,7 @@ using HarmonyLib;
 
 namespace Enhancer.Patches;
 
-public class UnlockSuits : IPatch
+public class FreeUnlockables : IPatch
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

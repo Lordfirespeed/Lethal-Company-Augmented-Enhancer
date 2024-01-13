@@ -78,10 +78,10 @@ public class EnhancerPatcher : MonoBehaviour
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.PassiveIncomeEnabled.Value,
             ListenToConfigEntries = [BoundConfig.PassiveIncomeEnabled],
         },
-        new PatchInfo<UnlockSuits> {
+        new PatchInfo<FreeUnlockables> {
             Name = "Suit unlock",
-            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.SuitUnlocksEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.SuitUnlocksEnabled],
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.FreeUnlockablesEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.FreeUnlockablesEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new PatchInfo<TimeSpeed> {
