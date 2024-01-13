@@ -5,11 +5,13 @@
 ***********************************************************/
 
 using System;
+using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Configuration;
 using Enhancer.Patches;
 using Enhancer.Config;
 using Enhancer.Config.AcceptableValues;
+using Newtonsoft.Json;
 
 namespace Enhancer;
 
@@ -19,7 +21,8 @@ public class PluginConfig
     public readonly ConfigEntry<bool> DelegationEnabled;
 
     public readonly ConfigEntry<bool> KeepConsoleEnabled;
-    public readonly ConfigEntry<bool> SuitUnlocksEnabled;
+    public readonly ConfigEntry<bool> FreeUnlockablesEnabled;
+    public readonly ConfigEntry<List<string>> FreeUnlockablesList;
 
     public readonly ConfigEntry<bool> CompanyBuyingFactorTweaksEnabled;
     public readonly ConfigEntry<bool> RandomiseCompanyBuyingFactor;
@@ -80,6 +83,11 @@ public class PluginConfig
             ConvertToString = (Func<object, Type, string>)((obj, type) => obj.ToString()),
             ConvertToObject = (Func<string, Type, object>)((str, type) => Interval<float>.Parse(str))
         });
+        TomlTypeConverter.AddConverter(typeof(List<string>), new TypeConverter
+        {
+            ConvertToString = (Func<object, Type, string>)((obj, type) => JsonConvert.SerializeObject(obj, type, new())),
+            ConvertToObject = (Func<string, Type, object>)((str, type) => JsonConvert.DeserializeObject(str, type) ?? throw new InvalidOperationException())
+        });
     }
 
     public PluginConfig(BaseUnityPlugin bindingPlugin)
@@ -109,11 +117,17 @@ public class PluginConfig
             true,
             "Whether to keep the terminal enabled after a player stops using it\nHost Required: No"
         );
-        SuitUnlocksEnabled = bindingPlugin.Config.Bind(
+        FreeUnlockablesEnabled = bindingPlugin.Config.Bind(
             "Misc Tweaks",
-            "Unlock Suits",
+            "Free Unlockables Enabled",
             false,
-            "Unlocks a few of the cheaper suits from the start so your crew has options.\nHost Required: Yes"
+            "Unlocks unlockables (such as suits, furniture) by name at the start of round.\nHost Required: Yes"
+        );
+        FreeUnlockablesList = bindingPlugin.Config.Bind<List<string>>(
+            "Misc Tweaks",
+            "Free Unlockables List",
+            ["Green suit", "Hazard suit"],
+            "The unlockable item names to unlock when 'Free Unlockables' are enabled"
         );
 
         #endregion
