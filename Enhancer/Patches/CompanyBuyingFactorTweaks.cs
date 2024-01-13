@@ -1,7 +1,7 @@
 using BepInEx.Logging;
-using UnityEngine;
 using HarmonyLib;
 using Unity.Netcode;
+using UnityEngine;
 
 namespace Enhancer.Patches;
 

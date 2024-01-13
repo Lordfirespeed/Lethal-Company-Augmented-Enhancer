@@ -1,7 +1,7 @@
 using System;
 using BepInEx.Logging;
-using TerminalApiHelper = TerminalApi.TerminalApi;
 using TerminalApi.Classes;
+using TerminalApiHelper = TerminalApi.TerminalApi;
 
 namespace Enhancer.Patches;
 

@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Configuration;
-using Enhancer.Patches;
 using Enhancer.Config;
 using Enhancer.Config.AcceptableValues;
+using Enhancer.Patches;
 using Newtonsoft.Json;
 
 namespace Enhancer;
