@@ -251,7 +251,7 @@ public class PluginConfig
         );
         MaxTargetIncomePerDayScalar = bindingPlugin.Config.Bind(
             "Quota Assignment Duration",
-            "Maximum Target Income Per Day",
+            "Maximum Target Income Per Day Scalar",
             1.5f,
             new ConfigDescription(
                 "Upper bound for target income per day multiplier when using variable quota duration behaviour.\n" +
