@@ -50,9 +50,17 @@ public class DaysPerQuota : IPatch
                 case QuotaDurationBehaviour.Variable:
                     return Plugin.BoundConfig.BaseTargetIncomePerDay.Value;
                 case QuotaDurationBehaviour.DynamicVariable:
-                    var averageIncomePerDay = QuotaFormula.Instance!.PastAssignments.Average(info => (float)info.Income / info.Duration);
-                    Logger.LogInfo($"Average income is currently {averageIncomePerDay:f1}");
-                    return averageIncomePerDay;
+                    try
+                    {
+                        var averageIncomePerDay =
+                            QuotaFormula.Instance!.PastAssignments.Average(info => (float)info.Income / info.Duration);
+                        Logger.LogInfo($"Average income is currently {averageIncomePerDay:f1}");
+                        return averageIncomePerDay;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return Plugin.BoundConfig.BaseTargetIncomePerDay.Value;
+                    }
                 default:
                     throw new ArgumentOutOfRangeException();
             }
