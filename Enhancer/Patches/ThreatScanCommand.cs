@@ -79,7 +79,7 @@ public class ThreatScanCommand : IPatch
     public static string ThreatScanTextSupplier()
     {
         //If there are no enemies in the level, do nothing
-        if (!RoundManager.Instance.currentLevel.spawnEnemiesAndScrap) return "Safe zone detected";
+        if (!RoundManager.Instance.currentLevel.spawnEnemiesAndScrap) return "Safe zone detected\n";
 
         var power = RoundManager.Instance.currentEnemyPower;
         var maxp = RoundManager.Instance.currentLevel.maxEnemyPowerCount;
