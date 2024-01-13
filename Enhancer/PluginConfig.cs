@@ -321,7 +321,7 @@ public class PluginConfig
         QuotaIncreaseRandomFactor = bindingPlugin.Config.Bind(
             "Quota Calculation",
             "fQuotaIncreaseRandomFactor",
-            1f,
+            0.5f,
             "Used in calculating quota increase. Multiplier for the random increase factor.\nHost Required: Yes"
         );
 

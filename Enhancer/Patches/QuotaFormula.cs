@@ -74,7 +74,7 @@ public class QuotaFormula : IPatch
         IncreaseSteepness = Plugin.BoundConfig.QuotaIncreaseSteepnessCoefficient.Value,
         IncreaseExponent = Plugin.BoundConfig.QuotaIncreaseSteepnessExponent.Value,
         BaseIncrease = Plugin.BoundConfig.QuotaBaseIncrease.Value,
-        RandomizerMultiplier = Plugin.BoundConfig.QuotaIncreaseRandomFactor.Value,
+        RandomizerMultiplier = Plugin.BoundConfig.QuotaIncreaseRandomFactor.Value * 2,
     };
 
     public void SetLogger(ManualLogSource logger)
