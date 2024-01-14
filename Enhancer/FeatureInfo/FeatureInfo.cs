@@ -96,16 +96,15 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
 
     private void InstantiateFeature()
     {
-        Plugin.Logger.LogDebug($"Instantiating feature...");
+        if (FeatureHarmony is null)
+            throw new Exception("FeatureInfo has not been initialised. Cannot patch without a Harmony instance.");
+        if (FeatureLogger is null)
+            throw new Exception("FeatureInfo has not been initialised. Cannot patch without a Logger instance.");
+
+        Plugin.Logger.LogDebug("Instantiating feature...");
         FeatureInstance = new TFeature();
 
-        if (FeatureLogger is null) {
-            Plugin.Logger.LogWarning($"FeatureLogger is null, using global logger for {Name}.");
-            FeatureInstance.SetLogger(Plugin.Logger);
-            return;
-        }
-
-        Plugin.Logger.LogDebug($"Assigning logger...");
+        Plugin.Logger.LogDebug("Assigning logger...");
         FeatureInstance.SetLogger(FeatureLogger);
 
         Plugin.Logger.LogDebug("Assigning harmony...");
