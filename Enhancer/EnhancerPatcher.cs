@@ -122,7 +122,7 @@ public class EnhancerPatcher : MonoBehaviour
         FeatureInfoInitializers.LogSourceFactory =
             patchName => BepInEx.Logging.Logger.CreateLogSource($"{MyPluginInfo.PLUGIN_NAME}/{patchName}");
 
-        Logger.LogInfo("Initialising patches...");
+        Logger.LogInfo("Initialising features...");
         Features.Do(patch => patch.Initialise());
         Logger.LogInfo("Done!");
     }

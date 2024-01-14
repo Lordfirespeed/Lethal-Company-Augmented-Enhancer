@@ -14,10 +14,10 @@ namespace Enhancer.FeatureInfo;
 internal static class FeatureInfoInitializers
 {
     public static Func<string, Harmony> HarmonyFactory { get; set; } =
-        s => throw new InvalidOperationException("PatchInfo HarmonyFactory has not been initialized.");
+        s => throw new InvalidOperationException("FeatureInfo HarmonyFactory has not been initialized.");
 
     public static Func<string, ManualLogSource> LogSourceFactory { get; set; } =
-        s => throw new InvalidOperationException("PatchInfo LogSourceFactory has not been initialized.");
+        s => throw new InvalidOperationException("FeatureInfo LogSourceFactory has not been initialized.");
 }
 
 internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : class, IFeature, new()
@@ -66,9 +66,9 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     public void Initialise()
     {
         if (_disposed)
-            throw new InvalidOperationException("PatchInfo has already been disposed!.");
+            throw new InvalidOperationException("FeatureInfo has already been disposed!.");
         if (FeatureHarmony is not null)
-            throw new InvalidOperationException("PatchInfo has already been initialised!");
+            throw new InvalidOperationException("FeatureInfo has already been initialised!");
 
         FeatureHarmony = FeatureInfoInitializers.HarmonyFactory(typeof(TFeature).Name);
         FeatureLogger = FeatureInfoInitializers.LogSourceFactory(Name);
@@ -94,13 +94,13 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
         Disable();
     }
 
-    private void InstantiatePatch()
+    private void InstantiateFeature()
     {
-        Plugin.Logger.LogDebug($"Instantiating patch...");
+        Plugin.Logger.LogDebug($"Instantiating feature...");
         FeatureInstance = new TFeature();
 
         if (FeatureLogger is null) {
-            Plugin.Logger.LogWarning($"PatchLogger is null, using global logger for {Name}.");
+            Plugin.Logger.LogWarning($"FeatureLogger is null, using global logger for {Name}.");
             FeatureInstance.SetLogger(Plugin.Logger);
             return;
         }
@@ -113,11 +113,11 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     {
         lock (PatchingLock) {
             if (FeatureHarmony is null)
-                throw new Exception("PatchInfo has not been initialised. Cannot patch without a Harmony instance.");
+                throw new Exception("FeatureInfo has not been initialised. Cannot patch without a Harmony instance.");
             if (FeatureInstance is not null) return;
 
-            Plugin.Logger.LogInfo($"Attaching {Name} patches...");
-            InstantiatePatch();
+            Plugin.Logger.LogInfo($"Enabling {Name} feature...");
+            InstantiateFeature();
             FeatureInstance!.OnEnable();
             FeatureHarmony.PatchAllWithNestedTypes(typeof(TFeature));
         }
@@ -127,10 +127,10 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     {
         lock (PatchingLock) {
             if (FeatureHarmony is null)
-                throw new Exception("PatchInfo has not been initialised. Cannot unpatch without a Harmony instance.");
+                throw new Exception("FeatureInfo has not been initialised. Cannot unpatch without a Harmony instance.");
             if (FeatureInstance is null) return;
 
-            Plugin.Logger.LogInfo($"Detaching {Name} patches...");
+            Plugin.Logger.LogInfo($"Disabling {Name} feature...");
             FeatureHarmony.UnpatchSelf();
             FeatureInstance.OnDisable();
             FeatureInstance = null;
