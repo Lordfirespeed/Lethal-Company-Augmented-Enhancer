@@ -24,6 +24,10 @@ public class PluginConfig
     public readonly ConfigEntry<bool> FreeUnlockablesEnabled;
     public readonly ConfigEntry<List<string>> FreeUnlockablesList;
 
+    public readonly ConfigEntry<bool> SavedItemCapEnabled;
+    public readonly ConfigEntry<int> SavedItemCap;
+    public readonly ConfigEntry<bool> RemoveItemCapEnabled;
+
     public readonly ConfigEntry<bool> MilitaryTime;
     public readonly ConfigEntry<bool> HideClockEnabled;
     public readonly ConfigEntry<bool> HideClockOnShip;
@@ -133,6 +137,32 @@ public class PluginConfig
             "Free Unlockables List",
             ["Green suit", "Hazard suit", "Purple Suit"],
             "The unlockable item names to unlock when 'Free Unlockables' are enabled"
+        );
+
+        #endregion
+
+        #region Saved Item Cap
+
+        SavedItemCapEnabled = bindingPlugin.Config.Bind(
+            "Saved Item Cap",
+            "Saved Item Cap Enabled",
+            false,
+            "Feature flag for the 'saved item cap' option.\nHost Required: Yes"
+        );
+        SavedItemCap = bindingPlugin.Config.Bind(
+            "Saved Item Cap",
+            "Saved Item Cap",
+            45,
+            "Increases the cap on the number of items that can be saved.\n +" +
+            "Can help to prevent items despawning when you have too many and re-load your lobby.\n" +
+            "Host Required: Yes"
+        );
+        RemoveItemCapEnabled = bindingPlugin.Config.Bind(
+            "Saved Item Cap",
+            "Remove Saved Item Cap",
+            false,
+            "Remove the cap on the number of items that can be saved entirely.\n" +
+            "Host Required: Yes"
         );
 
         #endregion
