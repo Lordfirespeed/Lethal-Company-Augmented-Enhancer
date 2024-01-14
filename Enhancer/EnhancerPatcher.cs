@@ -59,6 +59,11 @@ public class EnhancerPatcher : MonoBehaviour
             ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
+        new FeatureInfo<LeaderboardUsesBestAttempt> {
+            Name = "Leaderboard Uses Best Attempt",
+            EnabledCondition = () => BoundConfig.Enabled.Value,
+            ListenToConfigEntries = [],
+        },
         new FeatureInfo<LightswitchCommand> {
             Name = "Lightswitch Command",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.LightswitchCommandEnabled.Value,
