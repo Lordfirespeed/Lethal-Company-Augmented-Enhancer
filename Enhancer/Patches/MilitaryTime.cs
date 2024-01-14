@@ -18,15 +18,6 @@ public class MilitaryTime : IPatch
         Logger = logger;
     }
 
-    private static bool SetClock(ref TextMeshProUGUI ___clockNumber, ref float timeNormalized, ref float numberOfHours)
-    {
-        int num = (int)(timeNormalized * (60f * numberOfHours)) + 360;
-        int num2 = (int)Mathf.Floor(num / 60);
-        int num3 = num % 60;
-        ___clockNumber.text = $"{num2:00}:{num3:00}".TrimStart(['0']);
-        return false;
-    }
-
     [HarmonyPatch(typeof(HUDManager), nameof(HUDManager.SetClock))]
     [HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> Transpile24HourClock(IEnumerable<CodeInstruction> instructions)
