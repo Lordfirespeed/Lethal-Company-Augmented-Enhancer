@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using BepInEx.Logging;
-using Enhancer.Extensions;
+using GameNetcodeStuff;
 using HarmonyLib;
 
 namespace Enhancer.Patches;
@@ -17,10 +17,12 @@ public class HideClock : IPatch
         Logger = logger;
     }
 
-    private static bool PlayerIsInFactory => HUDManager.Instance != null && HUDManager.Instance.localPlayer.isInsideFactory;
-    private static bool PlayerIsInShip => HUDManager.Instance != null && HUDManager.Instance.localPlayer.isInHangarShipRoom;
-    private static bool PlayerIsInTerminal => HUDManager.Instance != null && HUDManager.Instance.localPlayer.inTerminalMenu;
-    private static bool CurrentClockVisibility => HUDManager.Instance != null && HUDManager.Instance.Clock.targetAlpha > 0;
+    private static PlayerControllerB? Player => HUDManager.Instance != null ? HUDManager.Instance.localPlayer : null;
+    private static bool PlayerIsInFactory => Player is { isInsideFactory: true };
+    private static bool PlayerIsInShip => Player is { isInHangarShipRoom: true };
+    private static bool PlayerIsInTerminal => Player is { inTerminalMenu: true };
+    private static HUDElement? Clock => HUDManager.Instance != null ? HUDManager.Instance.Clock : null;
+    private static bool CurrentClockVisibility => Clock is { targetAlpha: > 0 };
 
     private static Environment CurrentPlayerLocationEnvironment {
         get {
