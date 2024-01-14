@@ -23,6 +23,7 @@ public class PluginConfig
     public readonly ConfigEntry<bool> KeepConsoleEnabled;
     public readonly ConfigEntry<bool> FreeUnlockablesEnabled;
     public readonly ConfigEntry<List<string>> FreeUnlockablesList;
+    public readonly ConfigEntry<bool> LightswitchCommandEnabled;
 
     public readonly ConfigEntry<bool> SavedItemCapEnabled;
     public readonly ConfigEntry<int> SavedItemCap;
@@ -137,6 +138,12 @@ public class PluginConfig
             "Free Unlockables List",
             ["Green suit", "Hazard suit", "Purple Suit"],
             "The unlockable item names to unlock when 'Free Unlockables' are enabled"
+        );
+        LightswitchCommandEnabled = bindingPlugin.Config.Bind(
+            "Misc Tweaks",
+            "Lightswitch Commands Enabled",
+            false,
+            "Enabling this adds a 'lights' command to the terminal to control the interior ship lights, in case a trickster hides the switch.\nHost Required: No"
         );
 
         #endregion

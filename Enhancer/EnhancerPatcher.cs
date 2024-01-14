@@ -59,6 +59,11 @@ public class EnhancerPatcher : MonoBehaviour
             ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
+        new FeatureInfo<LightswitchCommand> {
+            Name = "Lightswitch Command",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.LightswitchCommandEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.LightswitchCommandEnabled],
+        },
         new FeatureInfo<MilitaryTime> {
             Name = "24-hour clock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.MilitaryTime.Value,
