@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 24 hour clock option
 - Options to choose where the clock is hidden/visible
 - Options to configure the saved item quantity cap
+- `lights` command group
 
 ### Fixed
 
