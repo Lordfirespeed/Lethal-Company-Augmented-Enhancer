@@ -16,7 +16,7 @@ public class EnhancerPatcher : MonoBehaviour
 
     internal static PluginConfig BoundConfig { get; set; } = null!;
 
-    private static readonly IList<IFeatureInfo<IFeature>> Features = [
+    private readonly IList<IFeatureInfo<IFeature>> _features = [
         new FeatureInfo<AlwaysShowTerminal> {
             Name = "Always show terminal",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.KeepConsoleEnabled.Value,
@@ -123,12 +123,12 @@ public class EnhancerPatcher : MonoBehaviour
             patchName => BepInEx.Logging.Logger.CreateLogSource($"{MyPluginInfo.PLUGIN_NAME}/{patchName}");
 
         Logger.LogInfo("Initialising features...");
-        Features.Do(patch => patch.Initialise());
+        _features.Do(patch => patch.Initialise());
         Logger.LogInfo("Done!");
     }
 
     private void OnDestroy()
     {
-        Features.Do(patch => patch.Dispose());
+        _features.Do(patch => patch.Dispose());
     }
 }
