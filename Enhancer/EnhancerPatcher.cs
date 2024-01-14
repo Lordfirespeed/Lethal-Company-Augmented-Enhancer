@@ -75,6 +75,17 @@ public class EnhancerPatcher : MonoBehaviour
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.QuotaFormulaEnabled],
         },
+        new PatchInfo<RemoveSavedItemCap> {
+            Name = "Remove Saved Item Cap",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.RemoveSavedItemCapEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.RemoveSavedItemCapEnabled],
+        },
+        new PatchInfo<SavedItemCap> {
+            Name = "Saved Item Cap",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.SavedItemCapEnabled.Value && !BoundConfig.RemoveSavedItemCapEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.SavedItemCapEnabled, BoundConfig.RemoveSavedItemCapEnabled],
+            DelegateToModGuids = ["MoreItems"]
+        },
         new PatchInfo<ScrapTweaks> {
             Name = "Scrap Tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapTweaksEnabled.Value,
