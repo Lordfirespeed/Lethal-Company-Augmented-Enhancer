@@ -43,9 +43,21 @@ For example, with 4 players:
 
 </details>
 
-### Suit Unlocker
-Enabling this option unlocks the Green and Hazard suits from game start.
-The PJs suit are not unlocked by default and remain available via the Company store.
+### Free Unlockables
+
+There's a configurable list of unlockable item names which will be unlocked
+at the start of an employment. By default the cheap suits are unlocked, when enabled.
+
+Enable debug logging in BepInEx's config, and Enhancer will write the available 
+unlockable names to the log when a lobby starts.
+
+### Clock Tweaks
+
+- Clock can be configured to display 24-hour (military) time
+- Clock visibility is configurable 
+  - show/hide in ship
+  - show/hide outside
+  - show/hide in facility 
 
 ### Always Show Terminal
 Enabling this option will prevent the ship terminal from closing on exit.
