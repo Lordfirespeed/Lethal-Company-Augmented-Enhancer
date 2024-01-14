@@ -26,15 +26,13 @@ public class RemoveSavedItemCap : IPatch
             .Start()
             .MatchForward(
                 false,
-                new CodeMatch(OpCodes.Ldloc_S, 6),
+                new CodeMatch(OpCodes.Ldloc_S),
                 new CodeMatch(OpCodes.Call, AccessTools.PropertyGetter(typeof(StartOfRound), nameof(StartOfRound.Instance))),
                 new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(StartOfRound), nameof(StartOfRound.maxShipItemCapacity))),
-                new CodeMatch(instr => instr.opcode == OpCodes.Bgt)
+                new CodeMatch(OpCodes.Bgt)
             )
-            .SetAndAdvance(OpCodes.Nop, null)
-            .RemoveInstructions(3);
-
-        Logger.LogDebugInstructionsFrom(matcher);
+            .AddLabelsAt(matcher.Pos + 4, matcher.Labels)
+            .RemoveInstructions(4);
 
         return matcher.InstructionEnumeration();
     }
