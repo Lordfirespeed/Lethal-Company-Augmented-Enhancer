@@ -23,7 +23,12 @@ public class PluginConfig
     public readonly ConfigEntry<bool> KeepConsoleEnabled;
     public readonly ConfigEntry<bool> FreeUnlockablesEnabled;
     public readonly ConfigEntry<List<string>> FreeUnlockablesList;
+
     public readonly ConfigEntry<bool> MilitaryTime;
+    public readonly ConfigEntry<bool> HideClockEnabled;
+    public readonly ConfigEntry<bool> HideClockOnShip;
+    public readonly ConfigEntry<bool> HideClockOutside;
+    public readonly ConfigEntry<bool> HideClockInFacility;
 
     public readonly ConfigEntry<bool> CompanyBuyingFactorTweaksEnabled;
     public readonly ConfigEntry<bool> RandomiseCompanyBuyingFactor;
@@ -129,11 +134,40 @@ public class PluginConfig
             ["Green suit", "Hazard suit", "Purple Suit"],
             "The unlockable item names to unlock when 'Free Unlockables' are enabled"
         );
+
+        #endregion
+
+        #region Clock Tweaks
+
         MilitaryTime = bindingPlugin.Config.Bind(
-            "Misc Tweaks",
+            "Clock Tweaks",
             "24-hour Clock",
             false,
             "Whether the time should display in 24-hour (military) format.\nHost Required: No"
+        );
+        HideClockEnabled = bindingPlugin.Config.Bind(
+            "Clock Tweaks",
+            "Hide Clock Enabled",
+            false,
+            "Feature flag for the 'hide clock on x' options.\nHost Required: No"
+        );
+        HideClockOnShip = bindingPlugin.Config.Bind(
+            "Clock Tweaks",
+            "Hide Clock on Ship",
+            true,
+            "Whether the HUD clock should be hidden on the ship.\nHost Required: No"
+        );
+        HideClockOutside = bindingPlugin.Config.Bind(
+            "Clock Tweaks",
+            "Hide Clock Outside",
+            false,
+            "Whether the HUD clock should be hidden outside.\nHost Required: No"
+        );
+        HideClockInFacility = bindingPlugin.Config.Bind(
+            "Clock Tweaks",
+            "Hide Clock in Facility",
+            true,
+            "Whether the HUD clock should be hidden in the facility.\nHost Required: No"
         );
 
         #endregion
