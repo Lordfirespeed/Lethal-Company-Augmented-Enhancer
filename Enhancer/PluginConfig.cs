@@ -125,7 +125,7 @@ public class PluginConfig
         KeepConsoleEnabled = bindingPlugin.Config.Bind(
             "Misc Tweaks",
             "Always Show Terminal",
-            true,
+            false,
             "Whether to keep the terminal enabled after a player stops using it\nHost Required: No"
         );
         FreeUnlockablesEnabled = bindingPlugin.Config.Bind(
@@ -224,7 +224,6 @@ public class PluginConfig
             false,
             "Whether or not the company buying price tweaks are enabled.\nHost required: Yes"
         );
-
         RandomiseCompanyBuyingFactor = bindingPlugin.Config.Bind(
             "Company Buying Prices",
             "Company Buying Factor Randomizer Enabled",
@@ -439,7 +438,6 @@ public class PluginConfig
                 "Whether or not to enable scrap tweaks.\nHost required: Yes"
             )
         );
-
         ScrapValueScalar = bindingPlugin.Config.Bind(
             "Scrap Value, Quantity & Playercount Scaling",
             "Scrap Value Scalar",
@@ -460,7 +458,6 @@ public class PluginConfig
                 new AcceptableValueRange<float>(0, float.MaxValue)
             )
         );
-
         ScrapPlayercountScaling = bindingPlugin.Config.Bind(
             "Scrap Value, Quantity & Playercount Scaling",
             "Scrap Playercount Scaling",
