@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable list of unlockables to unlock at game start
 - 24 hour clock option
 - Options to choose where the clock is hidden/visible
+- Options to configure the saved item quantity cap
 
 ### Fixed
 
