@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Options to choose where the clock is hidden/visible
 - Options to configure the saved item quantity cap
 - `lights` command group
+- Option to only overwrite challenge moon leaderboard entry when your score is higher
+  than your previous best attempt
 
 ### Fixed
 

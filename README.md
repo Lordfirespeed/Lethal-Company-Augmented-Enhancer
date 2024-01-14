@@ -111,6 +111,10 @@ danger level due to enemy threats.
 The `lights` command group can be added to the terminal, which allows you to control the ship's interior lights
 in case the light switch 'goes missing'.
 
+### Leaderboard Uses Best Attempts
+The challenge moon leaderboard can be configured to only accept attempts whose scores are an improvement over
+your previous best score.
+
 ### Days Per Quota
 Assignment Duration (Days Per Quota): The quota assignment duration can be configured, including
 variable options similar to Dynamic Deadline.
