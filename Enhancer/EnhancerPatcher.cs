@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Logging;
 using Enhancer.Features;
-using Enhancer.PatchInfo;
+using Enhancer.FeatureInfo;
 using HarmonyLib;
 using UnityEngine;
 
@@ -16,98 +16,98 @@ public class EnhancerPatcher : MonoBehaviour
 
     internal static PluginConfig BoundConfig { get; set; } = null!;
 
-    private IEnumerable<IPatchInfo<IFeature>> GetPatches() => [
-        new PatchInfo<AlwaysShowTerminal> {
+    private IEnumerable<IFeatureInfo<IFeature>> GetPatches() => [
+        new FeatureInfo<AlwaysShowTerminal> {
             Name = "Always show terminal",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.KeepConsoleEnabled.Value,
             ListenToConfigEntries = [BoundConfig.KeepConsoleEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<DaysPerQuota> {
+        new FeatureInfo<DaysPerQuota> {
             Name = "Days per quota",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaAssignmentEnabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DaysPerQuotaAssignmentEnabled, BoundConfig.QuotaFormulaEnabled],
             DelegateToModGuids = ["mom.llama.enhancer", "Haha.DynamicDeadline"],
         },
-        new PatchInfo<DeathPenalty> {
+        new FeatureInfo<DeathPenalty> {
             Name = "Death penalty",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DeathPenaltyFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DeathPenaltyFormulaEnabled],
         },
-        new PatchInfo<HangarDoorCloseDuration> {
+        new FeatureInfo<HangarDoorCloseDuration> {
             Name = "Hangar door close duration",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DoorPowerDurationEnabled.Value,
             ListenToConfigEntries = [BoundConfig.DoorPowerDurationEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<HideClock> {
+        new FeatureInfo<HideClock> {
             Name = "Hide Clock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.HideClockEnabled.Value,
             ListenToConfigEntries = [BoundConfig.HideClockEnabled, BoundConfig.HideClockOutside, BoundConfig.HideClockOnShip, BoundConfig.HideClockInFacility],
             DelegateToModGuids = ["atk.lethalcompany.shipclock"],
         },
-        new PatchInfo<ThreatScanCommand> {
+        new FeatureInfo<ThreatScanCommand> {
             Name = "Threat scanner",
             EnabledCondition = () =>
                 BoundConfig.Enabled.Value && BoundConfig.ThreatScanner.Value is not ThreatScannerMode.Disabled,
             ListenToConfigEntries = [BoundConfig.ThreatScanner],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<ItemProtection> {
+        new FeatureInfo<ItemProtection> {
             Name = "Item protection",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapProtectionEnabled.Value,
             ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<MilitaryTime> {
+        new FeatureInfo<MilitaryTime> {
             Name = "24-hour clock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.MilitaryTime.Value,
             ListenToConfigEntries = [BoundConfig.MilitaryTime],
             DelegateToModGuids = ["com.zduniusz.lethalcompany.24hourclock"],
         },
-        new PatchInfo<CompanyBuyingFactorTweaks> {
+        new FeatureInfo<CompanyBuyingFactorTweaks> {
             Name = "Company buying factor tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.CompanyBuyingFactorTweaksEnabled.Value,
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<QuotaFormula> {
+        new FeatureInfo<QuotaFormula> {
             Name = "Quota formula",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
             ListenToConfigEntries = [BoundConfig.QuotaFormulaEnabled],
         },
-        new PatchInfo<RemoveSavedItemCap> {
+        new FeatureInfo<RemoveSavedItemCap> {
             Name = "Remove Saved Item Cap",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.RemoveSavedItemCapEnabled.Value,
             ListenToConfigEntries = [BoundConfig.RemoveSavedItemCapEnabled],
         },
-        new PatchInfo<SavedItemCap> {
+        new FeatureInfo<SavedItemCap> {
             Name = "Saved Item Cap",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.SavedItemCapEnabled.Value && !BoundConfig.RemoveSavedItemCapEnabled.Value,
             ListenToConfigEntries = [BoundConfig.SavedItemCapEnabled, BoundConfig.RemoveSavedItemCapEnabled],
             DelegateToModGuids = ["MoreItems"]
         },
-        new PatchInfo<ScrapTweaks> {
+        new FeatureInfo<ScrapTweaks> {
             Name = "Scrap Tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapTweaksEnabled.Value,
             ListenToConfigEntries = [BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
         },
-        new PatchInfo<StartingCredits> {
+        new FeatureInfo<StartingCredits> {
             Name = "Starting credits",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.StartingCreditsEnabled.Value,
             ListenToConfigEntries = [BoundConfig.StartingCreditsEnabled],
         },
-        new PatchInfo<PassiveIncome> {
+        new FeatureInfo<PassiveIncome> {
             Name = "Passive income",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.PassiveIncomeEnabled.Value,
             ListenToConfigEntries = [BoundConfig.PassiveIncomeEnabled],
         },
-        new PatchInfo<FreeUnlockables> {
+        new FeatureInfo<FreeUnlockables> {
             Name = "Suit unlock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.FreeUnlockablesEnabled.Value,
             ListenToConfigEntries = [BoundConfig.FreeUnlockablesEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
-        new PatchInfo<TimeSpeed> {
+        new FeatureInfo<TimeSpeed> {
             Name = "Time speed",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.TimeSpeedEnabled.Value,
             ListenToConfigEntries = [BoundConfig.TimeSpeedEnabled],
@@ -117,9 +117,9 @@ public class EnhancerPatcher : MonoBehaviour
 
     private void Start()
     {
-        PatchInfoInitializers.HarmonyFactory =
+        FeatureInfoInitializers.HarmonyFactory =
             harmonyName => new Harmony($"{MyPluginInfo.PLUGIN_GUID}-{harmonyName}");
-        PatchInfoInitializers.LogSourceFactory =
+        FeatureInfoInitializers.LogSourceFactory =
             patchName => BepInEx.Logging.Logger.CreateLogSource($"{MyPluginInfo.PLUGIN_NAME}/{patchName}");
 
         Logger.LogInfo("Initialising patches...");
