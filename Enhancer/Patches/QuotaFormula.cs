@@ -92,7 +92,7 @@ public class QuotaFormula : IPatch
 
     public void OnUnpatch()
     {
-        Instance = null;
+        if (Instance == this) Instance = null;
     }
 
     public static void ResetQuotaVariables()
