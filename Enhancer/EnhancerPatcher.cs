@@ -40,6 +40,12 @@ public class EnhancerPatcher : MonoBehaviour
             ListenToConfigEntries = [BoundConfig.DoorPowerDurationEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
+        new PatchInfo<HideClock> {
+            Name = "Hide Clock",
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.HideClockEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.HideClockEnabled, BoundConfig.HideClockOutside, BoundConfig.HideClockOnShip, BoundConfig.HideClockInFacility],
+            DelegateToModGuids = ["atk.lethalcompany.shipclock"],
+        },
         new PatchInfo<ThreatScanCommand> {
             Name = "Threat scanner",
             EnabledCondition = () =>
