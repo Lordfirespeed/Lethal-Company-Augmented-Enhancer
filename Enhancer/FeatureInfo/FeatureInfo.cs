@@ -107,6 +107,9 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
 
         Plugin.Logger.LogDebug($"Assigning logger...");
         FeatureInstance.SetLogger(FeatureLogger);
+
+        Plugin.Logger.LogDebug("Assigning harmony...");
+        FeatureInstance.SetHarmony(FeatureHarmony);
     }
 
     private void Enable()
