@@ -1,5 +1,5 @@
 using System;
-using Enhancer.Patches;
+using Enhancer.Features;
 
 namespace Enhancer.PatchInfo;
 

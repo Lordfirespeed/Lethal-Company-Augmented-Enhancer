@@ -10,7 +10,7 @@ using NetworkManager = Unity.Netcode.NetworkManager;
 using Object = UnityEngine.Object;
 using OpCodes = System.Reflection.Emit.OpCodes;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class QuotaFormula : IPatch
 {

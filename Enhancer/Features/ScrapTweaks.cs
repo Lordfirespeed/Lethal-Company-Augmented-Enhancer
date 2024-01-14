@@ -2,7 +2,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using LC_API.GameInterfaceAPI.Events.EventArgs.Player;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class ScrapTweaks : IPatch
 {

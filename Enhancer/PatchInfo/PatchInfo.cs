@@ -5,7 +5,7 @@ using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using Enhancer.Extensions;
-using Enhancer.Patches;
+using Enhancer.Features;
 using HarmonyLib;
 using UnityEngine.UIElements.Collections;
 

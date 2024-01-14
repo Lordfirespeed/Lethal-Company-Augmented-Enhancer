@@ -3,7 +3,7 @@ using BepInEx.Logging;
 using TerminalApi.Classes;
 using TerminalApiHelper = TerminalApi.TerminalApi;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public enum ThreatScannerMode
 {

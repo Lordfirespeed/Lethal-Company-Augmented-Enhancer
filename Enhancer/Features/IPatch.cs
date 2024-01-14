@@ -1,6 +1,6 @@
 using BepInEx.Logging;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public interface IPatch
 {

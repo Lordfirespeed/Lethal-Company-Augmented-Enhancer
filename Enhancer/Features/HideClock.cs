@@ -5,7 +5,7 @@ using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class HideClock : IPatch
 {

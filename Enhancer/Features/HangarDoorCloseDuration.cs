@@ -1,7 +1,7 @@
 using BepInEx.Logging;
 using HarmonyLib;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class HangarDoorCloseDuration : IPatch
 {

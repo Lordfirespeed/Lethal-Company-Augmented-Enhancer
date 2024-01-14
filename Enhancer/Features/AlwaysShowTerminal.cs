@@ -6,7 +6,7 @@ using HarmonyLib;
 using UnityEngine.UI;
 using CodeMatch = HarmonyLib.CodeMatch;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class AlwaysShowTerminal : IPatch
 {

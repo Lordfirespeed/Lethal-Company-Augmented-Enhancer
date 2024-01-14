@@ -10,7 +10,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using Enhancer.Config;
 using Enhancer.Config.AcceptableValues;
-using Enhancer.Patches;
+using Enhancer.Features;
 using Newtonsoft.Json;
 
 namespace Enhancer;

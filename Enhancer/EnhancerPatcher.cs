@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Logging;
-using Enhancer.Patches;
+using Enhancer.Features;
 using Enhancer.PatchInfo;
 using HarmonyLib;
 using UnityEngine;

@@ -3,7 +3,7 @@ using HarmonyLib;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class CompanyBuyingFactorTweaks : IPatch
 {

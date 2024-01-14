@@ -2,7 +2,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class DeathPenalty : IPatch
 {

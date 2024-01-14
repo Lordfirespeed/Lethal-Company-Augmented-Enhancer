@@ -3,7 +3,7 @@ using BepInEx.Logging;
 using Enhancer.Extensions;
 using HarmonyLib;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class FreeUnlockables : IPatch
 {

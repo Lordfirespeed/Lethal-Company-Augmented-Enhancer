@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using OpCodes = System.Reflection.Emit.OpCodes;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 public class MilitaryTime : IPatch
 {

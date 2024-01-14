@@ -5,7 +5,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
 
-namespace Enhancer.Patches;
+namespace Enhancer.Features;
 
 [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.DespawnPropsAtEndOfRound))]
 public class ItemProtection : IPatch
