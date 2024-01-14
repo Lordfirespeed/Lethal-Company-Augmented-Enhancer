@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+### Added
+
+### Fixed
+
+### Removed
+
+## [0.6.0]
+
+### Changed
+
 - 'Unlock Suits' option replaced with 'Free Unlockables'
 
 ### Added
@@ -20,10 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `lights` command group
 - Option to only overwrite challenge moon leaderboard entry when your score is higher
   than your previous best attempt
-
-### Fixed
-
-### Removed
 
 ## [0.5.0]
 
