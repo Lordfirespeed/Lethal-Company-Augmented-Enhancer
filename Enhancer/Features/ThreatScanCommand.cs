@@ -17,8 +17,8 @@ public class ThreatScanCommand : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 
-    private TerminalNode? _triggerNode;
-    private TerminalKeyword? _nounKeyword;
+    private CommandInfo _commandInfo;
+    private TerminalKeyword? _keyword;
 
     public void SetLogger(ManualLogSource logger)
     {
@@ -58,22 +58,23 @@ public class ThreatScanCommand : IFeature
 
     public void OnEnable()
     {
-        _triggerNode = TerminalApiHelper.CreateTerminalNode("Safe zone detected\n", true);
-        _nounKeyword = TerminalApiHelper.CreateTerminalKeyword("threats");
-        _nounKeyword.specialKeywordResult = _triggerNode;
+        var triggerNode = TerminalApiHelper.CreateTerminalNode("Safe zone detected\n", true);
+        _keyword = TerminalApiHelper.CreateTerminalKeyword("threats", triggeringNode: triggerNode);
 
-        TerminalApiHelper.AddTerminalKeyword(_nounKeyword, new CommandInfo {
-            TriggerNode = _triggerNode,
+        _commandInfo = new CommandInfo {
             DisplayTextSupplier = ThreatScanTextSupplier,
             Category = "Other",
             Description = "Scan for threats on the current moon."
-        });
+        };
+
+        TerminalApiHelper.AddTerminalKeyword(_keyword, _commandInfo);
     }
 
     public void OnDisable()
     {
-        if (_nounKeyword is not null)
-            TerminalApiHelper.DeleteKeyword(_nounKeyword.word);
+        if (_keyword is not null)
+            TerminalApiHelper.DeleteKeyword(_keyword.word);
+        TerminalApiHelper.CommandInfos.Remove(_commandInfo);
     }
 
     public static string ThreatScanTextSupplier()
