@@ -103,8 +103,8 @@ how much time has passed.
 ### Ship Hangar Doors Power Duration
 The time it takes for the hangar doors to re-open due to lack of power can be configured.
 
-### Threat Scanner
-The `scan` command on the terminal can be configured to provide additional information about the environment's
+### Threat Scanner Command
+The `threats` command can be added to the terminal, which provides additional information about the environment's
 danger level due to enemy threats.
 
 ### Days Per Quota
