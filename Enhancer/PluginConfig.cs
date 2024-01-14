@@ -26,7 +26,7 @@ public class PluginConfig
 
     public readonly ConfigEntry<bool> SavedItemCapEnabled;
     public readonly ConfigEntry<int> SavedItemCap;
-    public readonly ConfigEntry<bool> RemoveItemCapEnabled;
+    public readonly ConfigEntry<bool> RemoveSavedItemCapEnabled;
 
     public readonly ConfigEntry<bool> MilitaryTime;
     public readonly ConfigEntry<bool> HideClockEnabled;
@@ -157,7 +157,7 @@ public class PluginConfig
             "Can help to prevent items despawning when you have too many and re-load your lobby.\n" +
             "Host Required: Yes"
         );
-        RemoveItemCapEnabled = bindingPlugin.Config.Bind(
+        RemoveSavedItemCapEnabled = bindingPlugin.Config.Bind(
             "Saved Item Cap",
             "Remove Saved Item Cap",
             false,
