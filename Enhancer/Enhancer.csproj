@@ -54,6 +54,9 @@
         <Reference Include="UnityEngine.InputSystem">
             <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Unity.InputSystem.dll</HintPath>
         </Reference>
+        <Reference Include="Facepunch.Steamworks.Win64">
+            <HintPath>$(LETHAL_COMPANY_DIR)/Lethal Company_Data/Managed/Facepunch.Steamworks.Win64.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
