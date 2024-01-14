@@ -107,6 +107,10 @@ The time it takes for the hangar doors to re-open due to lack of power can be co
 The `threats` command can be added to the terminal, which provides additional information about the environment's
 danger level due to enemy threats.
 
+### Lightswitch Command
+The `lights` command group can be added to the terminal, which allows you to control the ship's interior lights
+in case the light switch 'goes missing'.
+
 ### Days Per Quota
 Assignment Duration (Days Per Quota): The quota assignment duration can be configured, including
 variable options similar to Dynamic Deadline.
