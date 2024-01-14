@@ -20,107 +20,108 @@ public class EnhancerPatcher : MonoBehaviour
         new FeatureInfo<AlwaysShowTerminal> {
             Name = "Always show terminal",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.KeepConsoleEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.KeepConsoleEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.KeepConsoleEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new FeatureInfo<DaysPerQuota> {
             Name = "Days per quota",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DaysPerQuotaAssignmentEnabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.DaysPerQuotaAssignmentEnabled, BoundConfig.QuotaFormulaEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.DaysPerQuotaAssignmentEnabled, BoundConfig.QuotaFormulaEnabled],
             DelegateToModGuids = ["mom.llama.enhancer", "Haha.DynamicDeadline"],
         },
         new FeatureInfo<DeathPenalty> {
             Name = "Death penalty",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DeathPenaltyFormulaEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.DeathPenaltyFormulaEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.DeathPenaltyFormulaEnabled],
         },
         new FeatureInfo<HangarDoorCloseDuration> {
             Name = "Hangar door close duration",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.DoorPowerDurationEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.DoorPowerDurationEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.DoorPowerDurationEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new FeatureInfo<HideClock> {
             Name = "Hide Clock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.HideClockEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.HideClockEnabled, BoundConfig.HideClockOutside, BoundConfig.HideClockOnShip, BoundConfig.HideClockInFacility],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.HideClockEnabled, BoundConfig.HideClockOutside, BoundConfig.HideClockOnShip, BoundConfig.HideClockInFacility],
             DelegateToModGuids = ["atk.lethalcompany.shipclock"],
         },
         new FeatureInfo<ThreatScanCommand> {
             Name = "Threat scanner",
             EnabledCondition = () =>
                 BoundConfig.Enabled.Value && BoundConfig.ThreatScanner.Value is not ThreatScannerMode.Disabled,
-            ListenToConfigEntries = [BoundConfig.ThreatScanner],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.ThreatScanner],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new FeatureInfo<ItemProtection> {
             Name = "Item protection",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapProtectionEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.ScrapProtectionEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.ScrapProtectionEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new FeatureInfo<LeaderboardUsesBestAttempt> {
             Name = "Leaderboard Uses Best Attempt",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.LeaderboardUsesBestAttemptEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.LeaderboardUsesBestAttemptEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.LeaderboardUsesBestAttemptEnabled],
         },
         new FeatureInfo<LightswitchCommand> {
             Name = "Lightswitch Command",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.LightswitchCommandEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.LightswitchCommandEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.LightswitchCommandEnabled],
         },
         new FeatureInfo<MilitaryTime> {
             Name = "24-hour clock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.MilitaryTime.Value,
-            ListenToConfigEntries = [BoundConfig.MilitaryTime],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.MilitaryTime],
             DelegateToModGuids = ["com.zduniusz.lethalcompany.24hourclock"],
         },
         new FeatureInfo<CompanyBuyingFactorTweaks> {
             Name = "Company buying factor tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.CompanyBuyingFactorTweaksEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.CompanyBuyingFactorTweaksEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new FeatureInfo<QuotaFormula> {
             Name = "Quota formula",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.QuotaFormulaEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.QuotaFormulaEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.QuotaFormulaEnabled],
         },
         new FeatureInfo<RemoveSavedItemCap> {
             Name = "Remove Saved Item Cap",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.RemoveSavedItemCapEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.RemoveSavedItemCapEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.RemoveSavedItemCapEnabled],
         },
         new FeatureInfo<SavedItemCap> {
             Name = "Saved Item Cap",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.SavedItemCapEnabled.Value && !BoundConfig.RemoveSavedItemCapEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.SavedItemCapEnabled, BoundConfig.RemoveSavedItemCapEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.SavedItemCapEnabled, BoundConfig.RemoveSavedItemCapEnabled],
             DelegateToModGuids = ["MoreItems"]
         },
         new FeatureInfo<ScrapTweaks> {
             Name = "Scrap Tweaks",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.ScrapTweaksEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.ScrapPlayercountScaling, BoundConfig.ScrapQuantityScalar, BoundConfig.ScrapValueScalar]
         },
         new FeatureInfo<StartingCredits> {
             Name = "Starting credits",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.StartingCreditsEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.StartingCreditsEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.StartingCreditsEnabled],
         },
         new FeatureInfo<PassiveIncome> {
             Name = "Passive income",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.PassiveIncomeEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.PassiveIncomeEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.PassiveIncomeEnabled],
         },
         new FeatureInfo<FreeUnlockables> {
             Name = "Suit unlock",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.FreeUnlockablesEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.FreeUnlockablesEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.FreeUnlockablesEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         },
         new FeatureInfo<TimeSpeed> {
             Name = "Time speed",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.TimeSpeedEnabled.Value,
-            ListenToConfigEntries = [BoundConfig.TimeSpeedEnabled],
+            ListenToConfigEntries = [BoundConfig.Enabled, BoundConfig.TimeSpeedEnabled],
             DelegateToModGuids = ["mom.llama.enhancer"],
         }
     ];
