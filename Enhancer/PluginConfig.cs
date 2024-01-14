@@ -24,6 +24,7 @@ public class PluginConfig
     public readonly ConfigEntry<bool> FreeUnlockablesEnabled;
     public readonly ConfigEntry<List<string>> FreeUnlockablesList;
     public readonly ConfigEntry<bool> LightswitchCommandEnabled;
+    public readonly ConfigEntry<bool> LeaderboardUsesBestAttemptEnabled;
 
     public readonly ConfigEntry<bool> SavedItemCapEnabled;
     public readonly ConfigEntry<int> SavedItemCap;
@@ -144,6 +145,12 @@ public class PluginConfig
             "Lightswitch Commands Enabled",
             false,
             "Enabling this adds a 'lights' command to the terminal to control the interior ship lights, in case a trickster hides the switch.\nHost Required: No"
+        );
+        LeaderboardUsesBestAttemptEnabled = bindingPlugin.Config.Bind(
+            "Misc Tweaks",
+            "Leaderboard uses Best Attempt",
+            false,
+            "Enabling this prevents you from overwriting better challenge moon attempts with a worse one.\nHost Required: Unknown"
         );
 
         #endregion

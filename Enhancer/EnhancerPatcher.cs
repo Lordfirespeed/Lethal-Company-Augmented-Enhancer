@@ -61,8 +61,8 @@ public class EnhancerPatcher : MonoBehaviour
         },
         new FeatureInfo<LeaderboardUsesBestAttempt> {
             Name = "Leaderboard Uses Best Attempt",
-            EnabledCondition = () => BoundConfig.Enabled.Value,
-            ListenToConfigEntries = [],
+            EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.LeaderboardUsesBestAttemptEnabled.Value,
+            ListenToConfigEntries = [BoundConfig.LeaderboardUsesBestAttemptEnabled],
         },
         new FeatureInfo<LightswitchCommand> {
             Name = "Lightswitch Command",
