@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enhancer.Features;
 
-public class DeathPenalty : IPatch
+public class DeathPenalty : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

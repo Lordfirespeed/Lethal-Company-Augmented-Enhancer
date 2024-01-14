@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class HangarDoorCloseDuration : IPatch
+public class HangarDoorCloseDuration : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

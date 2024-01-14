@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class PassiveIncome : IPatch
+public class PassiveIncome : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

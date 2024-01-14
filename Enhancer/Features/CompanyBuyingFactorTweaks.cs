@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Enhancer.Features;
 
-public class CompanyBuyingFactorTweaks : IPatch
+public class CompanyBuyingFactorTweaks : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

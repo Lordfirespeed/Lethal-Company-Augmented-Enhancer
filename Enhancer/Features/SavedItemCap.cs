@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class SavedItemCap : IPatch
+public class SavedItemCap : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

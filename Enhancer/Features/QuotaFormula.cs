@@ -12,7 +12,7 @@ using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace Enhancer.Features;
 
-public class QuotaFormula : IPatch
+public class QuotaFormula : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
     public static QuotaFormula? Instance { get; private set; }
@@ -85,12 +85,12 @@ public class QuotaFormula : IPatch
         Logger = logger;
     }
 
-    public void OnPatch()
+    public void OnEnable()
     {
         Instance = this;
     }
 
-    public void OnUnpatch()
+    public void OnDisable()
     {
         if (Instance == this) Instance = null;
     }

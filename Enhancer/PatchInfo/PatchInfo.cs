@@ -20,7 +20,7 @@ internal static class PatchInfoInitializers
         s => throw new InvalidOperationException("PatchInfo LogSourceFactory has not been initialized.");
 }
 
-internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPatch, new()
+internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IFeature, new()
 {
     // I want to use 'required' here but netstandard2.1 doesn't have support.
     public string Name { get; set; }
@@ -118,7 +118,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
             Plugin.Logger.LogInfo($"Attaching {Name} patches...");
             InstantiatePatch();
-            PatchInstance!.OnPatch();
+            PatchInstance!.OnEnable();
             PatchHarmony.PatchAllWithNestedTypes(typeof(TPatch));
         }
     }
@@ -132,7 +132,7 @@ internal class PatchInfo<TPatch> : IPatchInfo<TPatch> where TPatch : class, IPat
 
             Plugin.Logger.LogInfo($"Detaching {Name} patches...");
             PatchHarmony.UnpatchSelf();
-            PatchInstance.OnUnpatch();
+            PatchInstance.OnDisable();
             PatchInstance = null;
         }
     }

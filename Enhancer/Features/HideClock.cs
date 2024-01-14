@@ -7,7 +7,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class HideClock : IPatch
+public class HideClock : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class TimeSpeed : IPatch
+public class TimeSpeed : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

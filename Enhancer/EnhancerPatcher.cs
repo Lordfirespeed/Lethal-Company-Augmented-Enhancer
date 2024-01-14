@@ -16,7 +16,7 @@ public class EnhancerPatcher : MonoBehaviour
 
     internal static PluginConfig BoundConfig { get; set; } = null!;
 
-    private IEnumerable<IPatchInfo<IPatch>> GetPatches() => [
+    private IEnumerable<IPatchInfo<IFeature>> GetPatches() => [
         new PatchInfo<AlwaysShowTerminal> {
             Name = "Always show terminal",
             EnabledCondition = () => BoundConfig.Enabled.Value && BoundConfig.KeepConsoleEnabled.Value,

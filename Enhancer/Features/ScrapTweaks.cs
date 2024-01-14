@@ -4,7 +4,7 @@ using LC_API.GameInterfaceAPI.Events.EventArgs.Player;
 
 namespace Enhancer.Features;
 
-public class ScrapTweaks : IPatch
+public class ScrapTweaks : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 
@@ -24,7 +24,7 @@ public class ScrapTweaks : IPatch
         return true;
     }
 
-    public void OnPatch()
+    public void OnEnable()
     {
         if (!RoundManagerExistsAndIsServer()) return;
 
@@ -40,7 +40,7 @@ public class ScrapTweaks : IPatch
         ApplyMultipliers(RoundManager.Instance.playersManager.connectedPlayersAmount);
     }
 
-    public void OnUnpatch()
+    public void OnDisable()
     {
         if (!RoundManagerExistsAndIsServer()) return;
 

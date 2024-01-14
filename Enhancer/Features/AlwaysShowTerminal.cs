@@ -8,7 +8,7 @@ using CodeMatch = HarmonyLib.CodeMatch;
 
 namespace Enhancer.Features;
 
-public class AlwaysShowTerminal : IPatch
+public class AlwaysShowTerminal : IFeature
 {
     private static readonly MethodInfo WaitUntilFrameEndToSetActiveMethod =
         AccessTools.Method(typeof(Terminal), nameof(Terminal.waitUntilFrameEndToSetActive));

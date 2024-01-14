@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Enhancer.Features;
 
 [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.DespawnPropsAtEndOfRound))]
-public class ItemProtection : IPatch
+public class ItemProtection : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

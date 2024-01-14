@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class StartingCredits : IPatch
+public class StartingCredits : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

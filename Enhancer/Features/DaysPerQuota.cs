@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enhancer.Features;
 
-public class DaysPerQuota : IPatch
+public class DaysPerQuota : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

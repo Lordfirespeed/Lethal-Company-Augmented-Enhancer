@@ -8,7 +8,7 @@ using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace Enhancer.Features;
 
-public class MilitaryTime : IPatch
+public class MilitaryTime : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 

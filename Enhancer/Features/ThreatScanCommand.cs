@@ -13,7 +13,7 @@ public enum ThreatScannerMode
     ThreatLevelName
 }
 
-public class ThreatScanCommand : IPatch
+public class ThreatScanCommand : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 
@@ -56,7 +56,7 @@ public class ThreatScanCommand : IPatch
         throw new ArgumentOutOfRangeException($"Invalid threat scanner type '{enemyPower}'.");
     }
 
-    public void OnPatch()
+    public void OnEnable()
     {
         _triggerNode = TerminalApiHelper.CreateTerminalNode("Safe zone detected\n", true);
         _nounKeyword = TerminalApiHelper.CreateTerminalKeyword("threats");
@@ -70,7 +70,7 @@ public class ThreatScanCommand : IPatch
         });
     }
 
-    public void OnUnpatch()
+    public void OnDisable()
     {
         if (_nounKeyword is not null)
             TerminalApiHelper.DeleteKeyword(_nounKeyword.word);

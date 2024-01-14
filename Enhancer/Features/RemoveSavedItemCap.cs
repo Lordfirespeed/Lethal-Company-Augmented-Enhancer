@@ -6,7 +6,7 @@ using HarmonyLib;
 
 namespace Enhancer.Features;
 
-public class RemoveSavedItemCap : IPatch
+public class RemoveSavedItemCap : IFeature
 {
     protected static ManualLogSource Logger { get; set; } = null!;
 
